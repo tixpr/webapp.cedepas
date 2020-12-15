@@ -1,0 +1,107 @@
+@import './vars.scss';
+*{
+	font-family: $font_family;
+}
+html, body{
+	display: flex;
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+}
+#root{
+	justify-content: stretch;
+	flex-grow: 1;
+	overflow: hidden;
+	background-color: $white;
+	&>section{
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		justify-content: flex-start;
+		flex-grow: 1;
+		overflow: hidden;
+		background-color: $white;
+	}
+}
+input, textarea, a, button {
+	outline: none;
+	&:focus{
+		outline: none;
+	}
+}
+button{
+	border: none;
+	cursor: pointer;
+}
+a{
+	text-decoration: none;
+}
+main{
+	flex-grow: 1;
+	background-color: $color9;
+	padding: 10px;
+}
+.trigger {
+	font-size: 24px !important;
+	line-height: 64px;
+	padding: 0 24px;
+	cursor: pointer;
+	transition: color 0.3s;
+}
+.trigger:hover {
+	color: $color1;
+}
+
+.app-logo {
+	fill: $color5;
+	margin: 5px;
+}
+
+@each $color, $value in $colors {
+	.icon_color#{$color}{
+		fill: #{$value};
+	}
+}
+
+@each $color, $value in $colors {
+	.text_color#{$color}{
+		color: #{$value};
+	}
+}
+
+@each $color, $value in $colors {
+	.bg#{$color}{
+		background-color: #{$value};
+	}
+}
+
+//flex
+.flex-row{
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+}
+.flex-row-reverse{
+	display: flex;
+	flex-direction: row-reverse;
+	align-items: stretch;
+}
+.flex-column{
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+}
+.flex-column-reverse{
+	display: flex;
+	flex-direction: column-reverse;
+	align-items: stretch;
+}
+.grow{
+	flex-grow: 1;
+}
+.flex-center{
+	align-items: center;
+	justify-content: center;
+}

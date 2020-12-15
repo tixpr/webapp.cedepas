@@ -1,0 +1,50 @@
+//colores
+$color0: #ffffff;
+$color1: #ffbd28;
+$color2: #0099f9;
+$color3: #e44c4b;
+$color4: #55bd5a;
+$color5: #24282c;
+$color6: #8c6cd1;
+$color7: #ec61a5;
+$color8: #161718;
+$color9: #fcfafa;
+$color10: #dddbdb;
+
+$white: $color0;
+
+$colors: () !default;
+$colors: map-merge(
+	(
+		"0": $color0,
+		"1": $color1,
+		"2": $color2,
+		"3": $color3,
+		"4": $color4,
+		"5": $color5,
+		"6": $color6,
+		"7": $color7,
+		"8": $color8,
+		"9": $color9,
+		"10": $color10
+	),
+	$colors
+);
+
+$error_color: $color3;
+$warning_color: $color2;
+$success_color: $color1;
+$alert_color: $color4;
+
+
+
+$shadow_color: rgba($color9,0.7);
+$border_color: $color9;
+
+//Espacios
+$font_size: 20px;
+$spacing: 0.5rem;
+$header_height: 60px;
+
+//font
+$font_family: 'Roboto', sans-serif;

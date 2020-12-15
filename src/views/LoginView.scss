@@ -1,0 +1,12 @@
+@import '../styles/vars';
+.login-form{
+	position: relative;
+	align-items: stretch;
+	background-color: $color0;
+	box-shadow: 5px 0 10px rgba($color5,0.1);
+	width: 400px;
+	padding: 20px;
+}
+.slider-login{
+	background-color: $color1;
+}
