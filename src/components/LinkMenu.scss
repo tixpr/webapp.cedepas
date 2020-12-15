@@ -1,0 +1,14 @@
+@import '../Styles/vars.scss';
+
+.nav-link{
+	align-items: center;
+	justify-content: stretch;
+	padding: 10px;
+	cursor: pointer;
+	color: $color0;
+	font-size: 0.9rem;
+	font-weight: 900;
+	&:hover{
+		color: $color1;
+	}
+}

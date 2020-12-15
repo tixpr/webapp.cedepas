@@ -1,0 +1,84 @@
+@import '../Styles/vars';
+
+.loading{
+	flex-grow: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	align-content: center;
+}
+
+.loader{
+	display: block;
+	position: relative;
+	margin: 10px;
+	width: 150px;
+	height: 150px;
+	transform: rotate(45deg);
+	animation: animacion 1s linear infinite;
+}
+.l-box{
+	position: absolute;
+	width: 75px;
+	height: 75px;
+	animation: rotar 1s linear infinite;
+	&:nth-child(1){
+		top:0;
+		left:0;
+		background-color: $color1;
+	}
+	&:nth-child(2){
+		top:0;
+		right:0;
+		background-color: $color2;
+	}
+	&:nth-child(3){
+		bottom:0;
+		right: 0;
+		background-color: $color3;
+	}
+	&:nth-child(4){
+		bottom:0;
+		left:0;
+		background-color: $color4;
+	}
+}
+@keyframes animacion {
+	0%{
+		width: 150px;
+		height: 150px;
+	}
+	10%{
+		width: 150px;
+		height: 150px;
+	}
+	50%{
+		width: 225px;
+		height: 225px;
+	}
+	90%{
+		width: 150px;
+		height: 150px;
+	}
+	100%{
+		width: 150px;
+		height: 150px;
+	}
+}
+@keyframes rotar {
+	0%{
+		transform: rotate(0deg);
+	}
+	10%{
+		transform: rotate(0deg);
+	}
+	50%{
+		transform: rotate(90deg);
+	}
+	90%{
+		transform: rotate(90deg);
+	}
+	100%{
+		transform: rotate(90deg);
+	}
+}

@@ -1,0 +1,26 @@
+@import '../styles/vars';
+.drawer{
+	justify-content: flex-start;
+	flex-wrap: nowrap;
+	width: 80px;
+	min-width: 80px;
+	max-width: 80px;
+	background-color: $color5;
+	transition: width .3s ease;
+	overflow-x: hidden;
+	overflow-y: auto;
+	&.close{
+		width: 0;
+	}
+}
+.logo-cont{
+	align-items: center;
+	justify-content: center;
+	background-color: $color1;
+	color: $color5;
+	height: 50px;
+	min-height: 50px;
+	max-height: 50px;
+	cursor: pointer;
+	margin-bottom: 20px;
+}

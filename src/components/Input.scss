@@ -1,0 +1,40 @@
+@import '../styles/vars.scss';
+
+.input-group{
+	justify-content: stretch;
+	margin: 5px;
+	&>*{
+		padding: 5px;
+	}
+	&>label{
+		font-size: 1.2rem;
+		color: $color5;
+		text-align: justify;
+		font-weight: 400;
+		pointer-events: none;
+	}
+	&>span{
+		color: $error_color;
+		text-align: justify;
+		font-size: 0.7rem;
+	}
+	&>input{
+		border: 1px solid $color10;
+		font-size: 1.1rem;
+		border-radius: 5px 5px 0 0;
+		&:hover, &:focus{
+			border-color: $color2;
+			&+label{
+				color:$color2;
+			}
+		}
+	}
+	&.error{
+		&>label{
+			color: $error_color !important;
+		}
+		&>input{
+			border-color: $error_color !important;
+		}
+	}
+}
