@@ -1,8 +1,7 @@
-import React from 'react';
-import './Load.scss';
+import React from "react";
+import "./Load.scss";
 
-
-export default ()=>{
+export default () => {
 	return (
 		<div className="load-content">
 			<div className="load">

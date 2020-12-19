@@ -1,23 +1,32 @@
-import React, {Fragment} from 'react';
+import React from "react";
+import clsx from "clsx";
 //compoenentes
-import Drawer from './components/Drawer';
-import Header from './components/Header';
+import Drawer from "./components/Drawer";
+import Header from "./components/Header";
 //módulos
-import Administrator, {administrator_menu} from './AdminModule';
+import Admin, { admin_menu } from "./Admin";
 //import Student, {student_links} from './Student';
+import { changeDrawerAction } from "./redux/actions/uiActions";
+import { useSelector, useDispatch } from "react-redux";
 
 const App = () => {
+	const drawer = useSelector((state) => state.ui.drawer);
+	const dispatch = useDispatch();
 	return (
-		<Fragment>
-			<Drawer main_menu={administrator_menu} />
-			<section>
-				<Header />
-				<main>
-					<Administrator />
+		<>
+			<Header />
+			<section className="flex-row grow justify-start">
+				<Drawer main_menu={admin_menu} />
+				<main className="bg-grey-50">
+					<div
+						className={clsx("base", drawer && "view")}
+						onClick={() => dispatch(changeDrawerAction())}
+					></div>
+					<Admin />
 				</main>
 			</section>
-		</Fragment>
+		</>
 	);
-}
+};
 
 export default App;

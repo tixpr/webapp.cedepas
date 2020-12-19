@@ -1,20 +1,20 @@
-import React from 'react';
-import {
-	Route,
-	Redirect
-} from 'react-router-dom';
-import {
-	useSelector 
-} from 'react-redux';
+import React from "react";
+import { Route, Redirect } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const  PrivateRoute = ({ component:Component, children, ...others }) => {
-	const user = useSelector(state=>state.auth.user);
-	if(!user){
+const PrivateRoute = ({
+	component: Component,
+	children,
+	onChange,
+	...others
+}) => {
+	const user = useSelector((state) => state.auth.user);
+	if (!user) {
 		return (
 			<Redirect
 				to={{
 					pathname: "/login",
-					state: { from: others.location }
+					state: { from: others.location },
 				}}
 			/>
 		);
@@ -22,8 +22,8 @@ const  PrivateRoute = ({ component:Component, children, ...others }) => {
 	return (
 		<Route
 			{...others}
-			render={props => (children)?(children):(<Component {...props} />)
-			}
+			onChange={onChange}
+			render={(props) => (children ? children : <Component {...props} />)}
 		/>
 	);
 };

@@ -1,20 +1,20 @@
-import React from 'react';
-import clsx from 'clsx';
-import './Drawer.scss';
-import {useSelector} from 'react-redux';
-import {Link} from 'react-router-dom';
-import LinkMenu from './LinkMenu';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngular } from '@fortawesome/free-brands-svg-icons';
+import React from "react";
+import clsx from "clsx";
+import "./Drawer.scss";
+import LinkMenu from "./LinkMenu";
+import { useSelector } from "react-redux";
 
-const Drawer = ({main_menu=null})=>{
-	const drawer = useSelector(state=>state.drawer);
+const Drawer = ({ main_menu = null }) => {
+	const drawer = useSelector((state) => state.ui.drawer);
 	return (
-		<nav className={clsx('flex-column drawer', !drawer && 'close')}>
-			<Link to="/" className="flex-row logo-cont">
-				<FontAwesomeIcon icon={faAngular} size="3x"/>
-			</Link>
-			{main_menu && main_menu.map(mm=><LinkMenu key={mm.to} {...mm} />)}
+		<nav
+			className={clsx(
+				"flex-column drawer align-strech justify-start bg-dark",
+				drawer && "show"
+			)}
+		>
+			{main_menu &&
+				main_menu.map((mm) => <LinkMenu key={mm.to} {...mm} />)}
 		</nav>
 	);
 };

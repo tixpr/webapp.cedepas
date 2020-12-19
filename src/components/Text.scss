@@ -1,0 +1,22 @@
+@import '../vars.scss';
+.text{
+	display: block;
+	margin: 0;
+	padding: 5px;
+	color: $dark;
+	&.primary{
+		color: $primary;
+	}
+	&.title{
+		font-weight: 900;
+		font-size: 1.3rem;
+	}
+	&.normal{
+		color: $grey-800;
+	}
+	&.sub-text{
+		font-size: 0.8rem;
+		color: $grey-500;
+		font-weight: 400;
+	}
+}

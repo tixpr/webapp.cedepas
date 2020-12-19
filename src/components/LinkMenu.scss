@@ -1,14 +1,20 @@
-@import '../Styles/vars.scss';
+@import "../vars.scss";
 
-.nav-link{
-	align-items: center;
-	justify-content: stretch;
+.nav-link {
 	padding: 10px;
-	cursor: pointer;
-	color: $color0;
 	font-size: 0.9rem;
-	font-weight: 900;
-	&:hover{
-		color: $color1;
+	font-weight: 700;
+	margin-top: 5px;
+	& > div {
+		width: 60px;
+		text-align: center;
+	}
+	& > span {
+		font-size: 0.9rem;
+		padding-top: 5px;
+	}
+	&:hover {
+		background-color: $warning !important;
+		color: $dark !important;
 	}
 }

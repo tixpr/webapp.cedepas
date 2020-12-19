@@ -1,7 +1,7 @@
-import React from 'react';
-import './Loading.scss';
+import React from "react";
+import "./Loading.scss";
 
-const Loading = ()=>{
+const Loading = () => {
 	return (
 		<div className="loading">
 			<div className="loader">

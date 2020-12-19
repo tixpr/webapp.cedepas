@@ -1,0 +1,12 @@
+@import '../vars.scss'; 
+
+.file-input{
+	padding: 10px;
+	margin: 10px 5px;
+	cursor: pointer;
+	border: 2px solid $grey-300;
+	&:hover{
+		border-color: $primary;
+		color: $primary;
+	}
+}

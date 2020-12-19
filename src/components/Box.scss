@@ -1,8 +1,8 @@
-@import '../styles/vars';
+@import "../vars";
 
-.box{
+.box {
 	padding: 10px;
 	border-style: solid;
 	border-width: 1.5px;
-	border-color: $color10;
+	border-color: $grey-200;
 }

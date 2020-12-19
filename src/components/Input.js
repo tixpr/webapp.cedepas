@@ -1,39 +1,36 @@
-import React, {useState, useEffect} from 'react';
-import clsx from 'clsx';
-import './Input.scss';
+import React from "react";
+import clsx from "clsx";
+import "./Input.scss";
 
-export default function Input({ name = Math.random(), label = 'texto', type = 'text', register=null, required=false, pattern=null, error=null, inline=false, ...others }) {
-	console.info('render input');
-	const [msg, setMsg] = useState('');
-	useEffect(()=>{
-		if(error){
-			switch(error.type){
-				case 'required':
-					setMsg(`Campo obligatorio`);break;
-				case 'type':
-					setMsg(`Tipo incorrecto`);break;
-				case 'pattern':
-					setMsg(`Valor invalido`);break;
-				case 'maxLength':
-				case 'max':
-					setMsg(`Mayor el máximo`);break;
-				case 'minLength':
-				case 'min':
-					setMsg(`Menor al mínimo`);break;
-				case 'validate':
-					setMsg(`Valor incorrecto`);break;
-				default:
-					setMsg('');break;
-			}
-		}
-	},[error]);
+export default function Input({
+	name = Math.random(),
+	label = null,
+	type = "text",
+	register = null,
+	error = null,
+	inline = false,
+	upper=false,
+	...others
+}) {
 	return (
-		<div className={clsx(!inline && 'flex-column-reverse', inline && 'flex-row','input-group', error && 'error')}>
-			{error&&<span>{msg}</span>}
-			<input ref={register({required,pattern})} id={name} name={name} type={type} {...others}/>
-			<label htmlFor={name}>
-				{`${label}:`}
-			</label>
+		<div
+			className={clsx(
+				!inline && "flex-column",
+				inline && "flex-row-reverse",
+				"justify-stretch input-group",
+				error && "error",
+				upper&&'upper'
+			)}
+		>
+			{label&&<label htmlFor={name}>{`${label}:`}</label>}
+			<input
+				ref={register}
+				id={name}
+				name={name}
+				type={type}
+				{...others}
+			/>
+			{error && <span>{error.message}</span>}
 		</div>
 	);
-};
+}

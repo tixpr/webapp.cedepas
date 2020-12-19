@@ -1,40 +1,48 @@
-@import '../styles/vars.scss';
+@import "../vars.scss";
 
-.input-group{
+.input-group {
 	justify-content: stretch;
 	margin: 5px;
-	&>*{
+	& > * {
 		padding: 5px;
 	}
-	&>label{
-		font-size: 1.2rem;
-		color: $color5;
+	& > label {
+		font-size: 1rem;
+		color: $dark;
 		text-align: justify;
 		font-weight: 400;
 		pointer-events: none;
+		user-select: none;
 	}
-	&>span{
-		color: $error_color;
+	& > span {
+		color: $danger;
 		text-align: justify;
-		font-size: 0.7rem;
+		font-size: 0.9rem;
+		font-weight: 600;
 	}
-	&>input{
-		border: 1px solid $color10;
+	& > input {
+		border: 1px solid $grey-300;
 		font-size: 1.1rem;
 		border-radius: 5px 5px 0 0;
-		&:hover, &:focus{
-			border-color: $color2;
-			&+label{
-				color:$color2;
-			}
+	}
+	&.upper > input {
+		text-transform: uppercase;
+	}
+	&.error {
+		& > label {
+			color: $danger !important;
+		}
+		& > input {
+			border-color: $danger !important;
 		}
 	}
-	&.error{
-		&>label{
-			color: $error_color !important;
+	&:hover,
+	&:focus {
+		& > input {
+			border-color: $primary;
 		}
-		&>input{
-			border-color: $error_color !important;
+		& > label {
+			color: $primary;
 		}
 	}
 }

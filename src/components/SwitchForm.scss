@@ -1,0 +1,30 @@
+@import '../vars.scss';
+.switch{
+	margin: 10px;
+	& svg{
+		display:none;
+		padding-right: 5px;
+	}
+	&>input{
+		display:none;
+		&:checked+label{
+			color: $primary;
+			&>.yes{
+				display: block;
+			}
+			&>.not{
+				display: none;
+			}
+		}
+	}
+	& .not{
+		display: block;
+	}
+	&>label{
+		cursor: pointer;
+		padding: 5px;
+		&>.not{
+			display: block;
+		}
+	}
+}
