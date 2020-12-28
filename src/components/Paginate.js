@@ -1,12 +1,12 @@
 import React from "react";
 import Button from "./Button";
 
-const Paginate = ({ links=[], onClick }) => {
+const Paginate = ({ links=[], onClick,pk=null }) => {
 	return (
 		<div className="flex-row wrap align-center justify-center">
 			{links.map((l,i) => (
 				<Button
-					key={`${l.label}-${i}`}
+					key={`${l.label}-${pk}-${i}`}
 					disabled={l.url === null || l.label === "..."}
 					primary={l.active}
 					not_border

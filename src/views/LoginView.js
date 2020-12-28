@@ -1,6 +1,6 @@
 import React from "react";
 import "./LoginView.scss";
-import Input from "../components/Input";
+import InputForm from "../components/InputForm";
 import { faSignInAlt } from "@fortawesome/free-solid-svg-icons";
 import Form, {Submit} from "../components/Form";
 import { useForm } from "react-hook-form";
@@ -52,18 +52,18 @@ const LoginView = () => {
 	return (
 		<div className={clsx(!lg && "flex-column", lg && "flex-row", "grow")}>
 			<Form
-				className="flex-column justify-center align-stretch login-form"
+				className="flex-column justify-center login-form"
 				onSubmit={handleSubmit(on_submit)}
 				errors={action_error}
 			>
 				<div className="flex-column bg-white">
-					<Input
+					<InputForm
 						name="email"
 						register={register}
 						label="Correo electrónico"
 						error={errors.email}
 					/>
-					<Input
+					<InputForm
 						name="password"
 						type="password"
 						register={register}

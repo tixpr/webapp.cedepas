@@ -10,7 +10,7 @@ const SwitchForm = ({
 	onChange
 })=>{
 	return (
-		<div className="flex-row align-stretch justify-start switch">
+		<div className="flex-row justify-start switch">
 			<input id={name} name={name} defaultChecked={checked}  type="checkbox" onChange={(onChange)?onChange:null}/>
 			<label htmlFor={name} className="flex-row text-grey-400">
 				<FontAwesomeIcon className="not" icon={faCircle} />

@@ -1,8 +1,11 @@
 import React from 'react';
 
-export default ()=>{
+const Teacher  = ()=>{
 	return (
 		<div>
+			Docentes
 		</div>
 	);
 };
+
+export default Teacher;

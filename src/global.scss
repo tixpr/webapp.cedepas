@@ -12,16 +12,6 @@ body {
 	overflow: hidden;
 	font-size: 16px;
 }
-#root {
-	justify-content: stretch;
-	flex-grow: 1;
-	overflow: hidden;
-	background-color: $white;
-	& > section {
-		overflow: hidden;
-		background-color: $white;
-	}
-}
 input,
 textarea,
 a,
@@ -36,6 +26,9 @@ button {
 	cursor: pointer;
 	background: none;
 }
+label{
+	user-select: none;
+}
 a {
 	text-decoration: none;
 	cursor: pointer;
@@ -43,42 +36,41 @@ a {
 .view {
 	display: inherit !important;
 }
-main {
-	flex-grow: 1;
-	padding: 10px;
-	position: relative;
-	overflow-y: auto;
+.hidden{
+	display: none !important;
+}
+.overflow-x{
+	overflow-x: auto;
+	overflow-y: hidden;
+}
+.overflow-y{
 	overflow-x: hidden;
+	overflow-y: auto;
+}
+.overflow-hidden{
+	overflow: hidden;
 }
 hr{
-	border: none;
+	width:100%;
 	height: 0;
-	border-top: 1px solid $grey-100;
-	border-bottom: 1px solid $grey-100;
-}
-
-.app-logo {
-	fill: $dark;
-	margin: 5px;
+	border-top: 1px solid $grey-300 !important;
+	border-bottom: 1px solid $grey-300 !important;
 }
 .container-lg{
+	width: 100%;
 	max-width: 600px;
 	margin: 5px auto;
-	padding: 10px;
-}
-.none{
-	display: none !important;
 }
 
 @each $color, $value in $colors {
 	.text-#{$color} {
-		color: #{$value};
+		color: #{$value} !important;
 	}
 	.bg-#{$color} {
-		background-color: #{$value};
+		background-color: #{$value} !important;
 	}
 	.bd-#{$color} {
-		border-color: #{$value};
+		border-color: #{$value} !important;
 	}
 }
 @each $grey, $value in $greys {
@@ -141,7 +133,7 @@ hr{
 }
 @media (max-width: 767.99px) {
 	html {
-		font-size: 14px;
+		font-size: 15px;
 	}
 	main{
 		padding: 0;

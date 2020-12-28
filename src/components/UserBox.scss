@@ -3,15 +3,13 @@
 .user-box{
 	border-width: 1px;
 	border-style: solid;
-	border-left-width: 10px;
+	border-left-width: 7px;
+	border-bottom: 1px solid $grey-400 !important;
+	border-top: hidden;
+	border-right: hidden;
 	padding: 5px;
-	margin: 5px 10px;
+	margin: 0 10px;
 }
 .user-avatar{
-	padding: 0 10px;
-}
-@media (max-width: 767.99px) {
-	.user-box {
-		margin: 5px 0;
-	}
+	padding: 0 10px 0 0;
 }

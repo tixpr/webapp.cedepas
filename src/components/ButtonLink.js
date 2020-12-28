@@ -6,6 +6,7 @@ import "./Button.scss";
 
 const ButtonLink = ({
 	icon = null,
+	icon_size=null,
 	text = null,
 	primary = false,
 	not_border = false,
@@ -13,6 +14,7 @@ const ButtonLink = ({
 	disabled = false,
 	text_color = null,
 	bg_color = null,
+	className=null,
 	...others
 }) => {
 	return (
@@ -28,11 +30,12 @@ const ButtonLink = ({
 				not_border && "not-border",
 				disabled && "disabled",
 				text_color && `text-${text_color}`,
-				!text_color && !primary && "text-primary"
+				!text_color && !primary && "text-primary",
+				className&&` ${className}`
 			)}
 			{...others}
 		>
-			{icon ? <FontAwesomeIcon icon={icon} size="lg" /> : null}
+			{icon ? <FontAwesomeIcon icon={icon} size={icon_size||"lg"} /> : null}
 			{text ? (
 				<span
 					className={clsx(

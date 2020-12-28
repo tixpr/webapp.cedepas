@@ -1,8 +1,8 @@
-export const change_drawer_type = "CHANGE_DRAWER";
+export const change_mode_user_type = "CHANGE_USER_MODE";
 
-export const changeDrawerAction = () => {
+export const changeUserModeAction = (mode) => {
 	return {
-		type: change_drawer_type,
-		payload: null,
+		type: change_mode_user_type,
+		payload: mode,
 	};
 };

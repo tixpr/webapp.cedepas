@@ -1,18 +1,17 @@
-import { change_drawer_type } from "../actions/uiActions";
+import { change_mode_user_type } from "../actions/uiActions";
 
 const initial = {
-	drawer: false,
+	mode: null,
 };
 
-const drawerReducer = (state = initial, { type, payload }) => {
+const uiReducer = (state = initial, { type, payload }) => {
 	switch (type) {
-		case change_drawer_type:
-			let d = !state.drawer;
+		case change_mode_user_type:
 			return Object.assign(state, {
-				drawer: d,
+				mode: payload,
 			});
 		default:
 			return state;
 	}
 };
-export default drawerReducer;
+export default uiReducer;

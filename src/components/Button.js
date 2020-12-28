@@ -11,13 +11,15 @@ const Button = ({
 	center = false,
 	disabled = false,
 	text_color = null,
+	hidden=false,
 	bg_color = null,
+	icon_size=null,
 	...others
 }) => {
 	return (
 		<button
 			className={clsx(
-				"flex-row align-end btn",
+				"flex-row align-center btn",
 				icon && !text && "justify-center icon",
 				text && !center && "justify-start",
 				center && "justify-center",
@@ -27,11 +29,12 @@ const Button = ({
 				not_border && "not-border",
 				disabled && "disabled",
 				text_color && `text-${text_color}`,
-				!text_color && !primary && "text-primary"
+				!text_color && !primary && "text-primary",
+				hidden&&'hidden',
 			)}
 			{...others}
 		>
-			{icon ? <FontAwesomeIcon icon={icon} size="lg" /> : null}
+			{icon ? <FontAwesomeIcon icon={icon} size={icon_size||"lg"} /> : null}
 			{text ? (
 				<span
 					className={clsx(

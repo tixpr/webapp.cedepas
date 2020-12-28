@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./FileInput.scss";
+import "./FileInputForm.scss";
 
-const FileInput = ({ onChange = null, name, ...others }) => {
+const FileInputForm = ({ onChange = null, name, ...others }) => {
 	const [file, setFile] = useState(null);
 	const on_change= (e)=>{
 		e.preventDefault();
@@ -10,11 +10,11 @@ const FileInput = ({ onChange = null, name, ...others }) => {
 		onChange&&onChange(temp);
 	};
 	return (
-		<label className={"flex-column align-stretch justify-end file-input"} htmlFor={name}>
+		<label className={"flex-column justify-end file-input"} htmlFor={name}>
 			<input onChange={on_change} hidden id={name} name={name} type="file" {...others} />
 			{file?`Archivo: ${file.name}`:'Archivo: '}
 		</label>
 	);
 };
 
-export default FileInput;
+export default FileInputForm;

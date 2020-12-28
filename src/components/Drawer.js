@@ -2,15 +2,18 @@ import React from "react";
 import clsx from "clsx";
 import "./Drawer.scss";
 import LinkMenu from "./LinkMenu";
-import { useSelector } from "react-redux";
+import {useMediaQuery} from 'react-responsive';
 
 const Drawer = ({ main_menu = null }) => {
-	const drawer = useSelector((state) => state.ui.drawer);
+	const lg = useMediaQuery({
+		query: "(min-width: 768px)",
+	});
 	return (
 		<nav
 			className={clsx(
-				"flex-column drawer align-strech justify-start bg-dark",
-				drawer && "show"
+				!lg&&"flex-row justify-evenly",
+				lg&&'flex-Column',
+				"drawer bg-dark"
 			)}
 		>
 			{main_menu &&

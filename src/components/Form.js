@@ -6,7 +6,7 @@ import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
 
 const Errors = ({ msg, errors }) => {
 	return (
-		<div className="flex-row align-stretch justify-start">
+		<div className="flex-row justify-start">
 			<span>
 				<strong>{`${msg}:`}</strong>
 			</span>

@@ -3,7 +3,7 @@ import './Progress.scss';
 
 const Progress = ({ progress }) => {
 	return (
-		<div className="progress flex-column nwrap grow align-stretch justify-stretch bg-white">
+		<div className="progress flex-column nwrap grow justify-stretch bg-white">
 			<span className="flex-row align-center justify-center">
 				{(progress===100)?`Procesando...`:`Enviado (${progress}%)`}
 			</span>

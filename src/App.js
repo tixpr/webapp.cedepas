@@ -1,30 +1,45 @@
 import React from "react";
-import clsx from "clsx";
+//import { useDispatch, useSelector } from 'react-redux';
 //compoenentes
-import Drawer from "./components/Drawer";
 import Header from "./components/Header";
+//import Button from './components/Button';
 //módulos
-import Admin, { admin_menu } from "./Admin";
-//import Student, {student_links} from './Student';
-import { changeDrawerAction } from "./redux/actions/uiActions";
-import { useSelector, useDispatch } from "react-redux";
+import Admin from './Admin';
+//import Student from './Student';
+//import Teacher from './Teacher';
+//actions
+//import { changeUserModeAction } from './redux/actions/uiActions';
 
 const App = () => {
-	const drawer = useSelector((state) => state.ui.drawer);
+	/*
+	const mode = useSelector(state=>state.ui.mode);
+	const roles = useSelector(state=>state.auth.user.data.roles);
 	const dispatch = useDispatch();
+	let modulo=null;
+	switch(mode){
+		case null:
+			if(roles.length===1){
+				dispatch(changeUserModeAction(roles[0]))
+			}
+			return (
+				<div className="flex-row grow wrap align-center justify-evenly bg-dark">
+					{roles.map(r=><Button key={r} text={r} bg_color='not' text_color="warning" onClick={()=>{dispatch(changeUserModeAction(r))}}></Button>)}
+				</div>
+			);
+		case 'Administrador':
+			modulo = <Admin/>;break;
+		case 'Estudiante':
+			modulo=<Student/>;break;
+		case 'Docente':
+			modulo=<Teacher/>;break;
+		default:
+			break;
+	}
+	*/
 	return (
 		<>
 			<Header />
-			<section className="flex-row grow justify-start">
-				<Drawer main_menu={admin_menu} />
-				<main className="bg-grey-50">
-					<div
-						className={clsx("base", drawer && "view")}
-						onClick={() => dispatch(changeDrawerAction())}
-					></div>
-					<Admin />
-				</main>
-			</section>
+			<Admin />
 		</>
 	);
 };

@@ -1,15 +1,15 @@
 //colores
-$color0: #ffffff;
-$color1: #0099f9;
-$color2: #ffbd28;
-$color3: #e44c4b;
-$color4: #55bd5a;
-$color5: #24282c;
-$color6: #8c6cd1;
-$color7: #ec61a5;
-$color8: #161718;
-$color9: #fcfafa;
-$color10: #dddbdb;
+$color0: #ffffff !default;
+$color1: #0099f9 !default;
+$color2: #ffbd28 !default;
+$color3: #e44c4b !default;
+$color4: #55bd5a !default;
+$color5: #24282c !default;
+$color6: #8c6cd1 !default;
+$color7: #ec61a5 !default;
+$color8: #161718 !default;
+$color9: #fcfafa !default;
+$color10: #dddbdb !default;
 
 $colors: () !default;
 $colors: map-merge(

@@ -6,7 +6,7 @@ export const postImportUsersAction = (file, progressFunc) => {
 	return (dispatch) => {
 		let fd = new FormData();
 		fd.append("import_users", file);
-		axios.post("api/import_users", fd, {
+		axios.post("api/users/import", fd, {
 			onUploadProgress: e=>{
 				let p = Math.round((e.loaded * 100) / e.total);
 				progressFunc&&progressFunc(p);
