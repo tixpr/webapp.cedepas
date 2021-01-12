@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouteMatch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import Load from "../../../components/Load";
 import {
 	loadGetAllUsersAction,
 	getAllUsersAction,
@@ -52,7 +53,7 @@ const HomeView = () => {
 	return (
 		<>
 			{view_new ? (
-				<div className="flex-column">
+				<div className="container-lg flex-column">
 					<NewUserForm
 						onSuccess={() => setViewNew(false)}
 						onCancel={() => setViewNew(false)}
@@ -136,15 +137,15 @@ const HomeView = () => {
 				</div>
 			</div>
 			{paginate}
-			<div className="container-lg">
-				<ListView>
-					{is_load
-						? null
-						: users.map((user) => (
-								<UserBox key={user.id} user={user} url={url} />
-						  ))}
-				</ListView>
-			</div>
+			<ListView>
+				{is_load ? (
+					<Load />
+				) : (
+					users.map((user) => (
+						<UserBox key={user.id} user={user} url={url} />
+					))
+				)}
+			</ListView>
 			{paginate}
 		</>
 	);

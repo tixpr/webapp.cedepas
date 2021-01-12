@@ -78,7 +78,7 @@ const usersReducer = (state = initial, { type, payload }) => {
 			});
 		case post_user_error_type:
 			return Object.assign(state, {
-				post_user_error: payload,
+				post_user_errors: payload,
 				post_user_load: false,
 				post_user_success: false,
 			});

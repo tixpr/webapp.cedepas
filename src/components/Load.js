@@ -1,7 +1,7 @@
 import React from "react";
 import "./Load.scss";
 
-export default () => {
+const Load = () => {
 	return (
 		<div className="load-content">
 			<div className="load">
@@ -11,3 +11,4 @@ export default () => {
 		</div>
 	);
 };
+export default Load;

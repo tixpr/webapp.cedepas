@@ -26,7 +26,7 @@ button {
 	cursor: pointer;
 	background: none;
 }
-label{
+label {
 	user-select: none;
 }
 a {
@@ -36,30 +36,34 @@ a {
 .view {
 	display: inherit !important;
 }
-.hidden{
+.hidden {
 	display: none !important;
 }
-.overflow-x{
+.overflow-x {
 	overflow-x: auto;
 	overflow-y: hidden;
 }
-.overflow-y{
+.overflow-y {
 	overflow-x: hidden;
 	overflow-y: auto;
 }
-.overflow-hidden{
+.overflow-hidden {
 	overflow: hidden;
 }
-hr{
-	width:100%;
+hr {
+	width: 100%;
 	height: 0;
 	border-top: 1px solid $grey-300 !important;
 	border-bottom: 1px solid $grey-300 !important;
+	margin: 3px 0;
 }
-.container-lg{
+.container-lg {
 	width: 100%;
 	max-width: 600px;
 	margin: 5px auto;
+}
+.container-overflow-x {
+	overflow-x: auto !important;
 }
 
 @each $color, $value in $colors {
@@ -70,18 +74,40 @@ hr{
 		background-color: #{$value} !important;
 	}
 	.bd-#{$color} {
-		border-color: #{$value} !important;
+		border: 1px solid #{$value} !important;
 	}
 }
 @each $grey, $value in $greys {
 	.text-#{$grey} {
-		color: #{$value};
+		color: #{$value} !important;
 	}
 	.bg-#{$grey} {
 		background-color: #{$value};
 	}
 	.bd-#{$grey} {
-		border-color: #{$value};
+		border: 1px solid #{$value} !important;
+	}
+}
+table {
+	border-collapse: collapse;
+	margin: 0 auto;
+	min-width: 100%;
+}
+th {
+	border: 1px solid $grey-400;
+	padding: 5px;
+	font-size: 1.1rem;
+	text-align: center;
+	font-weight: 900;
+}
+td {
+	border: 1px solid $grey-400;
+	padding: 2px 5px;
+	font-size: 1rem;
+	font-weight: 400;
+	text-align: center;
+	&:nth-child(1) {
+		text-align: justify;
 	}
 }
 
@@ -109,15 +135,21 @@ hr{
 .grow {
 	flex-grow: 1;
 }
-.wrap{
+.wrap {
 	flex-wrap: wrap;
 }
-.nwrap{
+.nwrap {
 	flex-wrap: nowrap;
 }
 .flex-center {
 	align-items: center;
 	justify-content: center;
+}
+.padding-10 {
+	padding: 10px !important;
+}
+.margin-10 {
+	margin: 10px !important;
 }
 @each $direction, $value in $directions {
 	.align-#{$direction} {
@@ -135,10 +167,10 @@ hr{
 	html {
 		font-size: 15px;
 	}
-	main{
+	main {
 		padding: 0;
 	}
-	.container-lg{
+	.container-lg {
 		max-width: 100%;
 	}
 }

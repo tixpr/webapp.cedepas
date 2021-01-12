@@ -8,8 +8,9 @@ import Loading from "./components/Loading";
 import App from "./App";
 
 const Splash = () => {
-	const is_load = useSelector((state) => state.auth.is_load);
-	if (is_load) {
+	const is_load = useSelector((state) => state.auth.is_login_load);
+	const logout_load = useSelector((state) => state.auth.logout_load);
+	if (is_load || logout_load) {
 		return <Loading />;
 	}
 	return (

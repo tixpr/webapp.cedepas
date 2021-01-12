@@ -1,0 +1,13 @@
+@import "../vars.scss";
+
+.menu {
+	display: block;
+	position: relative !important;
+}
+
+.menu-items {
+	position: absolute;
+	right: 0;
+	top: 100%;
+	z-index: 1000;
+}

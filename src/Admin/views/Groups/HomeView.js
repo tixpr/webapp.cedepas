@@ -6,6 +6,7 @@ import Button from "../../../components/Button";
 import Text from "../../../components/Text";
 import ListView from "../../../components/ListView";
 import Paginate from "../../../components/Paginate";
+import Load from "../../../components/Load";
 //new period actions
 import {
 	loadGroupsAction,
@@ -32,7 +33,7 @@ import {
 	faEdit,
 	faTrash,
 	faCheck,
-	faWindowClose,
+	faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 
 const edit_group_schema = yup.object().shape({
@@ -76,30 +77,38 @@ const EditGroupForm = ({ onSuccess, period, onCancel }) => {
 				errors={action_error}
 				success={action_success}
 			>
-				<div className="flex-row">
-					<div className="grow">
-						{is_load ? <p>Cargando</p> : null}
-						<InputForm
-							name="name"
-							upper
-							hidden={is_load}
-							register={register}
-							inline
-							error={errors.name}
-						/>
-					</div>
-					<Submit
-						icon={faCheck}
-						bg_color="primary"
-						text_color="white"
-						center
-					/>
-					<Button
-						icon={faWindowClose}
-						bg_color="danger"
-						text_color="white"
-						onClick={onCancel}
-					/>
+				<div className="flex-column">
+					{is_load ? (
+						<Load />
+					) : (
+						<>
+							<InputForm
+								label="Nombre del Grupo"
+								name="name"
+								upper
+								hidden={is_load}
+								register={register}
+								inline
+								error={errors.name}
+							/>
+							<div className="flex-row flex-center">
+								<Submit
+									text="Aceptar"
+									icon={faEdit}
+									bg_color="primary"
+									text_color="white"
+									center
+								/>
+								<Button
+									text="Cancelar"
+									icon={faTimes}
+									bg_color="danger"
+									text_color="white"
+									onClick={onCancel}
+								/>
+							</div>
+						</>
+					)}
 				</div>
 			</Form>
 		</div>
@@ -121,10 +130,13 @@ const DeleteGroupForm = ({ onSuccess, period, onCancel }) => {
 		dispatch(loadDeleteGroupAction());
 		dispatch(deleteGroupAction(period.id));
 	};
+	const cancel = (e) => {
+		e && e.preventDefault();
+		dispatch(clearDeleteGroupAction());
+		onCancel && onCancel();
+	};
 	if (action_error) {
-		setTimeout(() => {
-			dispatch(clearDeleteGroupAction());
-		}, 7000);
+		setTimeout(() => dispatch(clearDeleteGroupAction()), 7000);
 	}
 	if (action_success) {
 		dispatch(clearDeleteGroupAction());
@@ -138,28 +150,30 @@ const DeleteGroupForm = ({ onSuccess, period, onCancel }) => {
 				errors={action_error}
 				success={action_success}
 			>
-				<div className="flex-row">
-					<div className="grow">
-						{is_load ? (
-							<p>Cargando</p>
-						) : (
-							<Text h3 className="text-danger">
+				<div className="flex-row wrap align-center">
+					{is_load ? (
+						<Load />
+					) : (
+						<>
+							<Text h3 className=" grow text-danger">
 								Confirmar la eliminación
 							</Text>
-						)}
-					</div>
-					<Submit
-						icon={faCheck}
-						bg_color="danger"
-						text_color="white"
-						center
-					/>
-					<Button
-						icon={faWindowClose}
-						bg_color="success"
-						text_color="white"
-						onClick={onCancel}
-					/>
+							<Submit
+								text="Eliminar"
+								icon={faCheck}
+								bg_color="danger"
+								text_color="white"
+								center
+							/>
+							<Button
+								icon={faTimes}
+								text="Cancelar"
+								bg_color="success"
+								text_color="white"
+								onClick={cancel}
+							/>
+						</>
+					)}
 				</div>
 			</Form>
 		</div>
@@ -236,15 +250,18 @@ const NewGroupForm = ({ onSuccess, onCancel }) => {
 		(state) => state.admin.groups.post_group_success
 	);
 	const dispatch = useDispatch();
+	const cancel = (e) => {
+		e && e.preventDefault();
+		dispatch(clearPostGroupAction());
+		onCancel && onCancel();
+	};
 	const submit = (d) => {
 		console.info(d);
 		dispatch(loadPostGroupAction());
 		dispatch(postGroupAction(d));
 	};
 	if (action_error) {
-		setTimeout(() => {
-			dispatch(clearPostGroupAction());
-		}, 7000);
+		setTimeout(() => dispatch(clearPostGroupAction()), 7000);
 	}
 	if (action_success) {
 		dispatch(clearPostGroupAction());
@@ -259,30 +276,38 @@ const NewGroupForm = ({ onSuccess, onCancel }) => {
 				errors={action_error}
 				success={action_success}
 			>
-				<div className="flex-row">
-					<div className="grow">
-						{is_load ? <p>Cargando</p> : null}
-						<InputForm
-							name="name"
-							upper
-							hidden={is_load}
-							register={register}
-							inline
-							error={errors.name}
-						/>
-					</div>
-					<Submit
-						icon={faCheck}
-						bg_color="primary"
-						text_color="white"
-						center
-					/>
-					<Button
-						icon={faWindowClose}
-						bg_color="danger"
-						text_color="white"
-						onClick={onCancel}
-					/>
+				<div className="flex-column">
+					{is_load ? (
+						<Load />
+					) : (
+						<>
+							<InputForm
+								name="name"
+								upper
+								label="Nombre del Grupo"
+								hidden={is_load}
+								register={register}
+								inline
+								error={errors.name}
+							/>
+							<div className="flex-row flex-center">
+								<Submit
+									text="Aceptar"
+									icon={faCheck}
+									bg_color="primary"
+									text_color="white"
+									center
+								/>
+								<Button
+									text="Cancelar"
+									icon={faTimes}
+									bg_color="danger"
+									text_color="white"
+									onClick={cancel}
+								/>
+							</div>
+						</>
+					)}
 				</div>
 			</Form>
 		</div>
@@ -330,8 +355,10 @@ const HomeView = () => {
 				</div>
 				<div className="flex-row grow justify-end">
 					<span className="text-grey-700">
-						{groups_total
-							? `${groups_total} grupos en total.`
+						{!is_load
+							? groups_total
+								? `${groups_total} grupos en total.`
+								: `${groups.length} grupos en total.`
 							: "Cargando..."}
 					</span>
 				</div>
@@ -348,22 +375,21 @@ const HomeView = () => {
 					/>
 				</div>
 			) : null}
+			<center>
+				<Text title className="text-grey-700">
+					Grupos
+				</Text>
+			</center>
 			{groups_paginate}
-			<div className="container-lg">
-				<ListView>
-					{is_load ? (
-						<p>Cargando...</p>
-					) : (
-						groups.map((p) => (
-							<GroupBox
-								key={`period-${p.id}`}
-								period={p}
-								url={url}
-							/>
-						))
-					)}
-				</ListView>
-			</div>
+			<ListView>
+				{is_load ? (
+					<Load />
+				) : (
+					groups.map((p) => (
+						<GroupBox key={`period-${p.id}`} period={p} url={url} />
+					))
+				)}
+			</ListView>
 		</div>
 	);
 };

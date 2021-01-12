@@ -1,4 +1,7 @@
-import { change_mode_user_type } from "../actions/uiActions";
+import {
+	change_ui_user_mode_type,
+	get_ui_user_mode_type,
+} from "../actions/uiActions";
 
 const initial = {
 	mode: null,
@@ -6,7 +9,11 @@ const initial = {
 
 const uiReducer = (state = initial, { type, payload }) => {
 	switch (type) {
-		case change_mode_user_type:
+		case get_ui_user_mode_type:
+			return Object.assign(state, {
+				mode: payload,
+			});
+		case change_ui_user_mode_type:
 			return Object.assign(state, {
 				mode: payload,
 			});

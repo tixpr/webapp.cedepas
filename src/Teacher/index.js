@@ -1,4 +1,5 @@
 import React from 'react';
+//para el menu
 
 const Teacher  = ()=>{
 	return (

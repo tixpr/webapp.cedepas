@@ -2,11 +2,12 @@ import React from "react";
 import "./LoginView.scss";
 import InputForm from "../components/InputForm";
 import { faSignInAlt } from "@fortawesome/free-solid-svg-icons";
-import Form, {Submit} from "../components/Form";
+import Load from "../components/Load";
+import Form, { Submit } from "../components/Form";
 import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
-import { loginAction } from "../redux/actions/authActions";
+import { loginAction, loadLoginAction } from "../redux/actions/authActions";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useMediaQuery } from "react-responsive";
@@ -33,10 +34,11 @@ const LoginView = () => {
 	});
 	const h = useHistory();
 	const user = useSelector((state) => state.auth.user);
-	const action_error = useSelector((state) => state.auth.action_error);
+	const action_error = useSelector((state) => state.auth.login_error);
+	const is_load = useSelector((state) => state.auth.login_load);
 	const dispatch = useDispatch();
 	const on_submit = (data) => {
-		console.info("Login acction");
+		dispatch(loadLoginAction());
 		dispatch(loginAction(data.email, data.password));
 	};
 	if (user) {
@@ -57,20 +59,26 @@ const LoginView = () => {
 				errors={action_error}
 			>
 				<div className="flex-column bg-white">
-					<InputForm
-						name="email"
-						register={register}
-						label="Correo electrónico"
-						error={errors.email}
-					/>
-					<InputForm
-						name="password"
-						type="password"
-						register={register}
-						label="Contraseña"
-						error={errors.password}
-					/>
-					<Submit icon={faSignInAlt} text="Ingresar" center />
+					{is_load ? (
+						<Load />
+					) : (
+						<>
+							<InputForm
+								name="email"
+								register={register}
+								label="Correo electrónico"
+								error={errors.email}
+							/>
+							<InputForm
+								name="password"
+								type="password"
+								register={register}
+								label="Contraseña"
+								error={errors.password}
+							/>
+							<Submit icon={faSignInAlt} text="Ingresar" center />
+						</>
+					)}
 				</div>
 			</Form>
 			<div className="grow slider-login"></div>

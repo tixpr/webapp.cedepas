@@ -11,7 +11,7 @@ const Drawer = ({ main_menu = null }) => {
 	return (
 		<nav
 			className={clsx(
-				!lg&&"flex-row justify-evenly",
+				!lg&&"flex-row align-stretch justify-stretch",
 				lg&&'flex-Column',
 				"drawer bg-dark"
 			)}

@@ -4,92 +4,96 @@ import { useParams, useRouteMatch } from "react-router-dom";
 import Text from "../../../components/Text";
 import Button from "../../../components/Button";
 import ListView from "../../../components/ListView";
+import Load from '../../../components/Load';
 import {
-	getCoursesAction,
-	loadGetCoursesAction,
-	clearGetCoursesAction,
-} from "../../redux/actions/coursesActions";
-import CourseBox from "./Courses/CourseBox";
+	getCoursesGroupAction,
+	loadGetCoursesGroupAction,
+	clearGetCoursesGroupAction,
+} from "../../redux/actions/coursesGroupActions";
+import CourseGroupBox from "./Courses/CourseGroupBox";
 import ImportCoursesForm from "./Courses/ImportCoursesForm";
-import NewCourseForm from "./Courses/NewCourseForm";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import AddCourseGroupForm from "./Courses/AddCourseGroupForm";
+import ErrorMessage from "../../../components/ErrorMessage";
+import { faPlus, faFileUpload } from "@fortawesome/free-solid-svg-icons";
 
 const GroupView = () => {
 	const { url } = useRouteMatch();
 	const { group_id } = useParams();
 	const dispatch = useDispatch();
-	const courses = useSelector((state) => state.admin.courses.data);
-	const [view_new_course, setViewNewCourse] = useState(false);
-	const [view_import_courses, setViewImportCourses] = useState(false);
+	const courses = useSelector((state) => state.admin.courses_group.data);
+	const [add, setAdd] = useState(false);
+	const [_import, setImport] = useState(false);
 	const action_errors = useSelector(
-		(state) => state.admin.courses.get_courses_errors
-	);
-	const action_success = useSelector(
-		(state) => state.admin.courses.get_courses_success
+		(state) => state.admin.courses_group.get_courses_group_errors
 	);
 	const is_load = useSelector(
-		(state) => state.admin.courses.get_courses_load
+		(state) => state.admin.courses_group.get_courses_group_load
 	);
 	useEffect(() => {
-		dispatch(loadGetCoursesAction());
-		dispatch(getCoursesAction(group_id));
-	}, [dispatch]);
-	if (action_success) {
-		dispatch(clearGetCoursesAction());
-	}
+		dispatch(loadGetCoursesGroupAction());
+		dispatch(getCoursesGroupAction(group_id));
+		return ()=>{
+			dispatch(clearGetCoursesGroupAction());
+		};
+	}, [dispatch, group_id]);
 	return (
 		<div className="flex-column">
-			<div className="flex-row align-center">
-				<Text h2>Cursos</Text>
-				<Button
-					text="Nuevo curso"
-					icon={faPlus}
-					text_color="white"
-					not_border
-					hidden={view_new_course || view_import_courses}
-					bg_color="success"
-					onClick={() => setViewNewCourse(true)}
-				/>
-				<Button
-					text="Importar cursos"
-					icon={faPlus}
-					text_color="white"
-					not_border
-					hidden={view_new_course || view_import_courses}
-					bg_color="primary"
-					onClick={() => setViewImportCourses(true)}
-				/>
-			</div>
-			{view_new_course ? (
-				<div className="container-lg">
-					<NewCourseForm
-						onSuccess={() => setViewNewCourse(false)}
-						onCancel={() => setViewNewCourse(false)}
+			{!add && !_import ? (
+				<div className="flex-row align-center">
+					<Button
+						text="Nuevo curso"
+						icon={faPlus}
+						text_color="white"
+						not_border
+						hidden={add || _import}
+						bg_color="success"
+						onClick={() => setAdd(true)}
 					/>
-				</div>
-			) : null}
-			{view_import_courses ? (
-				<div className="container-lg">
-					<ImportCoursesForm
-						onSuccess={() => setViewImportCourses(false)}
-						onCancel={() => setViewImportCourses(false)}
+					<Button
+						text="Importar cursos"
+						icon={faFileUpload}
+						text_color="white"
+						not_border
+						hidden={add || _import}
+						bg_color="primary"
+						onClick={() => setImport(true)}
 					/>
 				</div>
 			) : null}
 			<div className="container-lg">
-				{is_load ? <p>Cargando...</p> : null}
-				<ListView>
-					{is_load
-						? null
-						: courses.map((c) => (
-								<CourseBox
-									key={`coursebox-${c.id}`}
-									course={c}
-									url={url}
-								/>
-						  ))}
-				</ListView>
+				{add ? (
+					<AddCourseGroupForm
+						onCancel={() => setAdd(false)}
+					/>
+				) : null}
+				{_import ? (
+					<ImportCoursesForm
+						onSuccess={() => setImport(false)}
+						onCancel={() => setImport(false)}
+					/>
+				) : null}
 			</div>
+			{action_errors ? <ErrorMessage msg={action_errors} /> : null}
+			{is_load ? (
+				<Load />
+			) : (
+				<>
+					<center>
+						<Text h2 className="text-grey-700">
+							Cursos del Grupo
+						</Text>
+					</center>
+					<ListView>
+						{courses.map((c) => (
+							<CourseGroupBox
+								key={`CourseGroupBox-${c.id}`}
+								course={c}
+								url={url}
+							/>
+						))}
+					</ListView>
+				</>
+			)}
 		</div>
 	);
 };

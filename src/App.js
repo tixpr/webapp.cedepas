@@ -1,47 +1,68 @@
-import React from "react";
-//import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Loading from "./components/Loading";
+import clsx from "clsx";
+import { useMediaQuery } from "react-responsive";
 //compoenentes
 import Header from "./components/Header";
+import Drawer from "./components/Drawer";
 //import Button from './components/Button';
 //módulos
-import Admin from './Admin';
-//import Student from './Student';
-//import Teacher from './Teacher';
+import Admin, { admin_menu } from "./Admin";
+import Student from "./Student";
+import Teacher from "./Teacher";
 //actions
-//import { changeUserModeAction } from './redux/actions/uiActions';
+import { getUiUserModeAction } from "./redux/actions/uiActions";
 
 const App = () => {
-	/*
-	const mode = useSelector(state=>state.ui.mode);
-	const roles = useSelector(state=>state.auth.user.data.roles);
+	const lg = useMediaQuery({
+		query: "(min-width: 768px)",
+	});
+	const mode = useSelector((state) => state.ui.mode);
 	const dispatch = useDispatch();
-	let modulo=null;
-	switch(mode){
-		case null:
-			if(roles.length===1){
-				dispatch(changeUserModeAction(roles[0]))
-			}
+	useEffect(() => {
+		dispatch(getUiUserModeAction());
+	}, [dispatch]);
+	switch (mode) {
+		case "Administrador":
 			return (
-				<div className="flex-row grow wrap align-center justify-evenly bg-dark">
-					{roles.map(r=><Button key={r} text={r} bg_color='not' text_color="warning" onClick={()=>{dispatch(changeUserModeAction(r))}}></Button>)}
-				</div>
+				<>
+					<Header />
+					<div
+						className={clsx(
+							!lg && "flex-column-reverse",
+							lg && "flex-row",
+							"grow justify-start overflow-hidden"
+						)}
+					>
+						<Drawer main_menu={admin_menu} />
+						<main className="grow bg-grey-100 overflow-y">
+							<Admin />
+						</main>
+					</div>
+				</>
 			);
-		case 'Administrador':
-			modulo = <Admin/>;break;
-		case 'Estudiante':
-			modulo=<Student/>;break;
-		case 'Docente':
-			modulo=<Teacher/>;break;
+		case "Estudiante":
+			return (
+				<>
+					<Header />
+					<main className="grow bg-grey-100 overflow-y">
+						<Student />
+					</main>
+				</>
+			);
+		case "Docente":
+			return (
+				<>
+					<Header />
+					<main className="grow bg-grey-100 overflow-y">
+						<Teacher />
+					</main>
+				</>
+			);
 		default:
-			break;
+			return <Loading />;
 	}
-	*/
-	return (
-		<>
-			<Header />
-			<Admin />
-		</>
-	);
 };
 
 export default App;

@@ -1,60 +1,12 @@
 import React from "react";
 import "./Form.scss";
 import Button from "./Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
+import ErrorMessage from "./ErrorMessage";
 
-const Errors = ({ msg, errors }) => {
-	return (
-		<div className="flex-row justify-start">
-			<span>
-				<strong>{`${msg}:`}</strong>
-			</span>
-			<div className="flex-column align-start justify-stretch">
-				{errors.map((s) => (
-					<span className="el-err" key={s}>
-						{s}
-					</span>
-				))}
-			</div>
-		</div>
-	);
-};
-
-const ErrorMessage = ({ msg, icon = null }) => {
-	return (
-		<div className="flex-row align-center justify-start text-white bg-danger error-message">
-			<FontAwesomeIcon
-				icon={icon ? icon : faExclamationTriangle}
-				size="lg"
-			/>
-			{typeof msg === "string" ? (
-				<span>{msg}</span>
-			) : (
-				<p className="flex-column grow">
-					<span className="msg-title">
-						{msg.data.message && msg.data.message}
-					</span>
-					{msg.data.errors &&
-						Object.keys(msg.data.errors).map((v) => (
-							<Errors
-								msg={v}
-								key={v}
-								errors={msg.data.errors[v]}
-							/>
-						))}
-				</p>
-			)}
-		</div>
-	);
-};
-
-const SuccessMessage = ({msg})=>{
+const SuccessMessage = ({ msg }) => {
 	return (
 		<div className="flex-column bg-success text-white success">
-			<p>
-				{msg}
-			</p>
+			<p>{msg}</p>
 		</div>
 	);
 };

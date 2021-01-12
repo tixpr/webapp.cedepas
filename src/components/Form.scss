@@ -2,9 +2,11 @@
 
 fieldset {
 	border: 1px solid $grey-400;
+	margin: 0;
+	padding: 5px;
 }
 legend {
-	color: $grey-500;
+	color: $dark;
 	font-size: 1.2rem;
 	text-transform: uppercase;
 	font-weight: 700;
@@ -35,7 +37,7 @@ legend {
 	padding-left: 10px;
 	text-align: justify;
 }
-.success{
+.success {
 	padding: 0 10px;
 }
 .submit {

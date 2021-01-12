@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import Form, { Submit } from "../../../components/Form";
 import Button from "../../../components/Button";
 import Text from "../../../components/Text";
+import Load from "../../../components/Load";
 import { useSelector, useDispatch } from "react-redux";
 
 const ActiveUserForm = ({ onCancel, onSuccess, user }) => {
@@ -32,24 +33,32 @@ const ActiveUserForm = ({ onCancel, onSuccess, user }) => {
 		<Form
 			className="flex-row align-center"
 			onSubmit={handleSubmit(submit)}
+			fielset="bg-white"
 			errors={action_error}
 			success={action_success}
 		>
 			{is_load ? (
-				<p>Procesando...</p>
+				<Load />
 			) : (
-				<Text h3 className="grow text-danger">
-					Confirme la operación
-				</Text>
+				<>
+					<Text h3 className="grow text-danger">
+						Confirme la operación
+					</Text>
+					<Submit
+						center
+						text={user.active ? "Inhabilitar" : "Habilitar"}
+						bg_color={user.active ? "danger" : "primary"}
+						hidden={is_load}
+					/>
+					<Button
+						text="Cancelar"
+						hidden={is_load}
+						text_color="white"
+						bg_color={user.active ? "primary" : "danger"}
+						onClick={onCancel}
+					/>
+				</>
 			)}
-			<Submit center text={user.active?"Inhabilitar":"Habilitar"} bg_color={user.active?"danger":"primary"} hidden={is_load} />
-			<Button
-				text="Cancelar"
-				hidden={is_load}
-				text_color="white"
-				bg_color={user.active?"primary":"danger"}
-				onClick={onCancel}
-			/>
 		</Form>
 	);
 };

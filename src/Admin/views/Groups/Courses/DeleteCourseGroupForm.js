@@ -1,40 +1,42 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../../../../components/Button";
 import Text from "../../../../components/Text";
+import Load from '../../../../components/Load';
 //new period actions
 import {
-	loadDeleteCourseAction,
-	clearDeleteCourseAction,
-	deleteCourseAction
-} from '../../../redux/actions/coursesActions';
+	loadDeleteCourseGroupAction,
+	clearDeleteCourseGroupAction,
+	deleteCourseGroupAction,
+} from "../../../redux/actions/coursesGroupActions";
 //componentes
 import Form, { Submit } from "../../../../components/Form";
 import { useForm } from "react-hook-form";
 
-import {
-	faCheck,
-	faWindowClose,
-} from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faTimes } from "@fortawesome/free-solid-svg-icons";
 
-const DeleteCourseForm = ({ onSuccess, course, onCancel }) => {
+const DeleteCourseGroupForm = ({ onSuccess, course, onCancel }) => {
 	const { handleSubmit } = useForm();
 	const is_load = useSelector(
-		(state) => state.admin.courses.delete_course_load
+		(state) => state.admin.courses_group.delete_course_group_load
 	);
 	const action_error = useSelector(
-		(state) => state.admin.courses.delete_course_errors
+		(state) => state.admin.courses_group.delete_course_group_errors
 	);
 	const action_success = useSelector(
-		(state) => state.admin.courses.delete_course_success
+		(state) => state.admin.courses_group.delete_course_group_success
 	);
 	const dispatch = useDispatch();
 	const submit = (d) => {
-		dispatch(loadDeleteCourseAction());
-		dispatch(deleteCourseAction(course.id));
+		dispatch(loadDeleteCourseGroupAction());
+		dispatch(deleteCourseGroupAction(course.id));
 	};
+	useEffect(() => {
+		return () => {
+			dispatch(clearDeleteCourseGroupAction());
+		};
+	}, [dispatch]);
 	if (action_success) {
-		dispatch(clearDeleteCourseAction());
 		onSuccess && onSuccess();
 	}
 	return (
@@ -48,7 +50,7 @@ const DeleteCourseForm = ({ onSuccess, course, onCancel }) => {
 				<div className="flex-row">
 					<div className="grow">
 						{is_load ? (
-							<p>Cargando</p>
+							<Load />
 						) : (
 							<Text h3 className="text-danger">
 								Confirmar la eliminación
@@ -56,14 +58,16 @@ const DeleteCourseForm = ({ onSuccess, course, onCancel }) => {
 						)}
 					</div>
 					<Submit
-						icon={faCheck}
-						bg_color="danger"
+						text="Eliminar"
+						icon={faTrash}
+						bg_color="primary"
 						text_color="white"
 						center
 					/>
 					<Button
-						icon={faWindowClose}
-						bg_color="success"
+						text="Cancelar"
+						icon={faTimes}
+						bg_color="danger"
 						text_color="white"
 						onClick={onCancel}
 					/>
@@ -73,4 +77,4 @@ const DeleteCourseForm = ({ onSuccess, course, onCancel }) => {
 	);
 };
 
-export default DeleteCourseForm;
+export default DeleteCourseGroupForm;

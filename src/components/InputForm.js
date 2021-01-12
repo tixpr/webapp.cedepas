@@ -3,29 +3,30 @@ import clsx from "clsx";
 import "./InputForm.scss";
 
 export default function InputForm({
+	add_class = "",
 	name = Math.random(),
 	label = null,
-	autocomplete='off',
+	autocomplete = "off",
 	type = "text",
 	register = null,
-	hidden=false,
+	hidden = false,
 	error = null,
 	inline = false,
-	upper=false,
+	upper = false,
 	...others
 }) {
 	return (
 		<div
 			className={clsx(
-				!inline && "flex-column",
-				inline && "flex-row",
+				"flex-column",
 				"justify-stretch input-group",
 				error && "error",
-				upper&&'upper',
-				hidden&&'hidden'
+				upper && "upper",
+				hidden && "hidden",
+				add_class
 			)}
 		>
-			{label&&<label htmlFor={name}>{`${label}:`}</label>}
+			{label && <label htmlFor={name}>{`${label}:`}</label>}
 			<input
 				className="grow"
 				ref={register}

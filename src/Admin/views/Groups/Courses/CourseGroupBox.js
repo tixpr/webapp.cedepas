@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
-import DeleteCourseForm from './DeleteCourseForm';
-import EditCourseForm from './EditCourseForm';
+import DeleteCourseGroupForm from './DeleteCourseGroupForm';
+import EditCourseGroupForm from './EditCourseGroupForm';
 import Button from '../../../../components/Button';
 import ButtonLink from '../../../../components/ButtonLink';
 import {
@@ -8,13 +8,13 @@ import {
 	faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 
-const CourseBox = ({ course, url, ...others }) => {
+const CourseGroupBox = ({ course, url, ...others }) => {
 	const { id, name } = course;
 	const [mode, setMode] = useState("default");
 	switch (mode) {
 		case "delete":
 			return (
-				<DeleteCourseForm
+				<DeleteCourseGroupForm
 					course={course}
 					onSuccess={() => setMode("default")}
 					onCancel={() => setMode("default")}
@@ -22,7 +22,7 @@ const CourseBox = ({ course, url, ...others }) => {
 			);
 		case "edit":
 			return (
-				<EditCourseForm
+				<EditCourseGroupForm
 					course={course}
 					onSuccess={() => setMode("default")}
 					onCancel={() => setMode("default")}
@@ -32,7 +32,7 @@ const CourseBox = ({ course, url, ...others }) => {
 		default:
 			return (
 				<div
-					className="flex-row align-center wrap justify-start bg-white"
+					className="flex-row align-center wrap justify-start bg-white bd-grey-400"
 					{...others}
 				>
 					<ButtonLink
@@ -63,4 +63,4 @@ const CourseBox = ({ course, url, ...others }) => {
 	}
 };
 
-export default CourseBox;
+export default CourseGroupBox;

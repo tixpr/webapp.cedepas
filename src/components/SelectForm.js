@@ -13,9 +13,9 @@ const SelectForm = ({ name, label, options, ref }) => {
 };
 */
 const SelectForm = React.forwardRef(({ label, name, options, error }, ref) => (
-	<div className="flex-column">
+	<div className="grow margin-10 flex-column">
+		{label && <label htmlFor={name}>{`${label}:`}</label>}
 		<select name={name} ref={ref}>
-			<option>{label}</option>
 			{options.map((op) => (
 				<option key={`${name}-${op.id}`} value={op.id}>
 					{op.name}
