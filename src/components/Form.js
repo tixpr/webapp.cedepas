@@ -22,29 +22,20 @@ const Form = ({
 	errors = null,
 	success = null,
 	children = null,
-	fielset = null,
+	fielset = "",
 }) => {
 	const err = errors ? <ErrorMessage msg={errors} /> : null;
 	const mg = success ? <SuccessMessage msg={success} /> : null;
 	return (
-		<form
-			className={legend ? className : `${className} ${fielset}`}
-			onSubmit={onSubmit}
-		>
-			{legend ? (
-				<fieldset className={`flex-column ${fielset}`}>
-					<legend>{legend}</legend>
+		<form className={className} onSubmit={onSubmit}>
+			<fieldset className={`flex-column ${fielset}`}>
+				<div className="grow flex-column align-stretch ">
+					{legend && <legend>{legend}</legend>}
 					{err}
 					{mg}
 					{children}
-				</fieldset>
-			) : (
-				<>
-					{err}
-					{mg}
-					{children}
-				</>
-			)}
+				</div>
+			</fieldset>
 		</form>
 	);
 };

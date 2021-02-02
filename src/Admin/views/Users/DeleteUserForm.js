@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import clsx from "clsx";
 import {
 	deleteUserAction,
 	loadDeleteUserAction,
@@ -10,10 +11,15 @@ import Button from "../../../components/Button";
 import Text from "../../../components/Text";
 import Load from "../../../components/Load";
 import { useSelector, useDispatch } from "react-redux";
+import { faTrash, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { useMediaQuery } from "react-responsive";
 
 const DeleteUserForm = ({ onCancel, onSuccess, user_id }) => {
+	const lg = useMediaQuery({
+		query: "(min-width: 768px)",
+	});
 	const { handleSubmit } = useForm();
-	const is_load = useSelector((state) => state.admin.users.delete_user_load);
+	const load = useSelector((state) => state.admin.users.delete_user_load);
 	const action_error = useSelector(
 		(state) => state.admin.users.delete_user_errors
 	);
@@ -26,39 +32,45 @@ const DeleteUserForm = ({ onCancel, onSuccess, user_id }) => {
 		dispatch(deleteUserAction(user_id));
 	};
 	if (action_success) {
-		dispatch(clearDeleteUserAction());
 		onSuccess && onSuccess();
 	}
+	useEffect(() => {
+		return () => dispatch(clearDeleteUserAction());
+	}, [dispatch]);
 	return (
 		<Form
-			className="flex-row align-center"
+			className="grow"
 			onSubmit={handleSubmit(submit)}
-			fielset="bg-white"
+			fielset="bg-white box-shadow"
 			errors={action_error}
-			success={action_success}
 		>
-			{is_load ? (
-				<Load />
-			) : (
-				<>
-					<Text h3 className="grow text-danger">
-						Confirme la elimnación del usuario
-					</Text>
-					<Submit
-						center
-						text="Eliminar"
-						bg_color="danger"
-						hidden={is_load}
-					/>
-					<Button
-						text="Cancelar"
-						hidden={is_load}
-						text_color="white"
-						bg_color="primary"
-						onClick={onCancel}
-					/>
-				</>
-			)}
+			{load && <Load />}
+			<div
+				className={clsx(
+					lg && "flex-row align-center",
+					!lg && "flex-column"
+				)}
+			>
+				<Text h3 className={clsx("grow text-danger", load && "hidden")}>
+					<center>Confirme la elimnación del usuario</center>
+				</Text>
+				<Submit
+					center
+					text="Eliminar"
+					icon={faTrash}
+					bg_color="danger"
+					hidden={load}
+				/>
+				<Button
+					text="Cancelar"
+					hidden={load}
+					center
+					icon={faTimes}
+					text_color="white"
+					bg_color="primary"
+					onClick={onCancel}
+				/>
+			</div>
 		</Form>
 	);
 };

@@ -11,13 +11,11 @@ import {
 	getAreasAction,
 } from "../redux/actions/areasActions";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import Text from "../../components/Text";
 
 const PlanView = () => {
 	const dispatch = useDispatch();
 	const [add, setAdd] = useState(false);
-	const action_success = useSelector(
-		(state) => state.admin.areas.get_areas_success
-	);
 	const action_errors = useSelector(
 		(state) => state.admin.areas.get_areas_errors
 	);
@@ -26,28 +24,31 @@ const PlanView = () => {
 	const cancel = () => setAdd(false);
 	useEffect(() => {
 		dispatch(getAreasAction());
+		return () => dispatch(clearGetAreasAction());
 	}, [dispatch]);
-	if (action_success) {
-		dispatch(clearGetAreasAction());
-	}
 	return (
 		<div className="grow flex-column">
 			{action_errors ? <ErrorMessage msg={action_errors} /> : null}
-			{add ? (
+			{add && (
 				<div className="container-lg">
 					<AddAreaForm onSuccess={cancel} onCancel={cancel} />
 				</div>
-			) : (
-				<div className="flex-row">
-					<Button
-						bg_color="success"
-						text_color="white"
-						text="Area"
-						icon={faPlus}
-						onClick={() => setAdd(true)}
-					/>
-				</div>
 			)}
+			<div className="flex-row">
+				<Button
+					bg_color="success"
+					text_color="white"
+					text="Agregar"
+					icon={faPlus}
+					hidden={add}
+					onClick={() => setAdd(true)}
+				/>
+			</div>
+			<Text h2 className="text-dark">
+				<center>
+					Areas
+				</center>
+			</Text>
 			{is_load ? (
 				<Load />
 			) : (

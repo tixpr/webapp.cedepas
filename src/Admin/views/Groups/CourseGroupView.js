@@ -1,50 +1,29 @@
-import React, { useEffect } from "react";
-import clsx from "clsx";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ErrorMessage from "../../../components/ErrorMessage";
 import Text from "../../../components/Text";
-import Load from '../../../components/Load';
+import Load from "../../../components/Load";
+import Button from "../../../components/Button";
+import Notetd from "../../../components/Notetd";
+import Presencetd from "../../../components/Presencetd";
+import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import {
 	loadGetCourseGroupAction,
 	clearGetCourseGroupAction,
 	getCourseGroupAction,
 } from "../../redux/actions/courseGroupActions";
-
-const Notetd = ({ note }) => {
-	return (
-		<td
-			className={clsx(
-				note > 11 && "text-primary",
-				note < 12 && "text-danger"
-			)}
-		>
-			{note}
-		</td>
-	);
-};
-
-const Presencetd = ({ presence }) => {
-	return (
-		<td
-			className={clsx(
-				presence && "text-primary",
-				!presence && "text-danger"
-			)}
-		>
-			{presence ? "A" : "F"}
-		</td>
-	);
-};
+import StudentCourseGroupForm from "./Courses/StudentCourseGroupForm";
 
 const CourseGroupView = () => {
 	const { course_group_id } = useParams();
+	const [add_student, setAddStudent] = useState(false);
 	const dispatch = useDispatch();
 	const course = useSelector((state) => state.admin.course_group.course);
 	const action_success = useSelector(
 		(state) => state.admin.course.get_course_group_success
 	);
-	const is_load = useSelector(
+	const load = useSelector(
 		(state) => state.admin.course_group.get_course_group_load
 	);
 	const action_errors = useSelector(
@@ -66,7 +45,7 @@ const CourseGroupView = () => {
 	if (action_success) {
 		dispatch(clearGetCourseGroupAction());
 	}
-	if (is_load) {
+	if (load) {
 		return <Load />;
 	}
 	return (
@@ -89,7 +68,13 @@ const CourseGroupView = () => {
 							Docente: {teacher && teacher.name}
 						</Text>
 					</div>
-					<hr />
+					{add_student && (
+						<StudentCourseGroupForm
+							onSuccess={() => setAddStudent(false)}
+							onCancel={() => setAddStudent(false)}
+							course_group_id={course_group_id}
+						/>
+					)}
 					{students && students.length > 0 ? (
 						<div className="grow bg-white padding-10 overflow-x">
 							<table>
@@ -101,7 +86,20 @@ const CourseGroupView = () => {
 												minWidth: 400,
 											}}
 										>
-											Apellidos y Nombre(s)
+											<div className="flex-row flex-center">
+												Apellidos y Nombre(s)
+												<Button
+													text_color="danger"
+													not_border
+													hidden={load}
+													bg_color="none"
+													icon={faUserPlus}
+													title="Agregar Estudiante"
+													onClick={() =>
+														setAddStudent(true)
+													}
+												/>
+											</div>
 										</th>
 										<th colSpan={presences.length}>
 											Asistencias
@@ -128,8 +126,10 @@ const CourseGroupView = () => {
 								<tbody>
 									{students.map((student) => {
 										return (
-											<tr>
-												<td className="text-dark">
+											<tr
+												key={`student-tr-${student.id}`}
+											>
+												<td className="text-dark text-justify">
 													<strong>
 														{student.name}
 													</strong>
@@ -142,7 +142,13 @@ const CourseGroupView = () => {
 																(p) =>
 																	p.user_id ===
 																	student.id
-															).presence
+															)
+																? presence.presences.find(
+																		(p) =>
+																			p.user_id ===
+																			student.id
+																  ).presence
+																: false
 														}
 													/>
 												))}
@@ -154,7 +160,13 @@ const CourseGroupView = () => {
 																(n) =>
 																	n.user_id ===
 																	student.id
-															).note
+															)
+																? note.notes.find(
+																		(n) =>
+																			n.user_id ===
+																			student.id
+																  ).note
+																: 0
 														}
 													/>
 												))}

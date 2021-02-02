@@ -1,0 +1,31 @@
+@import '../vars.scss';
+select{
+	appearance: none;
+	background-color: transparent;
+	border: 1px solid $grey-500;
+	padding: 5px;
+	font-size: 1rem;
+	margin: 5px;
+	outline: none;
+	z-index: 500;
+	&::-ms-expand{
+		display: none;
+	}
+	&:root{
+		--select-border: $grey-800;
+		--select-focus: $primary;
+		--select-arrow: var(--select-border);
+	}
+}
+.select-container{
+	padding: 5px;
+	&>div{
+		position: relative;
+	}
+}
+.icon-select{
+	position: absolute;
+	right: 12px;
+	top: 12px;
+	color: $grey-800;
+}

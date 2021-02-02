@@ -14,7 +14,7 @@ import CourseGroupBox from "./Courses/CourseGroupBox";
 import ImportCoursesForm from "./Courses/ImportCoursesForm";
 import AddCourseGroupForm from "./Courses/AddCourseGroupForm";
 import ErrorMessage from "../../../components/ErrorMessage";
-import { faPlus, faFileUpload } from "@fortawesome/free-solid-svg-icons";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const GroupView = () => {
 	const { url } = useRouteMatch();
@@ -37,7 +37,7 @@ const GroupView = () => {
 		};
 	}, [dispatch, group_id]);
 	return (
-		<div className="flex-column">
+		<div className="flex-column justify-stretch">
 			{!add && !_import ? (
 				<div className="flex-row align-center">
 					<Button
@@ -45,27 +45,18 @@ const GroupView = () => {
 						icon={faPlus}
 						text_color="white"
 						not_border
-						hidden={add || _import}
+						hidden={add}
 						bg_color="success"
 						onClick={() => setAdd(true)}
 					/>
-					<Button
-						text="Importar cursos"
-						icon={faFileUpload}
-						text_color="white"
-						not_border
-						hidden={add || _import}
-						bg_color="primary"
-						onClick={() => setImport(true)}
-					/>
 				</div>
 			) : null}
-			<div className="container-lg">
 				{add ? (
 					<AddCourseGroupForm
 						onCancel={() => setAdd(false)}
 					/>
 				) : null}
+			<div className="container-lg">
 				{_import ? (
 					<ImportCoursesForm
 						onSuccess={() => setImport(false)}

@@ -118,8 +118,7 @@ export const logoutAction = () => {
 	return (dispatch) => {
 		axios
 			.post("/logout")
-			.then((res) => {
-				console.info("logout success", res);
+			.then(() => {
 				return dispatch({
 					type: logout_type,
 				});

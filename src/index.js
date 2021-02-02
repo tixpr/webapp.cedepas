@@ -10,11 +10,12 @@ import { isLoginAction } from "./redux/actions/authActions";
 
 import Splash from "./Splash";
 
-import reportWebVitals from "./reportWebVitals";
+//import reportWebVitals from "./reportWebVitals";
 
 window.axios = axios;
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = "http://localhost:8000";
+//axios.defaults.baseURL = "https://api.seminarioandinosanpablo.org.pe";
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 store.dispatch(isLoginAction());
@@ -33,4 +34,4 @@ ReactDOM.render(
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+//reportWebVitals();

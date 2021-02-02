@@ -10,35 +10,37 @@
 		font-size: 1rem;
 		color: $dark;
 		text-align: justify;
-		font-weight: 400;
+		font-weight: 500;
 		pointer-events: none;
 		user-select: none;
 	}
-	& > span {
+	& span {
 		color: $danger;
 		text-align: justify;
 		font-size: 0.9rem;
 		font-weight: 600;
 	}
-	& > input {
-		border: 1px solid $grey-300;
+	& input {
+		border: 1px solid $grey-400;
 		font-size: 1.1rem;
-		border-radius: 5px 5px 0 0;
+		border-radius: 5px;
+		padding: 5px;
 	}
-	&.upper > input {
+	&.upper input {
 		text-transform: uppercase;
 	}
 	&.error {
 		& > label {
 			color: $danger !important;
 		}
-		& > input {
+		& input {
+			color: $danger !important;
 			border-color: $danger !important;
 		}
 	}
 	&:hover,
 	&:focus {
-		& > input {
+		& input {
 			border-color: $primary;
 			color: $primary;
 		}

@@ -11,7 +11,7 @@ export const get_areas_error_type = "get_areas_error";
 export const getAreasAction = () => {
 	return (dispatch) => {
 		axios
-			.get("api/areas/")
+			.get("api/areas")
 			.then(({ data }) => {
 				return dispatch({
 					type: get_areas_type,

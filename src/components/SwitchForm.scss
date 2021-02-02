@@ -8,7 +8,7 @@
 	&>input{
 		display:none;
 		&:checked+label{
-			color: $primary;
+			color: $primary !important;
 			&>.yes{
 				display: block;
 			}

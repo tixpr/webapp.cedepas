@@ -1,28 +1,31 @@
 @import "../vars";
 
+.login-container {
+	background-image: url("http://localhost:3000/images/cedepas_login.jpeg");
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.bg-transparent {
+	background-color: rgba($white, 0.8);
+}
+
 .login-form {
-	position: relative;
-	background-color: $white;
-	box-shadow: 5px 0 10px rgba($dark, 0.1);
-	width: 400px;
+	box-shadow: 0 0 15px $dark;
+	padding: 10px;
+	border-right: 1px solid $dark;
+}
+.logo-login {
+	width: 150px;
+	margin: 0 auto;
+	margin-bottom: 10px;
+}
+.login-max {
+	width: 100%;
+	max-width: 400px;
 }
 
 .slider-login {
-	background-color: $success;
-}
-
-@media (max-width: 767.9px) {
-	.login-form {
-		position: absolute;
-		z-index: 700;
-		width: 100%;
-		height: 100%;
-		margin: auto 0;
-		left: 0;
-		top: 0;
-		background-color: transparent;
-		& > div {
-			padding: 20px;
-		}
-	}
+	background-color: transparent;
 }

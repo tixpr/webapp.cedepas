@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
+import clsx from "clsx";
 import { useForm } from "react-hook-form";
 import Form, { Submit } from "../../../components/Form";
 import Load from "../../../components/Load";
+import Text from "../../../components/Text";
 import InputForm from "../../../components/InputForm";
+import SwitchForm from "../../../components/SwitchForm";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	putUserAction,
@@ -10,17 +13,25 @@ import {
 	clearPutUserAction,
 } from "../../redux/actions/usersActions";
 import Button from "../../../components/Button";
-import { faUserEdit } from "@fortawesome/free-solid-svg-icons";
+import { faUserEdit, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useMediaQuery } from "react-responsive";
 
 const new_user_schema = yup.object().shape({
 	firstname: yup.string().required("Requerido"),
 	lastname: yup.string().required("Requerido"),
 	email: yup.string().email("Invalido").required("Requerido"),
 	phone: yup.string().nullable(),
+	teacher: yup.boolean(),
+	student: yup.boolean(),
 });
 const EditUserForm = ({ onSuccess, onCancel, user }) => {
+	const lg = useMediaQuery({
+		query: "(min-width: 768px)",
+	});
+	const is_teacher = user.roles.includes("Docente");
+	const is_student = user.roles.includes("Estudiante");
 	const { register, handleSubmit, errors } = useForm({
 		mode: "onBlur",
 		defaultValues: {
@@ -28,10 +39,12 @@ const EditUserForm = ({ onSuccess, onCancel, user }) => {
 			lastname: user.lastname,
 			email: user.email,
 			phone: user.phone,
+			teacher: is_teacher,
+			student: is_student,
 		},
 		resolver: yupResolver(new_user_schema),
 	});
-	const is_load = useSelector((state) => state.admin.users.put_user_load);
+	const load = useSelector((state) => state.admin.users.put_user_load);
 	const action_error = useSelector(
 		(state) => state.admin.users.put_user_errors
 	);
@@ -40,72 +53,91 @@ const EditUserForm = ({ onSuccess, onCancel, user }) => {
 	);
 	const dispatch = useDispatch();
 	const submit = (d) => {
-		console.info(d);
 		dispatch(loadPutUserAction());
 		dispatch(putUserAction(d, user.id));
 	};
 	if (action_success) {
-		dispatch(clearPutUserAction());
 		onSuccess && onSuccess();
 	}
+	useEffect(() => {
+		return () => dispatch(clearPutUserAction());
+	}, [dispatch]);
 	return (
 		<Form
-			fielset="bg-white"
+			className="grow"
+			legend="Editar usuario"
+			fielset="bg-white box-shadow"
 			onSubmit={handleSubmit(submit)}
 			errors={action_error}
 			success={action_success}
 		>
-			{is_load ? (
-				<Load />
-			) : (
-				<>
-					<InputForm
-						name="firstname"
-						upper
-						hidden={is_load}
-						register={register}
-						label="Nombre(s)"
-						error={errors.firstname}
-					/>
-					<InputForm
-						name="lastname"
-						upper
-						hidden={is_load}
-						register={register}
-						label="Apellidos"
-						error={errors.lastname}
-					/>
-					<InputForm
-						name="email"
-						register={register}
-						label="Correo"
-						hidden={is_load}
-						error={errors.email}
-					/>
-					<InputForm
-						name="phone"
-						register={register}
-						label="Celular"
-						error={errors.phone}
-						hidden={is_load}
-					/>
-					<div className="flex-row flex-center">
-						<Submit
-							hidden={is_load}
-							icon={faUserEdit}
-							text="Editar"
-							center
-						/>
-						<Button
-							hidden={is_load}
-							text="Cancelar"
-							text_color="white"
-							bg_color="danger"
-							onClick={onCancel}
-						/>
-					</div>
-				</>
-			)}
+			{load && <Load />}
+			<InputForm
+				name="firstname"
+				upper
+				hidden={load}
+				register={register}
+				label="Nombre(s)"
+				error={errors.firstname}
+			/>
+			<InputForm
+				name="lastname"
+				upper
+				hidden={load}
+				register={register}
+				label="Apellidos"
+				error={errors.lastname}
+			/>
+			<InputForm
+				name="email"
+				register={register}
+				label="Correo"
+				hidden={load}
+				error={errors.email}
+			/>
+			<InputForm
+				name="phone"
+				register={register}
+				label="Celular"
+				error={errors.phone}
+				hidden={load}
+			/>
+			<div className="flex-row align-center justify-start">
+				<Text h4 className={clsx("text-dark", load && "hidden")}>
+					Roles:
+				</Text>
+				<SwitchForm
+					text="Estudiante"
+					name="student"
+					hidden={load}
+					error={errors.student}
+					register={register}
+				/>
+				<SwitchForm
+					text="Docente"
+					name="teacher"
+					hidden={load}
+					error={errors.teacher}
+					register={register}
+				/>
+			</div>
+			<div
+				className={clsx(
+					lg && "flex-row justify-evenly",
+					!lg && "flex-column"
+				)}
+			>
+				<Submit hidden={load} icon={faUserEdit} text="Editar" center />
+				<Button
+					hidden={load}
+					text="Cancelar"
+					icon={faTimes}
+					center
+					text_color="white"
+					bg_color="danger"
+					onClick={onCancel}
+				/>
+			</div>
 		</Form>
 	);
 };

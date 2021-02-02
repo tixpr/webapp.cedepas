@@ -3,6 +3,30 @@
 	height: 60px;
 	min-height: 60px;
 	max-height: 60px;
+	box-shadow: 0 0 10px $grey-700;
+	z-index: 700;
+}
+.logo {
+	display: block !important;
+	height: 50px;
+	padding: 5px;
+	background-color: $white;
+}
+.tt {
+	text-shadow: 1px 1px 3px $grey-600;
+	padding: 0 10px;
+	margin: 0;
+	font-style: italic;
+}
+.t1 {
+	font-size: 1.4rem;
+	font-weight: 700;
+	letter-spacing: 4px;
+}
+.t2 {
+	font-weight: 500;
+	font-size: 1.15rem;
+	letter-spacing: 1px;
 }
 .btn-menu {
 	display: none;
@@ -14,5 +38,8 @@
 	}
 	.btn-menu {
 		display: block;
+	}
+	.logo {
+		margin: 0 auto;
 	}
 }

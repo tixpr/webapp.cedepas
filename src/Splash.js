@@ -15,9 +15,9 @@ const Splash = () => {
 	}
 	return (
 		<Switch>
-			<Route exact strict path="/login" component={LoginView} />{" "}
-			<PrivateRoute path="/" component={App} />{" "}
-			<Route path="*" component={NotView} />{" "}
+			<Route exact strict path="/login" component={LoginView} />
+			<PrivateRoute path="/" component={App} />
+			<Route path="*" component={NotView} />
 		</Switch>
 	);
 };

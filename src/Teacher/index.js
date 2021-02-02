@@ -1,11 +1,25 @@
-import React from 'react';
-//para el menu
+import React from "react";
+//Rutas
+import { Switch, Route } from "react-router-dom";
 
-const Teacher  = ()=>{
+//Vistas
+import HomeView from "./views/HomeView";
+import GroupView from "./views/GroupView";
+import CourseView from "./views/CourseView";
+import NotView from "../views/NotView";
+
+const Teacher = () => {
 	return (
-		<div>
-			Docentes
-		</div>
+		<Switch>
+			<Route exact path="/" component={HomeView} />
+			<Route exact path="/group/:group_id" component={GroupView} />
+			<Route
+				exact
+				path="/course/:course_group_id"
+				component={CourseView}
+			/>
+			<Route path="*" component={NotView} />
+		</Switch>
 	);
 };
 

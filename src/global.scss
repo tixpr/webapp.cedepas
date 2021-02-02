@@ -33,8 +33,18 @@ a {
 	text-decoration: none;
 	cursor: pointer;
 }
+main {
+	display: flex;
+	flex-direction: column;
+	padding: 10px 0;
+}
 .view {
 	display: inherit !important;
+}
+.home-view {
+	background-size: 348px 347px;
+	background-position: center;
+	background-repeat: no-repeat;
 }
 .hidden {
 	display: none !important;
@@ -59,8 +69,20 @@ hr {
 }
 .container-lg {
 	width: 100%;
-	max-width: 600px;
+	max-width: 700px;
 	margin: 5px auto;
+}
+.container-absolute {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1000;
+	background-color: rgba($dark, 0.7);
+}
+.box-shadow {
+	box-shadow: 2px 2px 3px $grey-400;
 }
 .container-overflow-x {
 	overflow-x: auto !important;
@@ -106,9 +128,9 @@ td {
 	font-size: 1rem;
 	font-weight: 400;
 	text-align: center;
-	&:nth-child(1) {
-		text-align: justify;
-	}
+}
+.text-justify {
+	text-align: justify !important;
 }
 
 //flex
@@ -166,9 +188,6 @@ td {
 @media (max-width: 767.99px) {
 	html {
 		font-size: 15px;
-	}
-	main {
-		padding: 0;
 	}
 	.container-lg {
 		max-width: 100%;

@@ -59,7 +59,7 @@ const areasReducer = (state = initial, { type, payload }) => {
 			return Object.assign(state, {
 				get_areas_success: false,
 				get_areas_errors: null,
-				get_areas_load: false,
+				get_areas_load: true,
 			});
 		case get_areas_type:
 			return Object.assign(state, {

@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Form, { Submit } from "../../../components/Form";
 import InputForm from "../../../components/InputForm";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../../../components/Button";
-import Load from '../../../components/Load';
+import Load from "../../../components/Load";
 import { faEdit, faTimes } from "@fortawesome/free-solid-svg-icons";
 import {
 	loadPutAreaAction,
@@ -13,12 +13,17 @@ import {
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import clsx from "clsx";
+import { useMediaQuery } from "react-responsive";
 
 const edit_area_schema = yup.object().shape({
 	name: yup.string().required("Requerido"),
 });
 
 const EditAreaform = ({ area, onSuccess, onCancel }) => {
+	const lg = useMediaQuery({
+		query: "(min-width: 768px)",
+	});
 	const { id, name } = area;
 	const { register, handleSubmit, errors } = useForm({
 		mode: "onBlur",
@@ -40,47 +45,45 @@ const EditAreaform = ({ area, onSuccess, onCancel }) => {
 		dispatch(putAreaAction(d, id));
 	};
 	if (action_success) {
-		dispatch(clearPutAreaAction());
 		onSuccess && onSuccess();
 	}
+	useEffect(() => {
+		return () => dispatch(clearPutAreaAction());
+	}, [dispatch]);
 	return (
 		<Form
+			className="grow"
 			fielset="bg-white"
 			legend="Editar area"
 			onSubmit={handleSubmit(submit)}
 			errors={action_error}
-			success={action_success}
 		>
-			{is_load ? (
-				<Load />
-			) : (
-				<>
-					<InputForm
-						name="name"
-						upper
-						hidden={is_load}
-						register={register}
-						label="Nombre"
-						error={errors.name}
-					/>
-					<div className="flex-row flex-center">
-						<Submit
-							hidden={is_load}
-							icon={faEdit}
-							text="Editar"
-							center
-						/>
-						<Button
-							hidden={is_load}
-							text="Cancelar"
-							icon={faTimes}
-							text_color="white"
-							bg_color="danger"
-							onClick={onCancel}
-						/>
-					</div>
-				</>
-			)}
+			{is_load && <Load />}
+			<InputForm
+				name="name"
+				upper
+				hidden={is_load}
+				register={register}
+				label="Nombre"
+				error={errors.name}
+			/>
+			<div
+				className={clsx(
+					lg && "flex-row justify-evenly",
+					!lg && "flex-column"
+				)}
+			>
+				<Submit hidden={is_load} icon={faEdit} text="Editar" center />
+				<Button
+					hidden={is_load}
+					text="Cancelar"
+					center
+					icon={faTimes}
+					text_color="white"
+					bg_color="danger"
+					onClick={onCancel}
+				/>
+			</div>
 		</Form>
 	);
 };

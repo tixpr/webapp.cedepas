@@ -24,7 +24,7 @@ import {
 } from "../actions/usersActions";
 
 const initial = {
-	data: [],
+	users: [],
 	links: [],
 	total: 0,
 	is_load: true,
@@ -53,9 +53,9 @@ const usersReducer = (state = initial, { type, payload }) => {
 	switch (type) {
 		case get_all_users_type:
 			return Object.assign(state, {
-				data: payload.data,
-				total: payload.total,
-				links: payload.links,
+				users: payload.data,
+				total: payload.meta.total,
+				links: payload.meta.links,
 				is_load: false,
 			});
 		case set_filter_user_type:
@@ -70,7 +70,7 @@ const usersReducer = (state = initial, { type, payload }) => {
 			});
 		case post_user_type:
 			return Object.assign(state, {
-				data: payload.data,
+				users: payload.data,
 				total: payload.total,
 				post_user_success: true,
 				post_user_load: false,
@@ -123,7 +123,7 @@ const usersReducer = (state = initial, { type, payload }) => {
 			});
 		case put_user_type:
 			return Object.assign(state, {
-				data: payload,
+				users: payload,
 				put_user_errors: null,
 				put_user_load: false,
 				put_user_success: true,
@@ -148,7 +148,7 @@ const usersReducer = (state = initial, { type, payload }) => {
 			});
 		case delete_user_type:
 			return Object.assign(state, {
-				data: payload.data,
+				users: payload.data,
 				total: payload.total,
 				delete_user_errors: null,
 				delete_user_load: false,
@@ -174,7 +174,7 @@ const usersReducer = (state = initial, { type, payload }) => {
 			});
 		case active_user_type:
 			return Object.assign(state, {
-				data: payload,
+				users: payload,
 				active_user_errors: null,
 				active_user_load: false,
 				active_user_success: true,

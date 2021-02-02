@@ -9,8 +9,7 @@ import GroupsView from "./views/GroupsView";
 import PaymentsView from "./views/PaymentsView";
 import NotView from "../views/NotView";
 //Iconos para el menu
-import { faUsers, faBook, faFolder } from "@fortawesome/free-solid-svg-icons";
-import { faPaypal } from "@fortawesome/free-brands-svg-icons";
+import { faUsers, faFolder, faFolderPlus } from "@fortawesome/free-solid-svg-icons";
 
 export const admin_menu = [
 	{
@@ -25,14 +24,9 @@ export const admin_menu = [
 	},
 	{
 		to: "/groups",
-		icon: faBook,
+		icon: faFolderPlus,
 		text: "Grupos",
-	},
-	{
-		to: "/payments",
-		icon: faPaypal,
-		text: "Pagos",
-	},
+	}
 ];
 
 const Admin = () => {

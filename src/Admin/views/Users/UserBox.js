@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import clsx from "clsx";
-import EditUserform from "./EditUserForm";
+import EditUserForm from "./EditUserForm";
 import DeleteUserForm from "./DeleteUserForm";
 import ActiveUserForm from "./ActiveUserForm";
 import Button from "../../../components/Button";
+import Text from "../../../components/Text";
 import {
 	faEdit,
 	faTrash,
@@ -13,79 +14,80 @@ import {
 
 const UserBox = ({ user }) => {
 	const { active, firstname, lastname } = user;
-	const [mode, setMode] = useState("default");
-	switch (mode) {
-		case "edit":
-			return (
-				<EditUserform
-					onSuccess={() => setMode("default")}
-					onCancel={() => setMode("default")}
-					user={user}
-				/>
-			);
-		case "delete":
-			return (
-				<DeleteUserForm
-					onSuccess={() => setMode("default")}
-					onCancel={() => setMode("default")}
-					user_id={user.id}
-				/>
-			);
-		case "disabled":
-			return (
-				<ActiveUserForm
-					onSuccess={() => setMode("default")}
-					onCancel={() => setMode("default")}
-					user={user}
-				/>
-			);
-		case "view":
-			return null;
-		default:
-			return (
-				<div
+	const [edit, setEdit] = useState(false);
+	const [trash, setTrash] = useState(false);
+	const [enabled, setEnabled] = useState(false);
+	if (edit) {
+		return (
+			<EditUserForm
+				onSuccess={() => setEdit(false)}
+				onCancel={() => setEdit(false)}
+				user={user}
+			/>
+		);
+	}
+	if (trash) {
+		return (
+			<DeleteUserForm
+				onSuccess={() => setTrash(false)}
+				onCancel={() => setTrash(false)}
+				user_id={user.id}
+			/>
+		);
+	}
+	if (enabled) {
+		return (
+			<ActiveUserForm
+				onSuccess={() => setEnabled(false)}
+				onCancel={() => setEnabled(false)}
+				user={user}
+			/>
+		);
+	}
+	return (
+		<div
+			className={clsx(
+				"flex-column justify-stretch bg-white box-shadow",
+				active && "bd-success",
+				!active && "bd-warning"
+			)}
+		>
+			<div className="flex-row align-center justify-stretch">
+				<Text
+					h4
 					className={clsx(
-						"flex-column justify-stretch bg-white",
-						active && "bd-success",
-						!active && "bd-warning"
+						active && "text-grey-700",
+						!active && "text-warning",
+						"grow"
 					)}
 				>
-					<div className="flex-row align-center justify-stretch">
-						<div className="flex-column grow">
-							<Button
-								text={`${firstname} ${lastname}`}
-								not_border
-								text_color={active ? "primary" : "warning"}
-							/>
-						</div>
-						<Button
-							icon={faEdit}
-							not_border
-							icon_size="1x"
-							title="Editar usuario"
-							onClick={() => setMode("edit")}
-						/>
-						<Button
-							icon={faTrash}
-							not_border
-							icon_size="1x"
-							text_color="danger"
-							title="Eliminar usuario"
-							onClick={() => setMode("delete")}
-						/>
-						<Button
-							icon={active ? faExclamationCircle : faCheck}
-							not_border
-							icon_size="1x"
-							text_color={active ? "warning" : "success"}
-							title={`${
-								active ? "Desabilitar " : "Habilitar "
-							} usuario`}
-							onClick={() => setMode("disabled")}
-						/>
-					</div>
-				</div>
-			);
-	}
+					{`${firstname} ${lastname}`}
+				</Text>
+				<Button
+					icon={faEdit}
+					not_border
+					icon_size="1x"
+					title="Editar usuario"
+					onClick={() => setEdit(true)}
+				/>
+				<Button
+					icon={faTrash}
+					not_border
+					icon_size="1x"
+					text_color="danger"
+					title="Eliminar usuario"
+					onClick={() => setTrash(true)}
+				/>
+				<Button
+					icon={active ? faExclamationCircle : faCheck}
+					not_border
+					icon_size="1x"
+					text_color={active ? "warning" : "success"}
+					title={`${active ? "Desabilitar " : "Habilitar "} usuario`}
+					onClick={() => setEnabled(true)}
+				/>
+			</div>
+		</div>
+	);
 };
 export default UserBox;

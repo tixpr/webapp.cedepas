@@ -15,14 +15,19 @@ import SelectForm from "../../../../components/SelectForm";
 import Text from "../../../../components/Text";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { useMediaQuery } from 'react-responsive';
 import * as yup from "yup";
 import { faEdit, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
+import clsx from "clsx";
 
 const edit_course_group_schema = yup.object().shape({
 	user_id: yup.number().required("Requerido"),
 });
 const EditCourseGroupForm = ({ onSuccess, course, onCancel }) => {
+	const lg = useMediaQuery({
+		query: "(min-width: 768px)",
+	});
 	const { register, handleSubmit, errors } = useForm({
 		defaultValues: {
 			user_id: course.teacher.id,
@@ -65,6 +70,7 @@ const EditCourseGroupForm = ({ onSuccess, course, onCancel }) => {
 	return (
 		<div className="grow">
 			<Form
+				className="box-shadow"
 				fielset="bg-white"
 				onSubmit={handleSubmit(submit)}
 				errors={action_error}
@@ -78,7 +84,8 @@ const EditCourseGroupForm = ({ onSuccess, course, onCancel }) => {
 							<Text h3 className="text-dark">
 								{course.name}
 							</Text>
-							<div className="flex-row align-center justify-start">
+							<div className={clsx(lg&&"flex-row align-end justify-start",
+							!lg&&"flex-column")}>
 								<SelectForm
 									label="Docente"
 									name="user_id"
@@ -98,6 +105,7 @@ const EditCourseGroupForm = ({ onSuccess, course, onCancel }) => {
 									icon={faTimes}
 									bg_color="danger"
 									text_color="white"
+									center
 									onClick={onCancel}
 								/>
 							</div>

@@ -74,7 +74,7 @@ export const postUserAction = (data) => {
 		axios
 			.post("api/users", data)
 			.then(({ data }) => {
-				let users = getState().admin.users.data;
+				let users = getState().admin.users.users;
 				let t = getState().admin.users.total;
 				users.pop();
 				return dispatch({
@@ -177,8 +177,8 @@ export const putUserAction = (data,user_id) => {
 		axios
 			.put(`api/users/${user_id}`, data)
 			.then(({ data }) => {
-				let users = getState().admin.users.data;
-				let i = users.findIndex(e=>e.id===user_id);
+				let users = getState().admin.users.users;
+				const i = users.findIndex(u=>u.id===user_id);
 				let d = [].concat(users);
 				d[i] = data.data;
 				return dispatch({
@@ -230,7 +230,7 @@ export const deleteUserAction = (user_id) => {
 		axios
 			.delete(`api/users/${user_id}`)
 			.then(() => {
-				let users = getState().admin.users.data;
+				let users = getState().admin.users.users;
 				let t = getState().admin.users.total;
 				let nd = users.filter(e=>e.id!==user_id);
 				return dispatch({
@@ -286,7 +286,7 @@ export const activeUserAction = (user_id) => {
 		axios
 			.put(`api/users/${user_id}/active`)
 			.then(({data}) => {
-				let users = getState().admin.users.data;
+				let users = getState().admin.users.users;
 				let i = users.findIndex(e=>e.id===user_id);
 				let nd = [].concat(users);
 				nd[i]=data.data;

@@ -12,13 +12,15 @@ export default function InputForm({
 	hidden = false,
 	error = null,
 	inline = false,
+	control_grow = false,
 	upper = false,
 	...others
 }) {
 	return (
 		<div
 			className={clsx(
-				"flex-column",
+				!inline && "flex-column",
+				inline && "flex-row",
 				"justify-stretch input-group",
 				error && "error",
 				upper && "upper",
@@ -26,17 +28,23 @@ export default function InputForm({
 				add_class
 			)}
 		>
-			{label && <label htmlFor={name}>{`${label}:`}</label>}
-			<input
-				className="grow"
-				ref={register}
-				id={name}
-				name={name}
-				type={type}
-				autoComplete={autocomplete}
-				{...others}
-			/>
-			{error && <span>{error.message}</span>}
+			{label && (
+				<label
+					className={clsx(inline && "grow")}
+					htmlFor={name}
+				>{`${label}:`}</label>
+			)}
+			<div className={clsx("flex-column justify-stretch",!inline&&'grow', control_grow&&'grow')}>
+				<input
+					ref={register}
+					id={name}
+					name={name}
+					type={type}
+					autoComplete={autocomplete}
+					{...others}
+				/>
+				{error && <span>{error.message}</span>}
+			</div>
 		</div>
 	);
 }

@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "./Button";
 import RadioGroupMenu from "./RadioGroupMenu";
-import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { faSignOutAlt, faUser } from "@fortawesome/free-solid-svg-icons";
 import { logoutAction, loadLogoutAction } from "../redux/actions/authActions";
 import RadioForm from "./RadioForm";
 import { changeUiUserModeAction } from "../redux/actions/uiActions";
 import "./UserButton.scss";
+import { useHistory } from "react-router-dom";
 
 const UserButton = () => {
+	const h = useHistory();
 	const user = useSelector((state) => state.auth.user);
 	const ui_mode = useSelector((state) => state.ui.mode);
 	const dispatch = useDispatch();
@@ -16,7 +18,7 @@ const UserButton = () => {
 	return (
 		<div className="menu">
 			<Button
-				text={user.firstname}
+				icon={faUser}
 				not_border
 				bg_color="none"
 				text_color="white"
@@ -24,14 +26,6 @@ const UserButton = () => {
 			/>
 			{is_open ? (
 				<div className="flex-column menu-items bg-white">
-					<Button
-						text={user.firstname}
-						not_border
-						bg_color="none"
-						text_color="grey-700"
-						onClick={() => setOpen(!is_open)}
-					/>
-					<hr />
 					<RadioGroupMenu>
 						{user.roles.map((role) => (
 							<RadioForm
@@ -40,10 +34,13 @@ const UserButton = () => {
 								name={"role"}
 								value={role}
 								checked={ui_mode === role}
-								onChange={(m) =>
-									dispatch(changeUiUserModeAction(m)) &&
-									setOpen(false)
-								}
+								onChange={(m) => {
+									dispatch(changeUiUserModeAction(m));
+									setOpen(false);
+									h.entries = [];
+									h.index = -1;
+									h.push(`/`);
+								}}
 							/>
 						))}
 					</RadioGroupMenu>
@@ -55,6 +52,10 @@ const UserButton = () => {
 						bg_color="danger"
 						text_color="white"
 						onClick={() => {
+							setOpen(false);
+							h.entries = [];
+							h.index = -1;
+							h.push(`/`);
 							dispatch(loadLogoutAction());
 							dispatch(logoutAction());
 						}}

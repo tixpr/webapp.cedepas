@@ -3,7 +3,7 @@ import Button from "./Button";
 
 const Paginate = ({ links=[], onClick,pk=null }) => {
 	return (
-		<div className="flex-row wrap align-center justify-center">
+		<div className="flex-row wrap align-center justify-center bg-white">
 			{links.map((l,i) => (
 				<Button
 					key={`${l.label}-${pk}-${i}`}

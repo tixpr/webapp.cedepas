@@ -5,7 +5,7 @@ const Loading = () => {
 	return (
 		<div className="grow flex-column flex-center bg-grey-900">
 			<div className="grow flex-row flex-center">
-				<h1 className="text-danger">
+				<h1 className="text-primary">
 					CEDEPAS-CENTRO
 				</h1>
 			</div>

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import clsx from 'clsx';
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../../../../components/Button";
 import Load from "../../../../components/Load";
@@ -9,6 +10,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { useParams } from "react-router-dom";
+import { useMediaQuery } from 'react-responsive';
 import {
 	getCoursesTeacherAction,
 	loadPostCourseGroupAction,
@@ -23,6 +25,9 @@ const new_course_schema = yup.object().shape({
 	user_id: yup.number().required("Requerido"),
 });
 const AddCourseGroupForm = ({ onSuccess, onCancel }) => {
+	const lg = useMediaQuery({
+		query: "(min-width: 768px)",
+	});
 	const { group_id } = useParams();
 	const { register, handleSubmit, errors } = useForm({
 		mode: "onBlur",
@@ -64,10 +69,10 @@ const AddCourseGroupForm = ({ onSuccess, onCancel }) => {
 		return <ErrorMessage msg={get_errors} />;
 	}
 	return (
-		<div className="grow">
 			<Form
+				className="container-lg flex-column justify-stretch"
 				legend="Agregar Curso"
-				fielset="grow flex-column bg-white"
+				fielset="bg-white"
 				onSubmit={handleSubmit(submit)}
 				errors={post_error}
 			>
@@ -75,7 +80,7 @@ const AddCourseGroupForm = ({ onSuccess, onCancel }) => {
 					<Load />
 				) : (
 					<>
-						<div className="flex-row justify-evenly">
+						<div className={clsx(lg&&'flex-row',!lg&&'flex-column')}>
 							<SelectForm
 								ref={register}
 								label="Curso"
@@ -91,7 +96,7 @@ const AddCourseGroupForm = ({ onSuccess, onCancel }) => {
 								error={errors.user_id}
 							/>
 						</div>
-						<div className="flex-row flex-center">
+						<div className={clsx(lg&&"flex-row justify-evenly",!lg&&'flex-column')}>
 							<Submit
 								text="Agregar"
 								icon={faPlus}
@@ -105,12 +110,12 @@ const AddCourseGroupForm = ({ onSuccess, onCancel }) => {
 								bg_color="danger"
 								text_color="white"
 								onClick={onCancel}
+								center
 							/>
 						</div>
 					</>
 				)}
 			</Form>
-		</div>
 	);
 };
 

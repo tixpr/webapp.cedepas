@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import clsx from "clsx";
 import { useRouteMatch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ButtonLink from "../../../components/ButtonLink";
@@ -35,11 +36,15 @@ import {
 	faCheck,
 	faTimes,
 } from "@fortawesome/free-solid-svg-icons";
+import { useMediaQuery } from "react-responsive";
 
 const edit_group_schema = yup.object().shape({
 	name: yup.string().required("Requerido"),
 });
 const EditGroupForm = ({ onSuccess, period, onCancel }) => {
+	const lg = useMediaQuery({
+		query: "(min-width: 768px)",
+	});
 	const { register, handleSubmit, errors } = useForm({
 		defaultValues: {
 			name: period.name,
@@ -47,7 +52,7 @@ const EditGroupForm = ({ onSuccess, period, onCancel }) => {
 		mode: "onBlur",
 		resolver: yupResolver(edit_group_schema),
 	});
-	const is_load = useSelector((state) => state.admin.groups.put_group_load);
+	const load = useSelector((state) => state.admin.groups.put_group_load);
 	const action_error = useSelector(
 		(state) => state.admin.groups.put_group_errors
 	);
@@ -56,69 +61,64 @@ const EditGroupForm = ({ onSuccess, period, onCancel }) => {
 	);
 	const dispatch = useDispatch();
 	const submit = (d) => {
-		console.info(d);
 		dispatch(loadPutGroupAction());
 		dispatch(putGroupAction(d, period.id));
 	};
-	if (action_error) {
-		setTimeout(() => {
-			dispatch(clearPutGroupAction());
-		}, 7000);
-	}
 	if (action_success) {
-		dispatch(clearPutGroupAction());
 		onSuccess && onSuccess();
 	}
+	useEffect(() => {
+		return () => dispatch(clearPutGroupAction());
+	}, [dispatch]);
 	return (
-		<div className="grow">
-			<Form
-				fielset="bg-white"
-				onSubmit={handleSubmit(submit)}
-				errors={action_error}
-				success={action_success}
+		<Form
+			className="grow"
+			fielset="bg-white flex-column box-shadow"
+			onSubmit={handleSubmit(submit)}
+			errors={action_error}
+		>
+			{load && <Load />}
+			<InputForm
+				label="Nombre del Grupo"
+				name="name"
+				upper
+				hidden={load}
+				register={register}
+				error={errors.name}
+			/>
+			<div
+				className={clsx(
+					lg && "flex-row flex-center",
+					!lg && "flex-column"
+				)}
 			>
-				<div className="flex-column">
-					{is_load ? (
-						<Load />
-					) : (
-						<>
-							<InputForm
-								label="Nombre del Grupo"
-								name="name"
-								upper
-								hidden={is_load}
-								register={register}
-								inline
-								error={errors.name}
-							/>
-							<div className="flex-row flex-center">
-								<Submit
-									text="Aceptar"
-									icon={faEdit}
-									bg_color="primary"
-									text_color="white"
-									center
-								/>
-								<Button
-									text="Cancelar"
-									icon={faTimes}
-									bg_color="danger"
-									text_color="white"
-									onClick={onCancel}
-								/>
-							</div>
-						</>
-					)}
-				</div>
-			</Form>
-		</div>
+				<Submit
+					text="Aceptar"
+					hidden={load}
+					icon={faEdit}
+					bg_color="primary"
+					text_color="white"
+					center
+				/>
+				<Button
+					text="Cancelar"
+					hidden={load}
+					icon={faTimes}
+					bg_color="danger"
+					text_color="white"
+					center
+					onClick={onCancel}
+				/>
+			</div>
+		</Form>
 	);
 };
 const DeleteGroupForm = ({ onSuccess, period, onCancel }) => {
+	const lg = useMediaQuery({
+		query: "(min-width: 768px)",
+	});
 	const { handleSubmit } = useForm();
-	const is_load = useSelector(
-		(state) => state.admin.groups.delete_group_load
-	);
+	const load = useSelector((state) => state.admin.groups.delete_group_load);
 	const action_error = useSelector(
 		(state) => state.admin.groups.delete_group_errors
 	);
@@ -130,119 +130,129 @@ const DeleteGroupForm = ({ onSuccess, period, onCancel }) => {
 		dispatch(loadDeleteGroupAction());
 		dispatch(deleteGroupAction(period.id));
 	};
-	const cancel = (e) => {
-		e && e.preventDefault();
-		dispatch(clearDeleteGroupAction());
-		onCancel && onCancel();
-	};
-	if (action_error) {
-		setTimeout(() => dispatch(clearDeleteGroupAction()), 7000);
-	}
 	if (action_success) {
-		dispatch(clearDeleteGroupAction());
 		onSuccess && onSuccess();
 	}
+	useEffect(() => {
+		return () => dispatch(clearDeleteGroupAction());
+	}, [dispatch]);
 	return (
-		<div className="grow">
-			<Form
-				fielset="bg-white"
-				onSubmit={handleSubmit(submit)}
-				errors={action_error}
-				success={action_success}
+		<Form
+			className="grow flex-column"
+			fielset="bg-white box-shadow"
+			onSubmit={handleSubmit(submit)}
+			errors={action_error}
+		>
+			{load && <Load />}
+			<div
+				className={clsx(
+					lg && "flex-row flex-center",
+					!lg && "flex-column"
+				)}
 			>
-				<div className="flex-row wrap align-center">
-					{is_load ? (
-						<Load />
-					) : (
-						<>
-							<Text h3 className=" grow text-danger">
-								Confirmar la eliminación
-							</Text>
-							<Submit
-								text="Eliminar"
-								icon={faCheck}
-								bg_color="danger"
-								text_color="white"
-								center
-							/>
-							<Button
-								icon={faTimes}
-								text="Cancelar"
-								bg_color="success"
-								text_color="white"
-								onClick={cancel}
-							/>
-						</>
-					)}
-				</div>
-			</Form>
-		</div>
+				<Text h3 className={clsx("grow text-danger", load && "hidden")}>
+					<center>Confirmar la eliminación</center>
+				</Text>
+				<Submit
+					text="Eliminar"
+					icon={faCheck}
+					hidden={load}
+					bg_color="danger"
+					text_color="white"
+					center
+				/>
+				<Button
+					icon={faTimes}
+					hidden={load}
+					text="Cancelar"
+					bg_color="success"
+					text_color="white"
+					center
+					onClick={onCancel}
+				/>
+			</div>
+		</Form>
 	);
 };
 
 const GroupBox = ({ period, url, ...others }) => {
+	const lg = useMediaQuery({
+		query: "(min-width: 768px)",
+	});
 	const { id, name } = period;
-	const [mode, setMode] = useState("default");
-	switch (mode) {
-		case "delete":
-			return (
-				<DeleteGroupForm
-					period={period}
-					onSuccess={() => setMode("default")}
-					onCancel={() => setMode("default")}
-				/>
-			);
-		case "edit":
-			return (
-				<EditGroupForm
-					period={period}
-					onSuccess={() => setMode("default")}
-					onCancel={() => setMode("default")}
-				/>
-			);
-		case "default":
-		default:
-			return (
-				<div
-					className="flex-row align-center wrap justify-start bg-white"
-					{...others}
-				>
-					<ButtonLink
-						className="grow"
-						not_border
-						text={name}
-						to={`${url}/${id}`}
-					/>
-					<div className="flex-row">
-						<Button
-							icon={faEdit}
-							not_border
-							icon_size="1x"
-							title="Editar periodo"
-							onClick={() => setMode("edit")}
-						/>
-						<Button
-							icon={faTrash}
-							not_border
-							icon_size="1x"
-							text_color="danger"
-							title="Eliminar periodo"
-							onClick={() => setMode("delete")}
-						/>
-					</div>
-				</div>
-			);
+	const [edit, setEdit] = useState(false);
+	const [trash, setTrash] = useState(false);
+	if (edit) {
+		return (
+			<EditGroupForm
+				period={period}
+				onSuccess={() => setEdit(false)}
+				onCancel={() => setEdit(false)}
+			/>
+		);
 	}
+	if (trash) {
+		return (
+			<DeleteGroupForm
+				period={period}
+				onSuccess={() => setTrash(false)}
+				onCancel={() => setTrash(false)}
+			/>
+		);
+	}
+	return (
+		<div
+			className={clsx(
+				lg && "flex-row align-center justify-start",
+				!lg && "flex-column-reverse",
+				"bg-white box-shadow bd-grey-400"
+			)}
+			{...others}
+		>
+			<ButtonLink
+				className={clsx(lg && "grow", "")}
+				not_border
+				text={name}
+				to={`${url}/${id}`}
+			/>
+			<div
+				className={clsx(
+					"flex-row",
+					lg && "justify-center",
+					!lg && "grow justify-end"
+				)}
+			>
+				<Button
+					icon={faEdit}
+					not_border
+					icon_size="1x"
+					title="Editar periodo"
+					onClick={() => setEdit(true)}
+				/>
+				<Button
+					icon={faTrash}
+					not_border
+					icon_size="1x"
+					text_color="danger"
+					title="Eliminar periodo"
+					onClick={() => setTrash(true)}
+				/>
+			</div>
+		</div>
+	);
 };
 const new_group_schema = yup.object().shape({
 	name: yup.string().required("Requerido"),
 });
 const NewGroupForm = ({ onSuccess, onCancel }) => {
+	const lg = useMediaQuery({
+		query: "(min-width: 768px)",
+	});
 	const { register, handleSubmit, errors } = useForm({
 		mode: "onBlur",
 		resolver: yupResolver(new_group_schema),
 	});
-	const is_load = useSelector((state) => state.admin.groups.post_group_load);
+	const load = useSelector((state) => state.admin.groups.post_group_load);
 	const action_error = useSelector(
 		(state) => state.admin.groups.post_group_errors
 	);
@@ -250,64 +260,58 @@ const NewGroupForm = ({ onSuccess, onCancel }) => {
 		(state) => state.admin.groups.post_group_success
 	);
 	const dispatch = useDispatch();
-	const cancel = (e) => {
-		e && e.preventDefault();
-		dispatch(clearPostGroupAction());
-		onCancel && onCancel();
-	};
 	const submit = (d) => {
 		console.info(d);
 		dispatch(loadPostGroupAction());
 		dispatch(postGroupAction(d));
 	};
-	if (action_error) {
-		setTimeout(() => dispatch(clearPostGroupAction()), 7000);
-	}
 	if (action_success) {
-		dispatch(clearPostGroupAction());
 		onSuccess && onSuccess();
 	}
+	useEffect(() => {
+		return () => dispatch(clearPostGroupAction());
+	}, [dispatch]);
 	return (
 		<div className="grow">
 			<Form
-				legend="Nuevo Groupo"
+				className="container-lg"
+				legend="Nuevo Grupo"
 				fielset="bg-white"
 				onSubmit={handleSubmit(submit)}
 				errors={action_error}
-				success={action_success}
 			>
-				<div className="flex-column">
-					{is_load ? (
-						<Load />
-					) : (
-						<>
-							<InputForm
-								name="name"
-								upper
-								label="Nombre del Grupo"
-								hidden={is_load}
-								register={register}
-								inline
-								error={errors.name}
-							/>
-							<div className="flex-row flex-center">
-								<Submit
-									text="Aceptar"
-									icon={faCheck}
-									bg_color="primary"
-									text_color="white"
-									center
-								/>
-								<Button
-									text="Cancelar"
-									icon={faTimes}
-									bg_color="danger"
-									text_color="white"
-									onClick={cancel}
-								/>
-							</div>
-						</>
+				{load && <Load />}
+				<InputForm
+					name="name"
+					upper
+					label="Nombre del Grupo"
+					hidden={load}
+					register={register}
+					error={errors.name}
+				/>
+				<div
+					className={clsx(
+						lg && "flex-row flex-center",
+						!lg && "flex-column"
 					)}
+				>
+					<Submit
+						text="Aceptar"
+						icon={faCheck}
+						hidden={load}
+						bg_color="primary"
+						text_color="white"
+						center
+					/>
+					<Button
+						text="Cancelar"
+						icon={faTimes}
+						hidden={load}
+						bg_color="danger"
+						text_color="white"
+						center
+						onClick={onCancel}
+					/>
 				</div>
 			</Form>
 		</div>
@@ -320,7 +324,7 @@ const HomeView = () => {
 	const groups = useSelector((state) => state.admin.groups.data);
 	const groups_links = useSelector((state) => state.admin.groups.links);
 	const groups_total = useSelector((state) => state.admin.groups.total);
-	const is_load = useSelector((state) => state.admin.groups.groups_load);
+	const load = useSelector((state) => state.admin.groups.groups_load);
 	const dispatch = useDispatch();
 	const paginate_groups = (u) => {
 		dispatch(loadGroupsAction());
@@ -342,20 +346,19 @@ const HomeView = () => {
 		<div className="flex-column grow justify-stretch">
 			<div className="flex-row align-center wrap justify-stretch">
 				<div className="flex-row wrap align-center justify-start">
-					{view_new_group_form ? null : (
-						<Button
-							text_color="white"
-							not_border
-							bg_color="success"
-							icon={faFolderPlus}
-							text="Nuevo Groupo"
-							onClick={() => setViewNewGroupForm(true)}
-						/>
-					)}
+					<Button
+						text_color="white"
+						not_border
+						hidden={view_new_group_form}
+						bg_color="success"
+						icon={faFolderPlus}
+						text="Nuevo Grupo"
+						onClick={() => setViewNewGroupForm(true)}
+					/>
 				</div>
 				<div className="flex-row grow justify-end">
 					<span className="text-grey-700">
-						{!is_load
+						{!load
 							? groups_total
 								? `${groups_total} grupos en total.`
 								: `${groups.length} grupos en total.`
@@ -363,33 +366,29 @@ const HomeView = () => {
 					</span>
 				</div>
 			</div>
-			{view_new_group_form ? (
-				<div className="container-lg">
-					<NewGroupForm
-						onSuccess={() => {
-							setViewNewGroupForm(false);
-						}}
-						onCancel={() => {
-							setViewNewGroupForm(false);
-						}}
-					/>
-				</div>
-			) : null}
-			<center>
-				<Text title className="text-grey-700">
-					Grupos
-				</Text>
-			</center>
+			{view_new_group_form && (
+				<NewGroupForm
+					onSuccess={() => {
+						setViewNewGroupForm(false);
+					}}
+					onCancel={() => {
+						setViewNewGroupForm(false);
+					}}
+				/>
+			)}
+			<Text title className={clsx("text-grey-700", load && "hidden")}>
+				<center>Grupos</center>
+			</Text>
 			{groups_paginate}
-			<ListView>
-				{is_load ? (
-					<Load />
-				) : (
-					groups.map((p) => (
+			{load ? (
+				<Load />
+			) : (
+				<ListView>
+					{groups.map((p) => (
 						<GroupBox key={`period-${p.id}`} period={p} url={url} />
-					))
-				)}
-			</ListView>
+					))}
+				</ListView>
+			)}
 		</div>
 	);
 };
