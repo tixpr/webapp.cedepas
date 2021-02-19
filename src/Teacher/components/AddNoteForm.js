@@ -13,12 +13,16 @@ import {
 	resetPostNoteAction,
 	postNoteAction,
 } from "../redux/actions/courseActions";
+import SwitchForm from "../../components/SwitchForm";
 
 const AddNoteForm = ({ course_group_id, onSuccess, onCancel }) => {
 	const students = useSelector((state) => state.teacher.course.students);
 	let schemas = {};
-	let def_values = {};
+	let def_values = {
+		is_end: false,
+	};
 	schemas["name"] = yup.string().required("Requerido");
+	schemas["is_end"] = yup.boolean();
 	students.forEach((s) => {
 		schemas[`st_${s.id}`] = yup
 			.number()
@@ -41,7 +45,6 @@ const AddNoteForm = ({ course_group_id, onSuccess, onCancel }) => {
 		(state) => state.teacher.course.post_note_success
 	);
 	const submit = (d) => {
-		console.info("add note data =>", d);
 		dispatch(loadPostNoteAction());
 		dispatch(postNoteAction(course_group_id, d));
 	};
@@ -61,11 +64,17 @@ const AddNoteForm = ({ course_group_id, onSuccess, onCancel }) => {
 			>
 				<div className="flex-column">
 					{load && <Load />}
+					<SwitchForm
+						text="Es la nota final."
+						name="is_end"
+						hidden={load}
+						error={errors.is_end}
+						register={register}
+					/>
 					<InputForm
 						label="NOMBRE DE LA NOTA"
 						name="name"
 						hidden={load}
-						upper
 						inline
 						error={errors.name}
 						register={register}

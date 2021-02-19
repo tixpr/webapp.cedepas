@@ -3,6 +3,7 @@ import { Switch, Route, useRouteMatch } from "react-router-dom";
 import HomeView from "./Groups/HomeView";
 import GroupView from "./Groups/GroupView";
 import CourseGroupView from "./Groups/CourseGroupView";
+import MatriculaView from "./Groups/MatriculaView";
 import NotView from "../../views/NotView";
 
 const GroupsView = () => {
@@ -15,6 +16,11 @@ const GroupsView = () => {
 				exact
 				path={`${url}/:group_id/:course_group_id`}
 				component={CourseGroupView}
+			/>
+			<Route
+				exact
+				path={`${url}/:group_id/:course_group_id/matricula`}
+				component={MatriculaView}
 			/>
 			<Route path="*" component={NotView} />
 		</Switch>

@@ -1,4 +1,5 @@
 import axios from "axios";
+import err_fnc from "../../../components/err_fnc";
 
 export const reset_course_group_type = "student_clear_course_group";
 export const resetCourseGroupAction = () => {
@@ -19,23 +20,13 @@ export const getCourseGroupAction = (course_group_id) => {
 					payload: data.data,
 				});
 			})
-			.catch(({ response, message }) => {
-				if (response) {
-					if (response.status === 401) {
-						window.location.reload();
-					}
-					return dispatch({
-						type: get_course_group_error_type,
-						payload: {
-							data: response.data,
-							status: response.status,
-						},
-					});
-				}
-				return dispatch({
-					type: get_course_group_error_type,
-					payload: message,
-				});
-			});
+			.catch(({ response, message }) =>
+				err_fnc(
+					dispatch,
+					get_course_group_error_type,
+					response,
+					message
+				)
+			);
 	};
 };

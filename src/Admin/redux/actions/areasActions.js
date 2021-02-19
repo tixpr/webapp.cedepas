@@ -1,4 +1,6 @@
 import axios from "axios";
+import err_fnc from "../../../components/err_fnc";
+
 export const clear_get_areas_type = "clear_get_areas";
 export const clearGetAreasAction = () => {
 	return {
@@ -18,24 +20,9 @@ export const getAreasAction = () => {
 					payload: data.data,
 				});
 			})
-			.catch(({ response, message }) => {
-				if (response) {
-					if (response.status === 401) {
-						window.location.reload();
-					}
-					return dispatch({
-						type: get_areas_error_type,
-						payload: {
-							data: response.data,
-							status: response.status,
-						},
-					});
-				}
-				return dispatch({
-					type: get_areas_error_type,
-					payload: message,
-				});
-			});
+			.catch(({ response, message }) =>
+				err_fnc(dispatch, get_areas_error_type, response, message)
+			);
 	};
 };
 
@@ -65,24 +52,9 @@ export const postAreaAction = (data) => {
 					payload: [data.data].concat(getState().admin.areas.areas),
 				});
 			})
-			.catch(({ response, message }) => {
-				if (response) {
-					if (response.status === 401) {
-						window.location.reload();
-					}
-					return dispatch({
-						type: post_area_error_type,
-						payload: {
-							data: response.data,
-							status: response.status,
-						},
-					});
-				}
-				return dispatch({
-					type: post_area_error_type,
-					payload: message,
-				});
-			});
+			.catch(({ response, message }) =>
+				err_fnc(dispatch, post_area_error_type, response, message)
+			);
 	};
 };
 
@@ -115,24 +87,9 @@ export const putAreaAction = (data, area_id) => {
 					payload: nareas,
 				});
 			})
-			.catch(({ response, message }) => {
-				if (response) {
-					if (response.status === 401) {
-						window.location.reload();
-					}
-					return dispatch({
-						type: put_area_error_type,
-						payload: {
-							data: response.data,
-							status: response.status,
-						},
-					});
-				}
-				return dispatch({
-					type: put_area_error_type,
-					payload: message,
-				});
-			});
+			.catch(({ response, message }) =>
+				err_fnc(dispatch, put_area_error_type, response, message)
+			);
 	};
 };
 
@@ -164,45 +121,30 @@ export const deleteAreaAction = (area_id) => {
 					),
 				});
 			})
-			.catch(({ response, message }) => {
-				if (response) {
-					if (response.status === 401) {
-						window.location.reload();
-					}
-					return dispatch({
-						type: delete_area_error_type,
-						payload: {
-							data: response.data,
-							status: response.status,
-						},
-					});
-				}
-				return dispatch({
-					type: delete_area_error_type,
-					payload: message,
-				});
-			});
+			.catch(({ response, message }) =>
+				err_fnc(dispatch, delete_area_error_type, response, message)
+			);
 	};
 };
 
 //CURSOS
-export const load_post_course_type = "load_post_course_";
-export const loadPostCourseAction = () => {
+export const load_post_course_area_type = "admin_load_post_course_area";
+export const loadPostCourseAreaAction = () => {
 	return {
-		type: load_post_course_type,
+		type: load_post_course_area_type,
 	};
 };
 
-export const clear_post_course_type = "clear_post_course_";
-export const clearPostCourseAction = () => {
+export const clear_post_course_area_type = "admin_clear_post_course_area";
+export const clearPostCourseAreaAction = () => {
 	return {
-		type: clear_post_course_type,
+		type: clear_post_course_area_type,
 	};
 };
 
-export const post_course_type = "post_course_";
-export const post_course_error_type = "post_course_error_";
-export const postCourseAction = (data, area_id) => {
+export const post_course_area_type = "admin_post_course_area";
+export const post_course_area_error_type = "admin_post_course_area_error";
+export const postCourseAreaAction = (data, area_id) => {
 	return (dispatch, getState) => {
 		axios
 			.post(`api/course/${area_id}`, data)
@@ -217,48 +159,33 @@ export const postCourseAction = (data, area_id) => {
 				let nareas = [].concat(getState().admin.areas.areas);
 				nareas[ia] = narea;
 				return dispatch({
-					type: post_course_type,
+					type: post_course_area_type,
 					payload: nareas,
 				});
 			})
-			.catch(({ response, message }) => {
-				if (response) {
-					if (response.status === 401) {
-						window.location.reload();
-					}
-					return dispatch({
-						type: post_course_error_type,
-						payload: {
-							data: response.data,
-							status: response.status,
-						},
-					});
-				}
-				return dispatch({
-					type: post_course_error_type,
-					payload: message,
-				});
-			});
+			.catch(({ response, message }) =>
+				err_fnc(dispatch, post_course_area_error_type, response, message)
+			);
 	};
 };
 
-export const load_put_course_type = "load_put_course_";
-export const loadPutCourseAction = () => {
+export const load_put_course_area_type = "admin_load_put_course_area";
+export const loadPutCourseAreaAction = () => {
 	return {
-		type: load_put_course_type,
+		type: load_put_course_area_type,
 	};
 };
 
-export const clear_put_course_type = "clear_put_course_";
-export const clearPutCourseAction = () => {
+export const clear_put_course_area_type = "admin_clear_put_course_area";
+export const clearPutCourseAreaAction = () => {
 	return {
-		type: clear_put_course_type,
+		type: clear_put_course_area_type,
 	};
 };
 
-export const put_course_type = "put_course_";
-export const put_course_error_type = "put_course_error_";
-export const putCourseAction = (data, area_id, course_id) => {
+export const put_course_area_type = "admin_put_course_area";
+export const put_course_area_error_type = "admin_put_course_area_error";
+export const putCourseAreaAction = (data, area_id, course_id) => {
 	return (dispatch, getState) => {
 		axios
 			.put(`api/course/${course_id}`, data)
@@ -269,53 +196,38 @@ export const putCourseAction = (data, area_id, course_id) => {
 				let area = getState().admin.areas.areas[ia];
 				const ic = area.courses.findIndex((c) => c.id === course_id);
 				let ncourses = [].concat(area.courses);
-				ncourses[ic]= data.data;
-				let narea = Object.assign(area,{courses:ncourses});
+				ncourses[ic] = data.data;
+				let narea = Object.assign(area, { courses: ncourses });
 				let nareas = [].concat(getState().admin.areas.areas);
 				nareas[ia] = narea;
 				return dispatch({
-					type: put_course_type,
+					type: put_course_area_type,
 					payload: nareas,
 				});
 			})
-			.catch(({ response, message }) => {
-				if (response) {
-					if (response.status === 401) {
-						window.location.reload();
-					}
-					return dispatch({
-						type: put_course_error_type,
-						payload: {
-							data: response.data,
-							status: response.status,
-						},
-					});
-				}
-				return dispatch({
-					type: put_course_error_type,
-					payload: message,
-				});
-			});
+			.catch(({ response, message }) =>
+				err_fnc(dispatch, put_course_area_error_type, response, message)
+			);
 	};
 };
 
-export const load_delete_course_type = "load_delete_course_";
-export const loadDeleteCourseAction = () => {
+export const load_delete_course_area_type = "admin_load_delete_course_area";
+export const loadDeleteCourseAreaAction = () => {
 	return {
-		type: load_delete_course_type,
+		type: load_delete_course_area_type,
 	};
 };
 
-export const clear_delete_course_type = "clear_delete_course_";
-export const clearDeleteCourseAction = () => {
+export const clear_delete_course_area_type = "admin_clear_delete_course_area";
+export const clearDeleteCourseAreaAction = () => {
 	return {
-		type: clear_delete_course_type,
+		type: clear_delete_course_area_type,
 	};
 };
 
-export const delete_course_type = "delete_course_";
-export const delete_course_error_type = "delete_course_error_";
-export const deleteCourseAction = (area_id, course_id) => {
+export const delete_course_area_type = "admin_delete_course_area";
+export const delete_course_area_error_type = "admin_delete_course_area_error";
+export const deleteCourseAreaAction = (area_id, course_id) => {
 	return (dispatch, getState) => {
 		axios
 			.delete(`api/course/${course_id}`)
@@ -325,31 +237,16 @@ export const deleteCourseAction = (area_id, course_id) => {
 				);
 				let area = getState().admin.areas.areas[ia];
 				let ncourses = area.courses.filter((c) => c.id !== course_id);
-				let narea = Object.assign(area,{courses:ncourses});
+				let narea = Object.assign(area, { courses: ncourses });
 				let nareas = [].concat(getState().admin.areas.areas);
 				nareas[ia] = narea;
 				return dispatch({
-					type: delete_course_type,
+					type: delete_course_area_type,
 					payload: nareas,
 				});
 			})
-			.catch(({ response, message }) => {
-				if (response) {
-					if (response.status === 401) {
-						window.location.reload();
-					}
-					return dispatch({
-						type: delete_course_error_type,
-						payload: {
-							data: response.data,
-							status: response.status,
-						},
-					});
-				}
-				return dispatch({
-					type: delete_course_error_type,
-					payload: message,
-				});
-			});
+			.catch(({ response, message }) =>
+				err_fnc(dispatch, delete_course_area_error_type, response, message)
+			);
 	};
 };

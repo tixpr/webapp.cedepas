@@ -37,9 +37,13 @@ import {
 	faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { useMediaQuery } from "react-responsive";
+import SwitchForm from "../../../components/SwitchForm";
 
 const edit_group_schema = yup.object().shape({
 	name: yup.string().required("Requerido"),
+	start: yup.date().typeError("Error en la fecha de inicio"),
+	end: yup.date().typeError("Error en la fecha de finalización"),
+	pre_register_enabled: yup.boolean().typeError("Error en pre registro"),
 });
 const EditGroupForm = ({ onSuccess, period, onCancel }) => {
 	const lg = useMediaQuery({
@@ -48,6 +52,9 @@ const EditGroupForm = ({ onSuccess, period, onCancel }) => {
 	const { register, handleSubmit, errors } = useForm({
 		defaultValues: {
 			name: period.name,
+			start: period.start,
+			end: period.end,
+			pre_register_enabled: period.pre_register,
 		},
 		mode: "onBlur",
 		resolver: yupResolver(edit_group_schema),
@@ -61,6 +68,8 @@ const EditGroupForm = ({ onSuccess, period, onCancel }) => {
 	);
 	const dispatch = useDispatch();
 	const submit = (d) => {
+		d.start = d.start.toISOString().substr(0, 10);
+		d.end = d.end.toISOString().substr(0, 10);
 		dispatch(loadPutGroupAction());
 		dispatch(putGroupAction(d, period.id));
 	};
@@ -79,12 +88,34 @@ const EditGroupForm = ({ onSuccess, period, onCancel }) => {
 		>
 			{load && <Load />}
 			<InputForm
-				label="Nombre del Grupo"
 				name="name"
-				upper
+				label="Nombre del Grupo"
 				hidden={load}
 				register={register}
 				error={errors.name}
+			/>
+			<InputForm
+				name="start"
+				type="date"
+				label="Fecha de inicio"
+				hidden={load}
+				register={register}
+				error={errors.start}
+			/>
+			<InputForm
+				name="end"
+				type="date"
+				label="fecha de finalización"
+				hidden={load}
+				register={register}
+				error={errors.end}
+			/>
+			<SwitchForm
+				text="Se pueden Pre-Matricular"
+				name="pre_register_enabled"
+				hidden={load}
+				error={errors.pre_register_enabled}
+				register={register}
 			/>
 			<div
 				className={clsx(
@@ -179,7 +210,7 @@ const GroupBox = ({ period, url, ...others }) => {
 	const lg = useMediaQuery({
 		query: "(min-width: 768px)",
 	});
-	const { id, name } = period;
+	const { id, name, start, end, pre_register } = period;
 	const [edit, setEdit] = useState(false);
 	const [trash, setTrash] = useState(false);
 	if (edit) {
@@ -205,14 +236,16 @@ const GroupBox = ({ period, url, ...others }) => {
 			className={clsx(
 				lg && "flex-row align-center justify-start",
 				!lg && "flex-column-reverse",
-				"bg-white box-shadow bd-grey-400"
+				pre_register && "bd-success",
+				!pre_register && "bd-grey-500",
+				"bg-white box-shadow"
 			)}
 			{...others}
 		>
 			<ButtonLink
 				className={clsx(lg && "grow", "")}
 				not_border
-				text={name}
+				text={`${name} (Inicio: ${start}; Final: ${end})`}
 				to={`${url}/${id}`}
 			/>
 			<div
@@ -243,6 +276,9 @@ const GroupBox = ({ period, url, ...others }) => {
 };
 const new_group_schema = yup.object().shape({
 	name: yup.string().required("Requerido"),
+	start: yup.date().typeError("Error en la fecha de inicio"),
+	end: yup.date().typeError("Error en la fecha de finalización"),
+	pre_register_enabled: yup.boolean().typeError("Error en pre registro"),
 });
 const NewGroupForm = ({ onSuccess, onCancel }) => {
 	const lg = useMediaQuery({
@@ -250,6 +286,9 @@ const NewGroupForm = ({ onSuccess, onCancel }) => {
 	});
 	const { register, handleSubmit, errors } = useForm({
 		mode: "onBlur",
+		defaultValues: {
+			pre_register_enabled: true,
+		},
 		resolver: yupResolver(new_group_schema),
 	});
 	const load = useSelector((state) => state.admin.groups.post_group_load);
@@ -261,7 +300,8 @@ const NewGroupForm = ({ onSuccess, onCancel }) => {
 	);
 	const dispatch = useDispatch();
 	const submit = (d) => {
-		console.info(d);
+		d.start = d.start.toISOString().substr(0, 10);
+		d.end = d.end.toISOString().substr(0, 10);
 		dispatch(loadPostGroupAction());
 		dispatch(postGroupAction(d));
 	};
@@ -283,11 +323,33 @@ const NewGroupForm = ({ onSuccess, onCancel }) => {
 				{load && <Load />}
 				<InputForm
 					name="name"
-					upper
 					label="Nombre del Grupo"
 					hidden={load}
 					register={register}
 					error={errors.name}
+				/>
+				<InputForm
+					name="start"
+					type="date"
+					label="Fecha de inicio"
+					hidden={load}
+					register={register}
+					error={errors.start}
+				/>
+				<InputForm
+					name="end"
+					type="date"
+					label="fecha de finalización"
+					hidden={load}
+					register={register}
+					error={errors.end}
+				/>
+				<SwitchForm
+					text="Se pueden Pre-Matricular"
+					name="pre_register_enabled"
+					hidden={load}
+					error={errors.pre_register_enabled}
+					register={register}
 				/>
 				<div
 					className={clsx(

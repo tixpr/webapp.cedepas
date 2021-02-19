@@ -1,4 +1,5 @@
 import axios from "axios";
+import err_fnc from "../../components/err_fnc";
 
 const setDefaultRole = (roles) => {
 	if (roles.length > 1) {
@@ -15,7 +16,7 @@ export const is_login_error_type = "IS_LOGIN_ERROR";
 export const isLoginAction = () => {
 	return (dispatch) => {
 		axios
-			.get("api/user")
+			.get("/api/user")
 			.then(({ data }) => {
 				const { roles } = data.data;
 				const ls_role = window.localStorage.getItem("ui_mode");
@@ -50,16 +51,13 @@ export const loadLoginAction = () => {
 export const login_type = "LOGIN_USER";
 export const login_error_type = "LOGIN_ERROR";
 
-export const loginAction = (email, password) => {
+export const loginAction = (d) => {
 	return (dispatch) => {
 		axios
 			.get("/sanctum/csrf-cookie")
 			.then(() => {
 				axios
-					.post("/login", {
-						email,
-						password,
-					})
+					.post("/login", d)
 					.then(({ data }) => {
 						const { roles } = data.data;
 						const ls_role = window.localStorage.getItem("ui_mode");
@@ -75,40 +73,13 @@ export const loginAction = (email, password) => {
 							payload: data.data,
 						});
 					})
-					.catch(({ response, message }) => {
-						if (response) {
-							return dispatch({
-								type: login_error_type,
-								payload: {
-									data: response.data,
-									status: response.status,
-								},
-							});
-						}
-						return dispatch({
-							type: login_error_type,
-							payload: message,
-						});
-					});
+					.catch(({ response, message }) =>
+						err_fnc(dispatch, login_error_type, response, message)
+					);
 			})
-			.catch(({ response, message }) => {
-				if (response) {
-					if (response.status === 401) {
-						window.location.reload();
-					}
-					return dispatch({
-						type: login_error_type,
-						payload: {
-							data: response.data,
-							status: response.status,
-						},
-					});
-				}
-				return dispatch({
-					type: login_error_type,
-					payload: message,
-				});
-			});
+			.catch(({ response, message }) =>
+				err_fnc(dispatch, login_error_type, response, message)
+			);
 	};
 };
 
@@ -123,21 +94,9 @@ export const logoutAction = () => {
 					type: logout_type,
 				});
 			})
-			.catch(({ response, message }) => {
-				if (response) {
-					return dispatch({
-						type: logout_error_type,
-						payload: {
-							data: response.data,
-							status: response.status,
-						},
-					});
-				}
-				return dispatch({
-					type: logout_error_type,
-					payload: message,
-				});
-			});
+			.catch(({ response, message }) =>
+				err_fnc(dispatch, logout_error_type, response, message)
+			);
 	};
 };
 

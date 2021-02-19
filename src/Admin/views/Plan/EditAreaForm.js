@@ -61,7 +61,6 @@ const EditAreaform = ({ area, onSuccess, onCancel }) => {
 			{is_load && <Load />}
 			<InputForm
 				name="name"
-				upper
 				hidden={is_load}
 				register={register}
 				label="Nombre"

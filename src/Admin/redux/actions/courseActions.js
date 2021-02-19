@@ -1,21 +1,22 @@
 import axios from "axios";
+import err_fnc from "../../../components/err_fnc";
 
-export const load_get_course_type = "load_get_course";
+export const load_get_course_type = "admin_load_get_course";
 export const loadGetCourseAction = () => {
 	return {
 		type: load_get_course_type,
 	};
 };
 
-export const clear_get_course_type = "clear_get_course";
+export const clear_get_course_type = "admin_clear_get_course";
 export const clearGetCourseAction = () => {
 	return {
 		type: clear_get_course_type,
 	};
 };
 
-export const get_course_type = "get_course";
-export const get_course_error_type = "get_course_error";
+export const get_course_type = "admin_get_course";
+export const get_course_error_type = "admin_get_course_error";
 export const getCourseAction = (course_id) => {
 	return (dispatch) => {
 		axios
@@ -26,23 +27,8 @@ export const getCourseAction = (course_id) => {
 					payload: data.data,
 				});
 			})
-			.catch(({ response, message }) => {
-				if (response) {
-					if (response.status === 401) {
-						window.location.reload();
-					}
-					return dispatch({
-						type: get_course_error_type,
-						payload: {
-							data: response.data,
-							status: response.status,
-						},
-					});
-				}
-				return dispatch({
-					type: get_course_error_type,
-					payload: message,
-				});
-			});
+			.catch(({ response, message }) =>
+				err_fnc(dispatch, get_course_error_type, response, message)
+			);
 	};
 };

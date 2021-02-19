@@ -45,7 +45,6 @@ const EditPresenceForm = ({
 	const submit = (d) => {
 		dispatch(loadPutUserPresenceAction());
 		dispatch(putUserPresenceAction(user_id, presence_id, d));
-		console.info("edit note submit", d);
 	};
 	useEffect(() => {
 		return () => dispatch(resetPutUserPresenceAction());

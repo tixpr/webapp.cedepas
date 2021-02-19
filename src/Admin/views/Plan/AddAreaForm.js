@@ -58,7 +58,6 @@ const AddAreaForm = ({ onSuccess, onCancel }) => {
 				register={register}
 				label="Nombre del area"
 				name="name"
-				upper
 				hidden={load}
 				error={errors.name}
 			/>

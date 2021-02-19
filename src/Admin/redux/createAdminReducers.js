@@ -1,23 +1,25 @@
 import { combineReducers } from "redux";
-import usersReducer from "./reducers/usersReducer";
-import importUsersReducer from "./reducers/importUsersReducer";
-import groupsReducer from "./reducers/groupsReducer";
-import coursesReducer from "./reducers/coursesReducer";
-import courseReducer from "./reducers/courseReducer";
-import areasReducer from "./reducers/areasReducer";
-import coursesGroupReducer from "./reducers/coursesGroupReducer";
-import courseGroupReducer from "./reducers/courseGroupReducer";
+import users from "./reducers/usersReducer";
+import groups from "./reducers/groupsReducer";
+import courses from "./reducers/coursesReducer";
+import course from "./reducers/courseReducer";
+import areas from "./reducers/areasReducer";
+import courses_group from "./reducers/coursesGroupReducer";
+import course_group from "./reducers/courseGroupReducer";
+import library from "./reducers/libraryReducer";
+import matricula from "./reducers/matriculasReducer";
 
 const createAdminReducers = () =>
 	combineReducers({
-		users: usersReducer,
-		import: importUsersReducer,
-		groups: groupsReducer,
-		courses: coursesReducer,
-		course: courseReducer,
-		areas: areasReducer,
-		courses_group: coursesGroupReducer,
-		course_group: courseGroupReducer,
+		users,
+		groups,
+		courses,
+		course,
+		areas,
+		library,
+		courses_group,
+		course_group,
+		matricula,
 	});
 
 export default createAdminReducers;

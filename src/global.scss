@@ -82,7 +82,7 @@ hr {
 	background-color: rgba($dark, 0.7);
 }
 .box-shadow {
-	box-shadow: 2px 2px 3px $grey-400;
+	box-shadow: 2px 2px 5px $grey-500;
 }
 .container-overflow-x {
 	overflow-x: auto !important;
@@ -131,6 +131,9 @@ td {
 }
 .text-justify {
 	text-align: justify !important;
+}
+.text-center {
+	text-align: center !important;
 }
 
 //flex

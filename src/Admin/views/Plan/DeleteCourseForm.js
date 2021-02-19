@@ -7,9 +7,9 @@ import Text from "../../../components/Text";
 import Load from "../../../components/Load";
 import { faTrash, faTimes } from "@fortawesome/free-solid-svg-icons";
 import {
-	loadDeleteCourseAction,
-	clearDeleteCourseAction,
-	deleteCourseAction,
+	loadDeleteCourseAreaAction,
+	clearDeleteCourseAreaAction,
+	deleteCourseAreaAction,
 } from "../../redux/actions/areasActions";
 import { useForm } from "react-hook-form";
 import { useMediaQuery } from "react-responsive";
@@ -28,14 +28,14 @@ const DeleteCourseform = ({ course_id, area_id, onSuccess, onCancel }) => {
 	);
 	const dispatch = useDispatch();
 	const submit = () => {
-		dispatch(loadDeleteCourseAction());
-		dispatch(deleteCourseAction(area_id, course_id));
+		dispatch(loadDeleteCourseAreaAction());
+		dispatch(deleteCourseAreaAction(area_id, course_id));
 	};
 	if (action_success) {
 		onSuccess && onSuccess();
 	}
 	useEffect(() => {
-		return () => dispatch(clearDeleteCourseAction());
+		return () => dispatch(clearDeleteCourseAreaAction());
 	}, [dispatch]);
 	return (
 		<Form

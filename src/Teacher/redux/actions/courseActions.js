@@ -1,4 +1,5 @@
 import axios from "axios";
+import err_fnc from "../../../components/err_fnc";
 
 export const reset_course_group_type = "teacher_clear_course_group";
 export const resetCourseGroupAction = () => {
@@ -12,31 +13,21 @@ export const get_course_group_error_type = "teacher_get_course_group_error";
 export const getCourseGroupAction = (course_group_id) => {
 	return (dispatch) => {
 		axios
-			.get(`api/teacher/course_group/${course_group_id}`)
+			.get(`/api/teacher/course_group/${course_group_id}`)
 			.then(({ data }) => {
 				return dispatch({
 					type: get_course_group_type,
 					payload: data.data,
 				});
 			})
-			.catch(({ response, message }) => {
-				if (response) {
-					if (response.status === 401) {
-						window.location.reload();
-					}
-					return dispatch({
-						type: get_course_group_error_type,
-						payload: {
-							data: response.data,
-							status: response.status,
-						},
-					});
-				}
-				return dispatch({
-					type: get_course_group_error_type,
-					payload: message,
-				});
-			});
+			.catch(({ response, message }) =>
+				err_fnc(
+					dispatch,
+					get_course_group_error_type,
+					response,
+					message
+				)
+			);
 	};
 };
 //Editar nota
@@ -59,7 +50,7 @@ export const put_user_note_error_type = "teacher_put_user_note_error";
 export const putUserNoteAction = (user_id, note_id, d) => {
 	return (dispatch, getState) => {
 		axios
-			.put(`api/teacher/note/${note_id}/${user_id}`, d)
+			.put(`/api/teacher/note/${note_id}/${user_id}`, d)
 			.then(({ data }) => {
 				const notes = getState().teacher.course.notes;
 				const ns_i = notes.findIndex((n) => n.id === note_id);
@@ -78,24 +69,9 @@ export const putUserNoteAction = (user_id, note_id, d) => {
 					payload: temp,
 				});
 			})
-			.catch(({ response, message }) => {
-				if (response) {
-					if (response.status === 401) {
-						window.location.reload();
-					}
-					return dispatch({
-						type: put_user_note_error_type,
-						payload: {
-							data: response.data,
-							status: response.status,
-						},
-					});
-				}
-				return dispatch({
-					type: put_user_note_error_type,
-					payload: message,
-				});
-			});
+			.catch(({ response, message }) =>
+				err_fnc(dispatch, put_user_note_error_type, response, message)
+			);
 	};
 };
 //editar asistencia
@@ -118,7 +94,7 @@ export const put_user_presence_error_type = "teacher_put_user_presence_error";
 export const putUserPresenceAction = (user_id, presence_id, d) => {
 	return (dispatch, getState) => {
 		axios
-			.put(`api/teacher/presence/${presence_id}/${user_id}`, d)
+			.put(`/api/teacher/presence/${presence_id}/${user_id}`, d)
 			.then(({ data }) => {
 				const presences = getState().teacher.course.presences;
 				const ns_i = presences.findIndex((p) => p.id === presence_id);
@@ -139,24 +115,14 @@ export const putUserPresenceAction = (user_id, presence_id, d) => {
 					payload: temp,
 				});
 			})
-			.catch(({ response, message }) => {
-				if (response) {
-					if (response.status === 401) {
-						window.location.reload();
-					}
-					return dispatch({
-						type: put_user_presence_error_type,
-						payload: {
-							data: response.data,
-							status: response.status,
-						},
-					});
-				}
-				return dispatch({
-					type: put_user_presence_error_type,
-					payload: message,
-				});
-			});
+			.catch(({ response, message }) =>
+				err_fnc(
+					dispatch,
+					put_user_presence_error_type,
+					response,
+					message
+				)
+			);
 	};
 };
 //eliminar nota
@@ -179,7 +145,7 @@ export const delete_note_error_type = "teacher_delete_note_error";
 export const deleteNoteAction = (note_id) => {
 	return (dispatch, getState) => {
 		axios
-			.delete(`api/teacher/note/${note_id}`)
+			.delete(`/api/teacher/note/${note_id}`)
 			.then(() => {
 				const notes = getState().teacher.course.notes;
 				let new_notes = notes.filter((n) => n.id !== note_id);
@@ -188,24 +154,9 @@ export const deleteNoteAction = (note_id) => {
 					payload: new_notes,
 				});
 			})
-			.catch(({ response, message }) => {
-				if (response) {
-					if (response.status === 401) {
-						window.location.reload();
-					}
-					return dispatch({
-						type: delete_note_error_type,
-						payload: {
-							data: response.data,
-							status: response.status,
-						},
-					});
-				}
-				return dispatch({
-					type: delete_note_error_type,
-					payload: message,
-				});
-			});
+			.catch(({ response, message }) =>
+				err_fnc(dispatch, delete_note_error_type, response, message)
+			);
 	};
 };
 //eliminar asistencia
@@ -228,7 +179,7 @@ export const delete_presence_error_type = "teacher_delete_presence_error";
 export const deletePresenceAction = (presence_id) => {
 	return (dispatch, getState) => {
 		axios
-			.delete(`api/teacher/presence/${presence_id}`)
+			.delete(`/api/teacher/presence/${presence_id}`)
 			.then(() => {
 				const presences = getState().teacher.course.presences;
 				let new_presences = presences.filter(
@@ -239,24 +190,9 @@ export const deletePresenceAction = (presence_id) => {
 					payload: new_presences,
 				});
 			})
-			.catch(({ response, message }) => {
-				if (response) {
-					if (response.status === 401) {
-						window.location.reload();
-					}
-					return dispatch({
-						type: delete_presence_error_type,
-						payload: {
-							data: response.data,
-							status: response.status,
-						},
-					});
-				}
-				return dispatch({
-					type: delete_presence_error_type,
-					payload: message,
-				});
-			});
+			.catch(({ response, message }) =>
+				err_fnc(dispatch, delete_presence_error_type, response, message)
+			);
 	};
 };
 
@@ -281,7 +217,7 @@ export const post_note_error_type = "teacher_post_note_error";
 export const postNoteAction = (course_group_id, d) => {
 	return (dispatch, getState) => {
 		axios
-			.post(`api/teacher/course_group/${course_group_id}/note`, d)
+			.post(`/api/teacher/course_group/${course_group_id}/note`, d)
 			.then(({ data }) => {
 				let n_notes = [].concat(getState().teacher.course.notes);
 				n_notes.push(data.data);
@@ -290,24 +226,9 @@ export const postNoteAction = (course_group_id, d) => {
 					payload: n_notes,
 				});
 			})
-			.catch(({ response, message }) => {
-				if (response) {
-					if (response.status === 401) {
-						window.location.reload();
-					}
-					return dispatch({
-						type: post_note_error_type,
-						payload: {
-							data: response.data,
-							status: response.status,
-						},
-					});
-				}
-				return dispatch({
-					type: post_note_error_type,
-					payload: message,
-				});
-			});
+			.catch(({ response, message }) =>
+				err_fnc(dispatch, post_note_error_type, response, message)
+			);
 	};
 };
 
@@ -332,32 +253,19 @@ export const post_presence_error_type = "teacher_post_presence_error";
 export const postPresenceAction = (course_group_id, d) => {
 	return (dispatch, getState) => {
 		axios
-			.post(`api/teacher/course_group/${course_group_id}/presence`, d)
+			.post(`/api/teacher/course_group/${course_group_id}/presence`, d)
 			.then(({ data }) => {
-				let n_presences = [].concat(getState().teacher.course.presences);
+				let n_presences = [].concat(
+					getState().teacher.course.presences
+				);
 				n_presences.push(data.data);
 				return dispatch({
 					type: post_presence_type,
 					payload: n_presences,
 				});
 			})
-			.catch(({ response, message }) => {
-				if (response) {
-					if (response.status === 401) {
-						window.location.reload();
-					}
-					return dispatch({
-						type: post_presence_error_type,
-						payload: {
-							data: response.data,
-							status: response.status,
-						},
-					});
-				}
-				return dispatch({
-					type: post_presence_error_type,
-					payload: message,
-				});
-			});
+			.catch(({ response, message }) =>
+				err_fnc(dispatch, post_presence_error_type, response, message)
+			);
 	};
 };

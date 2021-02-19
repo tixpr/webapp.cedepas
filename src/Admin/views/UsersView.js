@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useRouteMatch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Load from "../../components/Load";
 import {
@@ -17,14 +16,19 @@ import Paginate from "../../components/Paginate";
 import NewUserForm from "./Users/NewUserForm";
 import { faUserPlus, faSearch } from "@fortawesome/free-solid-svg-icons";
 import UserBox from "./Users/UserBox";
+import ErrorMessage from "../../components/ErrorMessage";
+import { loadPutActiveRegisterAction, putActiveRegisterAction } from "../../redux/actions/registerActions";
 
 const UsersView = () => {
-	const { url } = useRouteMatch();
 	const { register, handleSubmit } = useForm();
 	const users = useSelector((state) => state.admin.users.users);
 	const links = useSelector((state) => state.admin.users.links);
 	const total = useSelector((state) => state.admin.users.total);
 	const load = useSelector((state) => state.admin.users.is_load);
+	const errors = useSelector((state) => state.admin.users.errors);
+	const is_reg = useSelector(state=>state.register.register);
+	const errors_reg = useSelector(state=>state.register.put_errors);
+	const load_reg = useSelector(state=>state.register.put_load);
 	const [view_new, setViewNew] = useState(false);
 	const dispatch = useDispatch();
 	const on_paginate = (url) => {
@@ -40,12 +44,17 @@ const UsersView = () => {
 		dispatch(loadGetAllUsersAction());
 		dispatch(getAllUsersAction());
 	};
+	const changeRegister=()=>{
+		dispatch(loadPutActiveRegisterAction());
+		dispatch(putActiveRegisterAction());
+	};
 	useEffect(() => {
 		dispatch(loadGetAllUsersAction());
 		dispatch(getAllUsersAction());
 	}, [dispatch]);
 	return (
 		<>
+			{errors && <ErrorMessage msg={errors} />}
 			{view_new && (
 				<NewUserForm
 					onSuccess={() => setViewNew(false)}
@@ -63,18 +72,20 @@ const UsersView = () => {
 						text="Nuevo"
 						onClick={() => setViewNew(true)}
 					/>
+					{load_reg&&<Load/>}
+					{errors_reg?<ErrorMessage msg={errors_reg}/>:null}
+					<SwitchForm
+						text="Registro de usuarios"
+						name="remember"
+						hidden={load_reg}
+						checked={is_reg}
+						onChange={()=>changeRegister()}
+					/>
 				</div>
 				<div className="flex-row justify-end grow">
-					<Form
-						fielset="bg-white"
-						onSubmit={handleSubmit(on_submit)}
-					>
+					<Form fielset="bg-white" onSubmit={handleSubmit(on_submit)}>
 						<div className="flex-row justify-end grow">
-							<InputForm
-								name="search"
-								upper
-								register={register}
-							/>
+							<InputForm name="search" register={register} />
 							<Submit icon={faSearch} not_border bg_color="not" />
 						</div>
 					</Form>
@@ -121,7 +132,7 @@ const UsersView = () => {
 			) : (
 				<ListView>
 					{users.map((user) => (
-						<UserBox key={user.id} user={user} url={url} />
+						<UserBox key={`user-${user.id}`} user={user} />
 					))}
 				</ListView>
 			)}

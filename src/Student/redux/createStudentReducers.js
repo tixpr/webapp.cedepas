@@ -1,13 +1,13 @@
 import { combineReducers } from "redux";
-import courseReducer from "./reducers/courseReducer";
-import coursesReducer from "./reducers/coursesReducer";
-import groupsReducer from "./reducers/groupsReducer";
+import course from "./reducers/courseReducer";
+import courses from "./reducers/coursesReducer";
+import groups from "./reducers/groupsReducer";
 
 const createStudentReducers = () =>
 	combineReducers({
-		groups: groupsReducer,
-		courses: coursesReducer,
-		course: courseReducer,
+		groups,
+		courses,
+		course,
 	});
 
 export default createStudentReducers;

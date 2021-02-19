@@ -13,7 +13,8 @@ import * as yup from "yup";
 import { useMediaQuery } from "react-responsive";
 import clsx from "clsx";
 import logo_cedepas250 from "../images/logo_cedepas250.jpeg";
-import ButtonLink from "../components/ButtonLink";
+import ErrorMessage from "../components/ErrorMessage";
+import SwitchForm from "../components/SwitchForm";
 
 const schema = yup.object().shape({
 	email: yup
@@ -21,6 +22,7 @@ const schema = yup.object().shape({
 		.email("Debe de ser un correo")
 		.required("Es obligatorio"),
 	password: yup.string().required("Es obligatorio"),
+	remember: yup.boolean(),
 });
 const LoginView = () => {
 	const lg = useMediaQuery({
@@ -31,6 +33,7 @@ const LoginView = () => {
 		defaultValues: {
 			email: "cedepas_admin@gmail.com",
 			password: "contraseña",
+			remember: true,
 		},
 		resolver: yupResolver(schema),
 	});
@@ -38,11 +41,31 @@ const LoginView = () => {
 	const user = useSelector((state) => state.auth.user);
 	const action_error = useSelector((state) => state.auth.login_error);
 	const load = useSelector((state) => state.auth.login_load);
+	const is_register = useSelector((state) => state.register.register);
+	const error_register = useSelector((state) => state.register.get_errors);
+	const success_register = useSelector((state) => state.register.get_success);
+	const load_register = useSelector((state) => state.register.get_load);
 	const dispatch = useDispatch();
-	const on_submit = (data) => {
+	const on_submit = (d) => {
 		dispatch(loadLoginAction());
-		dispatch(loginAction(data.email, data.password));
+		dispatch(loginAction(d));
 	};
+	const btn_register = (
+		<div className="flex-column">
+			{load_register && <Load />}
+			{error_register && <ErrorMessage msg={error_register} />}
+			{is_register && !load_register && success_register && (
+				<h4 className="flex-column bg-warning margin-10 text-center box-shadow">
+					<a
+						href="http://localhost:8000/register"
+						className="padding-10 text-dark"
+					>
+						Registrarse
+					</a>
+				</h4>
+			)}
+		</div>
+	);
 	if (user) {
 		return (
 			<Redirect
@@ -93,24 +116,44 @@ const LoginView = () => {
 						label="Contraseña"
 						error={errors.password}
 					/>
+					<SwitchForm
+						text="Recordarme"
+						name="remember"
+						hidden={load}
+						error={errors.remember}
+						register={register}
+					/>
 					<Submit
 						hidden={load}
 						icon={faSignInAlt}
 						text="Ingresar"
 						center
+						add_class="box-shadow"
 					/>
-					<ButtonLink
-						to="/password_recovery"
-						text="¿Olvide mi contraseña?"
-						not_border
-						hidden={load}
-						bg_color="white"
-						center
-						text_color="danger"
-					/>
+					<p className="text-center">
+						{!load && (
+							<a
+								href="http://localhost:8000/password/reset"
+								className="bg-white text-danger"
+							>
+								<strong>
+									<i>¿Olvide mi contraseña?</i>
+								</strong>
+							</a>
+						)}
+					</p>
+					{!lg && (
+						<p className="text-center">
+							{!load && !lg && btn_register}
+						</p>
+					)}
 				</div>
 			</Form>
-			{lg && <div className="grow slider-login"></div>}
+			{lg && (
+				<div className="grow flex-column slider-login">
+					{btn_register}
+				</div>
+			)}
 		</div>
 	);
 };

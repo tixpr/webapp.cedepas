@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useRouteMatch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ErrorMessage from "../../../components/ErrorMessage";
 import Text from "../../../components/Text";
@@ -14,9 +14,12 @@ import {
 	getCourseGroupAction,
 } from "../../redux/actions/courseGroupActions";
 import StudentCourseGroupForm from "./Courses/StudentCourseGroupForm";
+import ButtonLink from "../../../components/ButtonLink";
+import { faIdCard } from "@fortawesome/free-solid-svg-icons";
 
 const CourseGroupView = () => {
 	const { course_group_id } = useParams();
+	const { url } = useRouteMatch();
 	const [add_student, setAddStudent] = useState(false);
 	const dispatch = useDispatch();
 	const course = useSelector((state) => state.admin.course_group.course);
@@ -54,6 +57,16 @@ const CourseGroupView = () => {
 				<ErrorMessage msg={action_errors} />
 			) : (
 				<>
+					<div className="flex-row justify-start">
+						<ButtonLink
+							className="box-shadow"
+							bg_color="success"
+							text_color="white"
+							icon={faIdCard}
+							text={"Pre-Matriculas"}
+							to={`${url}/matricula`}
+						/>
+					</div>
 					<div className="flex-row align-end justify-center wrap padding-10 bg-white">
 						<Text h2 className="grow text-dark margin-10">
 							Curso: {course && course.name}

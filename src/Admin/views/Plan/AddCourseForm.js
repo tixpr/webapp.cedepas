@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import {
-	clearPostCourseAction,
-	postCourseAction,
-	loadPostCourseAction,
+	clearPostCourseAreaAction,
+	postCourseAreaAction,
+	loadPostCourseAreaAction,
 } from "../../redux/actions/areasActions";
 import Form, { Submit } from "../../../components/Form";
 import InputForm from "../../../components/InputForm";
@@ -48,15 +48,15 @@ const AddCourseForm = ({ onSuccess, onCancel, area_id }) => {
 	);
 	const load = useSelector((state) => state.admin.areas.post_course_load);
 	const submit = (d) => {
-		dispatch(loadPostCourseAction());
-		dispatch(postCourseAction(d, area_id));
+		dispatch(loadPostCourseAreaAction());
+		dispatch(postCourseAreaAction(d, area_id));
 	};
 	const dispatch = useDispatch();
 	if (action_success) {
 		onSuccess && onSuccess();
 	}
 	useEffect(() => {
-		return dispatch(clearPostCourseAction());
+		return dispatch(clearPostCourseAreaAction());
 	}, [dispatch]);
 	return (
 		<Form
@@ -75,7 +75,6 @@ const AddCourseForm = ({ onSuccess, onCancel, area_id }) => {
 				<InputForm
 					label="Nombre del Curso"
 					name="name"
-					upper
 					hidden={load}
 					add_class="grow"
 					register={register}

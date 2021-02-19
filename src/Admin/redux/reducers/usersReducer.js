@@ -1,14 +1,12 @@
 import {
 	load_get_all_users_type,
 	get_all_users_type,
+	get_all_users_error_type,
 	set_filter_user_type,
 	post_user_type,
 	post_user_error_type,
 	load_post_user_type,
 	clear_post_user_type,
-	post_import_users_type,
-	post_import_users_error_type,
-	clear_import_users_type,
 	load_put_user_type,
 	clear_put_user_type,
 	put_user_type,
@@ -28,6 +26,7 @@ const initial = {
 	links: [],
 	total: 0,
 	is_load: true,
+	errors: null,
 	filters: {
 		students: false,
 		teachers: false,
@@ -42,8 +41,6 @@ const initial = {
 	delete_user_errors: null,
 	delete_user_load: false,
 	delete_user_success: false,
-	import_users_errors: null,
-	import_users_success: false,
 	active_user_errors: null,
 	active_user_load: false,
 	active_user_success: false,
@@ -56,6 +53,7 @@ const usersReducer = (state = initial, { type, payload }) => {
 				users: payload.data,
 				total: payload.meta.total,
 				links: payload.meta.links,
+				errors: null,
 				is_load: false,
 			});
 		case set_filter_user_type:
@@ -67,6 +65,15 @@ const usersReducer = (state = initial, { type, payload }) => {
 		case load_get_all_users_type:
 			return Object.assign(state, {
 				is_load: true,
+				errors: null,
+			});
+		case get_all_users_error_type:
+			return Object.assign(state, {
+				users: [],
+				total: 0,
+				links: [],
+				errors: payload,
+				is_load: false,
 			});
 		case post_user_type:
 			return Object.assign(state, {
@@ -93,21 +100,6 @@ const usersReducer = (state = initial, { type, payload }) => {
 				post_user_load: false,
 				post_user_errors: null,
 				post_user_success: false,
-			});
-		case post_import_users_type:
-			return Object.assign(state, {
-				import_users_success: true,
-				import_users_error: null,
-			});
-		case post_import_users_error_type:
-			return Object.assign(state, {
-				import_users_error: payload,
-				import_users_success: false,
-			});
-		case clear_import_users_type:
-			return Object.assign(state, {
-				import_users_error: null,
-				import_users_success: false,
 			});
 		case clear_put_user_type:
 			return Object.assign(state, {

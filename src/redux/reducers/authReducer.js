@@ -27,9 +27,9 @@ const authReducer = (state = initial, { type, payload }) => {
 				is_login_load: false,
 			});
 		case is_login_error_type:
-			return Object.assign(state,{
+			return Object.assign(state, {
 				is_login_error: null,
-				user: payload,
+				user: null,
 				is_login_load: false,
 			});
 		case load_login_type:

@@ -29,7 +29,6 @@ const AddStudentForm = ({ onCancel, onSuccess, course_group_id }) => {
 		resolver: yupResolver(add_student_schema),
 	});
 	const submit = (d) => {
-		console.info(d);
 		dispatch(loadPostStudentCourseGroupAction());
 		dispatch(postStudentCourseGroupAction(course_group_id, d));
 	};

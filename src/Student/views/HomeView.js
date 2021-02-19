@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouteMatch } from "react-router-dom";
 import ButtonLink from "../../components/ButtonLink";
 import ErrorMessage from "../../components/ErrorMessage";
 import ListView from "../../components/ListView";
@@ -11,6 +12,7 @@ import {
 } from "../redux/actions/groupsActions";
 
 const HomeView = ()=>{
+	const {url} = useRouteMatch();
 	const groups = useSelector((state) => state.student.groups.groups);
 	const load = useSelector((state) => state.student.groups.load);
 	const errors = useSelector((state) => state.student.groups.errors);
@@ -39,7 +41,7 @@ const HomeView = ()=>{
 								<ButtonLink
 									className="box-shadow"
 									key={`group-${group.id}`}
-									to={`/group/${group.id}`}
+									to={`${url}/group/${group.id}`}
 									bg_color="white"
 									text={group.name}
 								/>

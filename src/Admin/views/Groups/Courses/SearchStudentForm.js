@@ -31,7 +31,6 @@ const SearchStudentForm = ({ course_group_id }) => {
 	const action_errors = useSelector(state=>state.admin.course_group.search_errors);
 	const load = useSelector(state=>state.admin.course_group.search_load);
 	const submit = (d) => {
-		console.info(d);
 		dispatch(loadGetSearchStudentAction());
 		dispatch(getSearchStudentAction(course_group_id,d));
 	};

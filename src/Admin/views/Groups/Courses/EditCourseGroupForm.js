@@ -51,7 +51,6 @@ const EditCourseGroupForm = ({ onSuccess, course, onCancel }) => {
 	const teachers = useSelector((state) => state.admin.courses_group.teachers);
 	const dispatch = useDispatch();
 	const submit = (d) => {
-		console.info(d);
 		dispatch(loadPutCourseGroupAction());
 		dispatch(putCourseGroupAction(d, course.id));
 	};

@@ -30,7 +30,10 @@ const ErrorMessage = ({ msg, icon = null }) => {
 			) : (
 				<p className="flex-column grow">
 					<span className="msg-title">
-						{msg.data.message.length>0?msg.data.message:"Error"} ({msg.status})
+						{msg.data.message.length > 0
+							? msg.data.message
+							: "Error"}{" "}
+						({msg.status})
 					</span>
 					{msg.data.errors &&
 						Object.keys(msg.data.errors).map((v) => (

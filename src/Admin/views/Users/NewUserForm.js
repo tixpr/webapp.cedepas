@@ -63,7 +63,6 @@ const NewUserForm = ({ onSuccess, onCancel }) => {
 			{load && <Load />}
 			<InputForm
 				name="firstname"
-				upper
 				hidden={load}
 				register={register}
 				label="Nombre(s)"
@@ -71,7 +70,6 @@ const NewUserForm = ({ onSuccess, onCancel }) => {
 			/>
 			<InputForm
 				name="lastname"
-				upper
 				hidden={load}
 				register={register}
 				label="Apellidos"

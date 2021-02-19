@@ -74,7 +74,6 @@ const EditUserForm = ({ onSuccess, onCancel, user }) => {
 			{load && <Load />}
 			<InputForm
 				name="firstname"
-				upper
 				hidden={load}
 				register={register}
 				label="Nombre(s)"
@@ -82,7 +81,6 @@ const EditUserForm = ({ onSuccess, onCancel, user }) => {
 			/>
 			<InputForm
 				name="lastname"
-				upper
 				hidden={load}
 				register={register}
 				label="Apellidos"

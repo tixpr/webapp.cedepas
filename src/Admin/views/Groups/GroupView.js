@@ -11,7 +11,6 @@ import {
 	clearGetCoursesGroupAction,
 } from "../../redux/actions/coursesGroupActions";
 import CourseGroupBox from "./Courses/CourseGroupBox";
-import ImportCoursesForm from "./Courses/ImportCoursesForm";
 import AddCourseGroupForm from "./Courses/AddCourseGroupForm";
 import ErrorMessage from "../../../components/ErrorMessage";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -22,7 +21,6 @@ const GroupView = () => {
 	const dispatch = useDispatch();
 	const courses = useSelector((state) => state.admin.courses_group.data);
 	const [add, setAdd] = useState(false);
-	const [_import, setImport] = useState(false);
 	const action_errors = useSelector(
 		(state) => state.admin.courses_group.get_courses_group_errors
 	);
@@ -38,10 +36,10 @@ const GroupView = () => {
 	}, [dispatch, group_id]);
 	return (
 		<div className="flex-column justify-stretch">
-			{!add && !_import ? (
+			{!add ? (
 				<div className="flex-row align-center">
 					<Button
-						text="Nuevo curso"
+						text="Agregar Curso"
 						icon={faPlus}
 						text_color="white"
 						not_border
@@ -56,14 +54,6 @@ const GroupView = () => {
 						onCancel={() => setAdd(false)}
 					/>
 				) : null}
-			<div className="container-lg">
-				{_import ? (
-					<ImportCoursesForm
-						onSuccess={() => setImport(false)}
-						onCancel={() => setImport(false)}
-					/>
-				) : null}
-			</div>
 			{action_errors ? <ErrorMessage msg={action_errors} /> : null}
 			{is_load ? (
 				<Load />

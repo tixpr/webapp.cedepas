@@ -11,9 +11,10 @@ const Button = ({
 	center = false,
 	disabled = false,
 	text_color = null,
-	hidden=false,
+	hidden = false,
 	bg_color = null,
-	icon_size=null,
+	icon_size = null,
+	add_class = null,
 	...others
 }) => {
 	return (
@@ -30,11 +31,14 @@ const Button = ({
 				disabled && "disabled",
 				text_color && `text-${text_color}`,
 				!text_color && !primary && "text-primary",
-				hidden&&'hidden',
+				hidden && "hidden",
+				add_class
 			)}
 			{...others}
 		>
-			{icon ? <FontAwesomeIcon icon={icon} size={icon_size||"lg"} /> : null}
+			{icon ? (
+				<FontAwesomeIcon icon={icon} size={icon_size || "lg"} />
+			) : null}
 			{text ? (
 				<span
 					className={clsx(

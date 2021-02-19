@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import store, { history } from "./redux/store";
 import { isLoginAction } from "./redux/actions/authActions";
+import {getActiveRegisterAction} from './redux/actions/registerActions';
 
 import Splash from "./Splash";
 
@@ -19,7 +20,7 @@ axios.defaults.baseURL = "http://localhost:8000";
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 store.dispatch(isLoginAction());
-
+store.dispatch(getActiveRegisterAction());
 ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>

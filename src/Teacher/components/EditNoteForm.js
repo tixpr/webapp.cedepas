@@ -39,7 +39,6 @@ const EditNoteForm = ({ note, note_id, user_id, onCancel, onSuccess }) => {
 	const submit = (d) => {
 		dispatch(loadPutUserNoteAction());
 		dispatch(putUserNoteAction(user_id, note_id, d));
-		console.info("edit note submit", d);
 	};
 	useEffect(() => {
 		return () => dispatch(resetPutUserNoteAction());
