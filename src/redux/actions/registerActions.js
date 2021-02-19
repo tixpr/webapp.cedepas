@@ -6,7 +6,7 @@ export const get_active_register_error_type = "GET_ACTIVE_REGISTER_ERROR";
 export const getActiveRegisterAction = () => {
 	return (dispatch) => {
 		axios
-			.get("/api/register")
+			.get("/api/is_register")
 			.then(({ data }) => {
 				return dispatch({
 					type: get_active_register_type,
@@ -36,7 +36,7 @@ export const put_active_register_error_type = "PUT_ACTIVE_REGISTER_ERROR";
 export const putActiveRegisterAction = () => {
 	return (dispatch) => {
 		axios
-			.put("/api/register")
+			.put("/api/is_register")
 			.then(({ data }) => {
 				return dispatch({
 					type: put_active_register_type,
