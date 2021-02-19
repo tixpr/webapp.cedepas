@@ -31,8 +31,6 @@ const LoginView = () => {
 	const { register, handleSubmit, errors } = useForm({
 		mode: "onBlur",
 		defaultValues: {
-			email: "cedepas_admin@gmail.com",
-			password: "contraseña",
 			remember: true,
 		},
 		resolver: yupResolver(schema),
@@ -57,7 +55,7 @@ const LoginView = () => {
 			{is_register && !load_register && success_register && (
 				<h4 className="flex-column bg-warning margin-10 text-center box-shadow">
 					<a
-						href="http://localhost:8000/register"
+						href="https://api.seminarioandinosanpablo.org.pe/register"
 						className="padding-10 text-dark"
 					>
 						Registrarse
@@ -133,7 +131,7 @@ const LoginView = () => {
 					<p className="text-center">
 						{!load && (
 							<a
-								href="http://localhost:8000/password/reset"
+								href="https://api.seminarioandinosanpablo.org.pe/password/reset"
 								className="bg-white text-danger"
 							>
 								<strong>
