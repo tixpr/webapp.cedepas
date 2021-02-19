@@ -6,11 +6,9 @@ import thunk from "redux-thunk";
 
 export const history = createHashHistory();
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
 const store = createStore(
 	createRootReducer(history),
-	composeEnhancers(
+	compose(
 		applyMiddleware(
 			routerMiddleware(history), // for dispatching history actions
 			thunk
