@@ -51,7 +51,7 @@ const MyBox = ({ pago }) => {
 					>
 						<img
 							style={{ width: "100%", maxWidth: "600px" }}
-							src={`http://localhost:8000/storage/vauchers/${pago.vaucher}`}
+							src={`https://api.seminarioandinosanpablo.org.pe/storage/vauchers/${pago.vaucher}`}
 							alt="vaucher del pago"
 						/>
 						<Button
