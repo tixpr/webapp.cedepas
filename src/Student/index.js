@@ -6,16 +6,28 @@ import GroupsView from "./views/HomeView";
 import LibraryView from "../components/LibraryView";
 import GroupView from "./views/GroupView";
 import CourseView from "./views/CourseView";
+import PagosView from "./views/PagosView";
+import GroupsRegisterView from "./views/GroupsRegisterView";
+import CoursesGroupRegisterView from "./views/CoursesGroupRegisterView";
 import NotView from "../views/NotView";
 
 //iconos
-import { faFolderOpen, faBookReader } from "@fortawesome/free-solid-svg-icons";
+import {
+	faFolderOpen,
+	faBookReader,
+	faIdCard,
+} from "@fortawesome/free-solid-svg-icons";
 
 export const student_menu = [
 	{
 		to: "/academic",
 		icon: faFolderOpen,
 		text: "Cursos",
+	},
+	{
+		to: "/matriculas",
+		icon: faIdCard,
+		text: "Matriculas",
 	},
 	{
 		to: "/library",
@@ -40,6 +52,26 @@ const Student = () => {
 						exact
 						path="/academic/group/:group_id/:course_group_id"
 						component={CourseView}
+					/>
+					<Route
+						exact
+						path="/academic/group/:group_id/:course_group_id/pagos"
+						component={PagosView}
+					/>
+					<Route path="*" component={NotView} />
+				</Switch>
+			</Route>
+			<Route path="/matriculas">
+				<Switch>
+					<Route
+						exact
+						path="/matriculas/"
+						component={GroupsRegisterView}
+					/>
+					<Route
+						exact
+						path="/matriculas/:group_id"
+						component={CoursesGroupRegisterView}
 					/>
 					<Route path="*" component={NotView} />
 				</Switch>

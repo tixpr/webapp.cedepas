@@ -1,6 +1,8 @@
+import { faPaypal } from "@fortawesome/free-brands-svg-icons";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useRouteMatch } from "react-router-dom";
+import ButtonLink from "../../components/ButtonLink";
 import ErrorMessage from "../../components/ErrorMessage";
 import Load from "../../components/Load";
 import Notetd from "../../components/Notetd";
@@ -13,6 +15,7 @@ import {
 
 const CourseView = () => {
 	const { course_group_id } = useParams();
+	const { url } = useRouteMatch();
 	const course = useSelector((state) => state.student.course.course);
 	const teacher = useSelector((state) => state.student.course.teacher);
 	const presences = useSelector((state) => state.student.course.presences);
@@ -34,6 +37,16 @@ const CourseView = () => {
 	return (
 		<>
 			{errors && <ErrorMessage msg={errors} />}
+			<div className="flex-row">
+				<ButtonLink
+					icon={faPaypal}
+					text="Pagos"
+					text_color="white"
+					bg_color="purple"
+					not_border
+					to={`${url}/pagos`}
+				/>
+			</div>
 			<div className="flex-row align-end justify-center wrap padding-10 bg-white">
 				<Text h2 className="grow text-dark margin-10">
 					Curso: {course && course.name}
@@ -78,7 +91,7 @@ const CourseView = () => {
 					</tbody>
 				</table>
 			</div>
-			<hr/>
+			<hr />
 			<div className="grow bg-white padding-10 overflow-x">
 				<table>
 					<thead>

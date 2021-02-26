@@ -1,6 +1,8 @@
+import { faIdBadge } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouteMatch } from "react-router-dom";
+import Button from "../../components/Button";
 import ButtonLink from "../../components/ButtonLink";
 import ErrorMessage from "../../components/ErrorMessage";
 import ListView from "../../components/ListView";
@@ -11,8 +13,8 @@ import {
 	getGroupsAction,
 } from "../redux/actions/groupsActions";
 
-const HomeView = ()=>{
-	const {url} = useRouteMatch();
+const HomeView = () => {
+	const { url } = useRouteMatch();
 	const groups = useSelector((state) => state.student.groups.groups);
 	const load = useSelector((state) => state.student.groups.load);
 	const errors = useSelector((state) => state.student.groups.errors);
@@ -32,6 +34,24 @@ const HomeView = ()=>{
 				<ErrorMessage msg={errors} />
 			) : (
 				<>
+					<div className="flex-row justify-end">
+						<Button
+							icon={faIdBadge}
+							not_border
+							icon_size="2x"
+							bg_color="success"
+							text_color="white"
+							text="Ejemplo de certificado"
+							title="Reporte de usuario"
+							add_class="box-shadow"
+							onClick={() =>
+								window.open(
+									"http://localhost:8000/api/student/certificado",
+									"_blank"
+								)
+							}
+						/>
+					</div>
 					<Text h2 className="text-dark">
 						<center>GRUPOS</center>
 					</Text>

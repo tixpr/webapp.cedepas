@@ -1,23 +1,24 @@
-@import '../vars.scss';
+@import "../vars.scss";
 
-.btn{
+.btn {
 	border: 1px solid $primary;
 	font-size: 0.9rem;
 	padding: 5px;
 	font-weight: 500;
 	margin: 5px;
-	&.disabled{
-		color: $grey-400;
-		border-color: $grey-400;
+	&.disabled {
+		color: $grey-500 !important;
+		border-color: $grey-500 !important;
+		background-color: $grey-200 !important;
 		cursor: default;
 	}
-	&.not-border{
+	&.not-border {
 		border: none;
 	}
-	&>*{
+	& > * {
 		padding: 5px;
 	}
-	&.icon{
+	&.icon {
 		padding: 0;
 	}
 }

@@ -34,6 +34,7 @@ const Button = ({
 				hidden && "hidden",
 				add_class
 			)}
+			disabled={disabled}
 			{...others}
 		>
 			{icon ? (

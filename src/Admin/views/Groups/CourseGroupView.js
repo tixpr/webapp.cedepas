@@ -16,6 +16,7 @@ import {
 import StudentCourseGroupForm from "./Courses/StudentCourseGroupForm";
 import ButtonLink from "../../../components/ButtonLink";
 import { faIdCard } from "@fortawesome/free-solid-svg-icons";
+import { faPaypal } from "@fortawesome/free-brands-svg-icons";
 
 const CourseGroupView = () => {
 	const { course_group_id } = useParams();
@@ -65,6 +66,14 @@ const CourseGroupView = () => {
 							icon={faIdCard}
 							text={"Pre-Matriculas"}
 							to={`${url}/matricula`}
+						/>
+						<ButtonLink
+							className="box-shadow"
+							bg_color="purple"
+							text_color="white"
+							icon={faPaypal}
+							text={"Pagos"}
+							to={`${url}/pagos`}
 						/>
 					</div>
 					<div className="flex-row align-end justify-center wrap padding-10 bg-white">

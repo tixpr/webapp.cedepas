@@ -1,14 +1,23 @@
 import React from "react";
-import './Progress.scss';
+import clsx from "clsx";
+import "./Progress.scss";
 
-const Progress = ({ progress }) => {
+const Progress = ({ progress, hidden }) => {
 	return (
-		<div className="progress flex-column nwrap grow justify-stretch bg-white">
-			<span className="flex-row align-center justify-center">
-				{(progress===100)?`Procesando...`:`Enviado (${progress}%)`}
-			</span>
-			<div className="flex-column justify-start percent-content">
-				<div className="percent bg-success" style={{ width: `${progress}%` }}></div>
+		<div
+			className={clsx(
+				"progress flex-column nowrap grow justify-stretch bg-grey-300",
+				hidden && "hidden"
+			)}
+		>
+			<div className="grow flex-row justify-start">
+				<div
+					className="bg-success"
+					style={{ width: `${progress}%` }}
+				></div>
+			</div>
+			<div className="p-text flex-row flex-center">
+				<span>{`${progress}%`}</span>
 			</div>
 		</div>
 	);

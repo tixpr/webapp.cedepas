@@ -72,7 +72,7 @@ const LibraryView = () => {
 					{books.map((book) => (
 						<div
 							key={`book-v-${book.id}`}
-							className="flex-column bg-white box-shadow padding-10"
+							className="flex-column bg-white box-shadow padding-10 bd-grey-500"
 						>
 							<Text h4 className="text-dark text-justify">
 								{`${book.title_editor}`}
