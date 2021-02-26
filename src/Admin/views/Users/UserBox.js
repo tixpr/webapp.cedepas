@@ -10,6 +10,7 @@ import {
 	faTrash,
 	faExclamationCircle,
 	faCheck,
+	faIdBadge,
 } from "@fortawesome/free-solid-svg-icons";
 
 const UserBox = ({ user }) => {
@@ -63,6 +64,18 @@ const UserBox = ({ user }) => {
 				>
 					{`${firstname} ${lastname}`}
 				</Text>
+				<Button
+					icon={faIdBadge}
+					not_border
+					icon_size="1x"
+					title="Reporte de usuario"
+					onClick={() =>
+						window.open(
+							`http://localhost:8000/api/certificado/${user.id}`,
+							"_blank"
+						)
+					}
+				/>
 				<Button
 					icon={faEdit}
 					not_border

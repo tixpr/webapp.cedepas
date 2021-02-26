@@ -1,44 +1,40 @@
 import React, { useEffect } from "react";
 import clsx from "clsx";
 import {
-	activeUserAction,
-	loadActiveUserAction,
-	clearActiveUserAction,
-} from "../../redux/actions/usersActions";
+	loadDeletePagoAction,
+	clearDeletePagoAction,
+	deletePagoAction,
+} from "../../../redux/actions/pagosActions";
 import { useForm } from "react-hook-form";
-import Form, { Submit } from "../../../components/Form";
-import Button from "../../../components/Button";
-import Load from "../../../components/Load";
-import {
-	faTimes,
-	faUserCheck,
-	faUserLock,
-} from "@fortawesome/free-solid-svg-icons";
+import Form, { Submit } from "../../../../components/Form";
+import Button from "../../../../components/Button";
+import Load from "../../../../components/Load";
 import { useSelector, useDispatch } from "react-redux";
+import { faTrash, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useMediaQuery } from "react-responsive";
 
-const ActiveUserForm = ({ onCancel, onSuccess, user }) => {
+const DeleteUserForm = ({ onCancel, onSuccess, pago_id }) => {
 	const lg = useMediaQuery({
 		query: "(min-width: 768px)",
 	});
 	const { handleSubmit } = useForm();
-	const load = useSelector((state) => state.admin.users.active_user_load);
+	const load = useSelector((state) => state.admin.pagos.delete_pago_load);
 	const action_error = useSelector(
-		(state) => state.admin.users.active_user_errors
+		(state) => state.admin.pagos.delete_pago_errors
 	);
 	const action_success = useSelector(
-		(state) => state.admin.users.active_user_success
+		(state) => state.admin.pagos.delete_pago_success
 	);
 	const dispatch = useDispatch();
 	const submit = () => {
-		dispatch(loadActiveUserAction());
-		dispatch(activeUserAction(user.id));
+		dispatch(loadDeletePagoAction());
+		dispatch(deletePagoAction(pago_id));
 	};
 	if (action_success) {
 		onSuccess && onSuccess();
 	}
 	useEffect(() => {
-		return () => dispatch(clearActiveUserAction());
+		return () => dispatch(clearDeletePagoAction());
 	}, [dispatch]);
 	return (
 		<Form
@@ -56,23 +52,19 @@ const ActiveUserForm = ({ onCancel, onSuccess, user }) => {
 			>
 				<Submit
 					center
+					text="Confirme la elimnación del pago"
+					icon={faTrash}
+					bg_color="danger"
 					hidden={load}
-					icon={user.active ? faUserLock : faUserCheck}
-					text={
-						user.active
-							? "Click para inhabilitar usuario"
-							: "Click para habilitar usuario"
-					}
-					bg_color={user.active ? "danger" : "primary"}
 					add_class="grow"
 				/>
 				<Button
-					icon={faTimes}
 					text="Cancelar"
 					hidden={load}
 					center
+					icon={faTimes}
 					text_color="white"
-					bg_color={user.active ? "primary" : "danger"}
+					bg_color="primary"
 					onClick={onCancel}
 					add_class="grow"
 				/>
@@ -81,4 +73,4 @@ const ActiveUserForm = ({ onCancel, onSuccess, user }) => {
 	);
 };
 
-export default ActiveUserForm;
+export default DeleteUserForm;

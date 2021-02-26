@@ -1,13 +1,13 @@
-@import '../vars.scss'; 
+@import "../vars.scss";
 
-.progress{
-	margin: 10px;
+.progress {
+	position: relative;
+	height: 30px;
+	margin: 0 5px;
 }
-
-.percent-content{
-	border: 2px solid $grey-300;
-}
-.percent{
-	height: 5px;
-	min-height: 5px;
+.p-text {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: 500;
 }

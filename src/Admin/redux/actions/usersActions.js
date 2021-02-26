@@ -176,8 +176,8 @@ export const activeUserAction = (user_id) => {
 		axios
 			.put(`api/users/${user_id}/active`)
 			.then(({ data }) => {
-				let users = getState().admin.users.users;
-				let i = users.findIndex((e) => e.id === user_id);
+				const users = getState().admin.users.users;
+				const i = users.findIndex((e) => e.id === user_id);
 				let nd = [].concat(users);
 				nd[i] = data.data;
 				return dispatch({

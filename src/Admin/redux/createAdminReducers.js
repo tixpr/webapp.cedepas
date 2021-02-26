@@ -8,6 +8,7 @@ import courses_group from "./reducers/coursesGroupReducer";
 import course_group from "./reducers/courseGroupReducer";
 import library from "./reducers/libraryReducer";
 import matricula from "./reducers/matriculasReducer";
+import pagos from "./reducers/pagosReducer";
 
 const createAdminReducers = () =>
 	combineReducers({
@@ -20,6 +21,7 @@ const createAdminReducers = () =>
 		courses_group,
 		course_group,
 		matricula,
+		pagos,
 	});
 
 export default createAdminReducers;

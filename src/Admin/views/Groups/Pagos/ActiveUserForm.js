@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import clsx from "clsx";
 import {
-	activeUserAction,
-	loadActiveUserAction,
-	clearActiveUserAction,
-} from "../../redux/actions/usersActions";
+	pagoActiveUserAction,
+	loadPagoActiveUserAction,
+	clearPagoActiveUserAction,
+} from "../../../redux/actions/pagosActions";
 import { useForm } from "react-hook-form";
-import Form, { Submit } from "../../../components/Form";
-import Button from "../../../components/Button";
-import Load from "../../../components/Load";
+import Form, { Submit } from "../../../../components/Form";
+import Button from "../../../../components/Button";
+import Load from "../../../../components/Load";
 import {
 	faTimes,
 	faUserCheck,
@@ -22,23 +22,23 @@ const ActiveUserForm = ({ onCancel, onSuccess, user }) => {
 		query: "(min-width: 768px)",
 	});
 	const { handleSubmit } = useForm();
-	const load = useSelector((state) => state.admin.users.active_user_load);
+	const load = useSelector((state) => state.admin.pagos.active_user_load);
 	const action_error = useSelector(
-		(state) => state.admin.users.active_user_errors
+		(state) => state.admin.pagos.active_user_errors
 	);
 	const action_success = useSelector(
-		(state) => state.admin.users.active_user_success
+		(state) => state.admin.pagos.active_user_success
 	);
 	const dispatch = useDispatch();
 	const submit = () => {
-		dispatch(loadActiveUserAction());
-		dispatch(activeUserAction(user.id));
+		dispatch(loadPagoActiveUserAction());
+		dispatch(pagoActiveUserAction(user.id));
 	};
 	if (action_success) {
 		onSuccess && onSuccess();
 	}
 	useEffect(() => {
-		return () => dispatch(clearActiveUserAction());
+		return () => dispatch(clearPagoActiveUserAction());
 	}, [dispatch]);
 	return (
 		<Form

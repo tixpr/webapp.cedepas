@@ -110,7 +110,7 @@ const MatriculaView = () => {
 		return () => dispatch(clearMatriculaGroupsAction());
 	}, [dispatch, course_group_id]);
 	if (post_success) {
-		return <Redirect to={url.slice(0, -9)} />;
+		return <Redirect to={url.slice(0, -10)} />;
 	}
 	return (
 		<>
@@ -126,15 +126,17 @@ const MatriculaView = () => {
 								<Load />
 							</div>
 						)}
-						<Button
-							text="Registrar Matriculas"
-							icon={faCheckDouble}
-							hidden={post_load || valid}
-							icon_size="1x"
-							text_color="white"
-							bg_color="success"
-							onClick={() => setValid(true)}
-						/>
+						{students.length > 0 && (
+							<Button
+								text="Registrar Matriculas"
+								icon={faCheckDouble}
+								hidden={post_load || valid}
+								icon_size="1x"
+								text_color="white"
+								bg_color="success"
+								onClick={() => setValid(true)}
+							/>
+						)}
 						<Button
 							text="Confirmar para registrar matriculas"
 							icon={faCheckDouble}
@@ -142,10 +144,14 @@ const MatriculaView = () => {
 							icon_size="1x"
 							text_color="white"
 							bg_color="primary"
+							center
+							add_class="grow"
 							onClick={realizar_matricula}
 						/>
 						<Button
 							text="Cancelar"
+							center
+							add_class="grow"
 							icon={faTimes}
 							hidden={!valid || post_load}
 							icon_size="1x"
@@ -156,18 +162,27 @@ const MatriculaView = () => {
 					</div>
 					<Text
 						h2
-						className="grow text-grey-700 padding-10 text-center bg-white"
+						className="text-grey-700 padding-10 text-center bg-white"
 					>
 						Pre Matriculados
 					</Text>
+					{students.length === 0 && (
+						<Text
+							h4
+							className="grow text-danger padding-10 text-center bg-white"
+						>
+							No existen estudiantes Pre Matriculados
+						</Text>
+					)}
 					<ListView>
-						{students.map((st) => (
-							<PreMatriculaBox
-								key={`matr-user-${st.id}`}
-								student={st}
-								course_group_id={course_group_id}
-							/>
-						))}
+						{students.length > 0 &&
+							students.map((st) => (
+								<PreMatriculaBox
+									key={`matr-user-${st.id}`}
+									student={st}
+									course_group_id={course_group_id}
+								/>
+							))}
 					</ListView>
 				</>
 			)}
