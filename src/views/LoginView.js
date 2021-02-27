@@ -48,22 +48,6 @@ const LoginView = () => {
 		dispatch(loadLoginAction());
 		dispatch(loginAction(d));
 	};
-	const btn_register = (
-		<div className="flex-column">
-			{load_register && <Load />}
-			{error_register && <ErrorMessage msg={error_register} />}
-			{is_register && !load_register && success_register && (
-				<h4 className="flex-column bg-warning margin-10 text-center box-shadow">
-					<a
-						href="https://api.seminarioandinosanpablo.org.pe/register"
-						className="padding-10 text-dark"
-					>
-						Registrarse
-					</a>
-				</h4>
-			)}
-		</div>
-	);
 	if (user) {
 		return (
 			<Redirect
@@ -142,14 +126,53 @@ const LoginView = () => {
 					</p>
 					{!lg && (
 						<p className="text-center">
-							{!load && !lg && btn_register}
+							{!load && !lg && (
+								<div className="flex-column">
+									{load_register && <Load />}
+									{error_register && (
+										<ErrorMessage msg={error_register} />
+									)}
+									{is_register &&
+										!load_register &&
+										success_register && (
+											<h4 className="flex-column bg-warning margin-10 text-center box-shadow">
+												<a
+													href="http://localhost:8000/register"
+													className="padding-10 text-dark"
+												>
+													Registrarse
+												</a>
+											</h4>
+										)}
+								</div>
+							)}
 						</p>
 					)}
 				</div>
 			</Form>
 			{lg && (
 				<div className="grow flex-column slider-login">
-					{btn_register}
+					<div className="grow flex-row flex-center bg-transparent">
+						{load_register && <Load />}
+						{error_register && (
+							<ErrorMessage msg={error_register} />
+						)}
+						{is_register && !load_register && success_register && (
+							<a
+								style={{
+									width: "250px",
+									height: "250px",
+									fontSize: "2rem",
+									borderRadius: "50%",
+									border: "3px solid white",
+								}}
+								href="http://localhost:8000/register"
+								className="flex-row flex-center boton-transparent text-center text-white box-shadow"
+							>
+								<strong>Registrarme</strong>
+							</a>
+						)}
+					</div>
 				</div>
 			)}
 		</div>

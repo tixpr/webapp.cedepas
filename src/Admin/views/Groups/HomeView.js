@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./Pagebox.scss";
 import clsx from "clsx";
 import { useRouteMatch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,6 +9,7 @@ import Text from "../../../components/Text";
 import ListView from "../../../components/ListView";
 import Paginate from "../../../components/Paginate";
 import Load from "../../../components/Load";
+
 //new period actions
 import {
 	loadGroupsAction,
@@ -236,8 +238,8 @@ const GroupBox = ({ period, url, ...others }) => {
 			className={clsx(
 				lg && "flex-row align-center justify-start",
 				!lg && "flex-column-reverse",
-				pre_register && "bd-success",
-				!pre_register && "bd-grey-500",
+				pre_register && "true",
+				!pre_register && "false",
 				"bg-white box-shadow"
 			)}
 			{...others}
