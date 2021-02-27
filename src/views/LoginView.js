@@ -137,7 +137,7 @@ const LoginView = () => {
 										success_register && (
 											<h4 className="flex-column bg-warning margin-10 text-center box-shadow">
 												<a
-													href="http://localhost:8000/register"
+													href="https://api.seminarioandinosanpablo.org.pe/register"
 													className="padding-10 text-dark"
 												>
 													Registrarse
@@ -166,7 +166,7 @@ const LoginView = () => {
 									borderRadius: "50%",
 									border: "3px solid white",
 								}}
-								href="http://localhost:8000/register"
+								href="https://api.seminarioandinosanpablo.org.pe/register"
 								className="flex-row flex-center boton-transparent text-center text-white box-shadow"
 							>
 								<strong>Registrarme</strong>
