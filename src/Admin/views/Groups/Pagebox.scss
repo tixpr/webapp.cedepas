@@ -1,0 +1,9 @@
+@import "../../../vars.scss";
+.true {
+	border: 1px solid $success;
+	border-left: 15px solid $success;
+}
+.false {
+	border: 1px solid $grey-500;
+	border-left: 15px solid $grey-400;
+}

@@ -110,7 +110,7 @@ const AddPagoForm = ({ onSucess, onCancel }) => {
 					<Submit
 						disabled={!up_success}
 						hidden={load}
-						text="Editar"
+						text="Aceptar"
 						icon={faCheck}
 					/>
 					<Button
