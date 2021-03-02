@@ -64,27 +64,27 @@ const UserBox = ({ user }) => {
 				>
 					{`${firstname} ${lastname}`}
 				</Text>
+				<Button
+					icon={faIdBadge}
+					not_border
+					icon_size="1x"
+					title="Reporte de usuario"
+					onClick={() =>
+						window.open(
+							`https://api.seminarioandinosanpablo.org.pe/api/certificado/${user.id}`,
+							"_blank"
+						)
+					}
+				/>
+				<Button
+					icon={faEdit}
+					not_border
+					icon_size="1x"
+					title="Editar usuario"
+					onClick={() => setEdit(true)}
+				/>
 				{id === 1 ? null : (
 					<>
-						<Button
-							icon={faIdBadge}
-							not_border
-							icon_size="1x"
-							title="Reporte de usuario"
-							onClick={() =>
-								window.open(
-									`https://api.seminarioandinosanpablo.org.pe/api/certificado/${user.id}`,
-									"_blank"
-								)
-							}
-						/>
-						<Button
-							icon={faEdit}
-							not_border
-							icon_size="1x"
-							title="Editar usuario"
-							onClick={() => setEdit(true)}
-						/>
 						<Button
 							icon={faTrash}
 							not_border
