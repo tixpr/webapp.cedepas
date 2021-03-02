@@ -1,6 +1,6 @@
 import React from "react";
 import "./Loading.scss";
-import logo_load from '../images/logo_cedepas250.jpeg';
+import logo_load from '../images/loading.png';
 
 const Loading = () => {
 	return (
