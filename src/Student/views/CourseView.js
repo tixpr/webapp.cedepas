@@ -65,28 +65,36 @@ const CourseView = () => {
 				<table>
 					<thead>
 						<tr>
-							<th colSpan={notes.length}>Notas</th>
+							<th colSpan={notes.length > 0 ? notes.length : 1}>
+								Notas
+							</th>
 						</tr>
 						<tr>
-							{notes.map((n) => (
-								<th key={`note-${n.id}-${course_group_id}`}>
-									{n.name}
-								</th>
-							))}
+							{notes.length > 0
+								? notes.map((n) => (
+										<th
+											key={`note-${n.id}-${course_group_id}`}
+										>
+											{n.name}
+										</th>
+								  ))
+								: null}
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							{notes.map((note) => (
-								<Notetd
-									key={`note${note.id}-st-${course_group_id}`}
-									note={
-										user_notes.find(
-											(n) => n.note_id === note.id
-										).note
-									}
-								/>
-							))}
+							{notes.length > 0
+								? notes.map((note) => (
+										<Notetd
+											key={`note${note.id}-st-${course_group_id}`}
+											note={
+												user_notes.find(
+													(n) => n.note_id === note.id
+												).note
+											}
+										/>
+								  ))
+								: null}
 						</tr>
 					</tbody>
 				</table>
@@ -96,28 +104,41 @@ const CourseView = () => {
 				<table>
 					<thead>
 						<tr>
-							<th colSpan={presences.length}>Asistencias</th>
+							<th
+								colSpan={
+									presences.length > 0 ? presences.length : 1
+								}
+							>
+								Asistencias
+							</th>
 						</tr>
 						<tr>
-							{presences.map((p) => (
-								<th key={`presence-${p.id}-${course_group_id}`}>
-									{p.date.slice(5)}
-								</th>
-							))}
+							{presences.length > 0
+								? presences.map((p) => (
+										<th
+											key={`presence-${p.id}-${course_group_id}`}
+										>
+											{p.date.slice(5)}
+										</th>
+								  ))
+								: null}
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							{presences.map((p) => (
-								<Presencetd
-									key={`presence${p.id}-st-${course_group_id}`}
-									presence={
-										user_presences.find(
-											(up) => up.presence_id === p.id
-										).presence
-									}
-								/>
-							))}
+							{presences.length > 0
+								? presences.map((p) => (
+										<Presencetd
+											key={`presence${p.id}-st-${course_group_id}`}
+											presence={
+												user_presences.find(
+													(up) =>
+														up.presence_id === p.id
+												).presence
+											}
+										/>
+								  ))
+								: null}
 						</tr>
 					</tbody>
 				</table>

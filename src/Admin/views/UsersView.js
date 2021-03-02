@@ -17,7 +17,10 @@ import NewUserForm from "./Users/NewUserForm";
 import { faUserPlus, faSearch } from "@fortawesome/free-solid-svg-icons";
 import UserBox from "./Users/UserBox";
 import ErrorMessage from "../../components/ErrorMessage";
-import { loadPutActiveRegisterAction, putActiveRegisterAction } from "../../redux/actions/registerActions";
+import {
+	loadPutActiveRegisterAction,
+	putActiveRegisterAction,
+} from "../../redux/actions/registerActions";
 
 const UsersView = () => {
 	const { register, handleSubmit } = useForm();
@@ -26,9 +29,9 @@ const UsersView = () => {
 	const total = useSelector((state) => state.admin.users.total);
 	const load = useSelector((state) => state.admin.users.is_load);
 	const errors = useSelector((state) => state.admin.users.errors);
-	const is_reg = useSelector(state=>state.register.register);
-	const errors_reg = useSelector(state=>state.register.put_errors);
-	const load_reg = useSelector(state=>state.register.put_load);
+	const is_reg = useSelector((state) => state.register.register);
+	const errors_reg = useSelector((state) => state.register.put_errors);
+	const load_reg = useSelector((state) => state.register.put_load);
 	const [view_new, setViewNew] = useState(false);
 	const dispatch = useDispatch();
 	const on_paginate = (url) => {
@@ -44,7 +47,7 @@ const UsersView = () => {
 		dispatch(loadGetAllUsersAction());
 		dispatch(getAllUsersAction());
 	};
-	const changeRegister=()=>{
+	const changeRegister = () => {
 		dispatch(loadPutActiveRegisterAction());
 		dispatch(putActiveRegisterAction());
 	};
@@ -72,14 +75,14 @@ const UsersView = () => {
 						text="Nuevo"
 						onClick={() => setViewNew(true)}
 					/>
-					{load_reg&&<Load/>}
-					{errors_reg?<ErrorMessage msg={errors_reg}/>:null}
+					{load_reg && <Load />}
+					{errors_reg ? <ErrorMessage msg={errors_reg} /> : null}
 					<SwitchForm
 						text="Registro de usuarios"
 						name="remember"
 						hidden={load_reg}
 						checked={is_reg}
-						onChange={()=>changeRegister()}
+						onChange={() => changeRegister()}
 					/>
 				</div>
 				<div className="flex-row justify-end grow">
@@ -131,9 +134,10 @@ const UsersView = () => {
 				<Load />
 			) : (
 				<ListView>
-					{users.map((user) => (
-						<UserBox key={`user-${user.id}`} user={user} />
-					))}
+					{users.length > 0 &&
+						users.map((user) => (
+							<UserBox key={`user-${user.id}`} user={user} />
+						))}
 				</ListView>
 			)}
 			{paginate}

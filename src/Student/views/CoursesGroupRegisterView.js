@@ -18,7 +18,7 @@ import { faIdCard } from "@fortawesome/free-solid-svg-icons";
 const PreBox = ({ course }) => {
 	const [reg, setReg] = useState(false);
 	const dispatch = useDispatch();
-	const { id, name } = course;
+	const { id, teacher, name } = course;
 	const load = useSelector((state) => state.student.register.post_load);
 	const errors = useSelector((state) => state.student.register.post_errors);
 	const preMatricula = (e) => {
@@ -32,25 +32,37 @@ const PreBox = ({ course }) => {
 	}, [dispatch]);
 	return (
 		<div className="box-shadow bg-white flex-column">
-			<div className="flex-column">
-				{errors && <ErrorMessage msg={errors} />}
-			</div>
-			<div className="flex-row align-center">
-				<Text h4 className="grow text-grey-700">
-					{name}
-				</Text>
-				{load && reg && <Load />}
-				<Button
-					icon={faIdCard}
-					text="Pre-Matricularse"
-					text_color="white"
-					disabled={load}
-					hidden={reg}
-					bg_color="primary"
-					not_border
-					onClick={preMatricula}
-				/>
-			</div>
+			{load && reg ? (
+				<Load />
+			) : (
+				<>
+					<div className="flex-column">
+						{errors && <ErrorMessage msg={errors} />}
+					</div>
+					<div className="flex-row align-center">
+						<div className="grow flex-column">
+							<Text h4 className="text-grey-700">
+								{`Curso: ${name}`}
+							</Text>
+							{teacher ? (
+								<Text h5 className="text-grey-600">
+									{`Docente: ${teacher}`}
+								</Text>
+							) : null}
+						</div>
+						<Button
+							icon={faIdCard}
+							text="Pre-Matricularse"
+							text_color="white"
+							disabled={load}
+							hidden={reg}
+							bg_color="primary"
+							not_border
+							onClick={preMatricula}
+						/>
+					</div>
+				</>
+			)}
 		</div>
 	);
 };

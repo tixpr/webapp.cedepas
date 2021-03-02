@@ -5,6 +5,7 @@ import "./FileInputForm.scss";
 const FileInputForm = ({
 	onChange = null,
 	name,
+	text = "",
 	hidden = false,
 	...others
 }) => {
@@ -15,6 +16,7 @@ const FileInputForm = ({
 		temp && setFile(temp);
 		onChange && onChange(temp);
 	};
+	const _text = text.length > 0 ? text : "Archivo";
 	return (
 		<label
 			className={clsx(
@@ -31,7 +33,7 @@ const FileInputForm = ({
 				type="file"
 				{...others}
 			/>
-			{file ? `Archivo: ${file.name}` : "Archivo: "}
+			{file ? `Archivo: ${file.name}` : `${_text}: `}
 		</label>
 	);
 };
