@@ -23,16 +23,16 @@
 	display: block;
 	position: relative;
 	margin: 10px;
-	width: 150px;
-	height: 150px;
-	transform: rotate(45deg);
+	width: 250px;
+	height: 250px;
+	//transform: rotate(45deg);
 	animation: animacion 1s linear infinite;
 }
 .l-box {
 	position: absolute;
-	width: 75px;
-	height: 75px;
-	animation: rotar 1s linear infinite;
+	width: 125px;
+	height: 125px;
+	animation: rotar 0.5s linear infinite;
 	&:nth-child(1) {
 		top: 0;
 		left: 0;
@@ -56,24 +56,24 @@
 }
 @keyframes animacion {
 	0% {
-		width: 150px;
-		height: 150px;
+		width: 250px;
+		height: 250px;
 	}
 	10% {
-		width: 150px;
-		height: 150px;
+		width: 250px;
+		height: 250px;
 	}
 	50% {
-		width: 225px;
-		height: 225px;
+		width: 500px;
+		height: 500px;
 	}
 	90% {
-		width: 150px;
-		height: 150px;
+		width: 250px;
+		height: 250px;
 	}
 	100% {
-		width: 150px;
-		height: 150px;
+		width: 250px;
+		height: 250px;
 	}
 }
 @keyframes rotar {

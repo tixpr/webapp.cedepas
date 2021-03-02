@@ -31,8 +31,8 @@ const LoginView = () => {
 	const { register, handleSubmit, errors } = useForm({
 		mode: "onBlur",
 		defaultValues: {
-			email: "cedepas_admin@gmail.com",
-			password: "contraseña",
+			email: "cedepas.webapp@gmail.com",
+			password: "c3d3p@sc3ntr0",
 			remember: true,
 		},
 		resolver: yupResolver(schema),

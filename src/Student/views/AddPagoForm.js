@@ -87,6 +87,7 @@ const AddPagoForm = ({ onSucess, onCancel }) => {
 				<FileInputForm
 					accept="image/*"
 					name="vaucher_file"
+					text="Subir imagen del vaucher"
 					hidden={load}
 					onChange={selectFile}
 				/>

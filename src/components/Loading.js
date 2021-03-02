@@ -1,11 +1,11 @@
 import React from "react";
 import "./Loading.scss";
-import logo_load from '../images/logo_load_2.jpg';
+import logo_load from '../images/logo_cedepas250.jpeg';
 
 const Loading = () => {
 	return (
 		<div className="grow flex-column flex-center bg-grey-900">
-			<div className="grow flex-row flex-center">
+			<div className="flex-row flex-center">
 				<h1 className="text-danger">
 					CEDEPAS-CENTRO
 				</h1>

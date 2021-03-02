@@ -14,7 +14,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const UserBox = ({ user }) => {
-	const { active, firstname, lastname } = user;
+	const { id, active, firstname, lastname } = user;
 	const [edit, setEdit] = useState(false);
 	const [trash, setTrash] = useState(false);
 	const [enabled, setEnabled] = useState(false);
@@ -64,41 +64,47 @@ const UserBox = ({ user }) => {
 				>
 					{`${firstname} ${lastname}`}
 				</Text>
-				<Button
-					icon={faIdBadge}
-					not_border
-					icon_size="1x"
-					title="Reporte de usuario"
-					onClick={() =>
-						window.open(
-							`http://localhost:8000/api/certificado/${user.id}`,
-							"_blank"
-						)
-					}
-				/>
-				<Button
-					icon={faEdit}
-					not_border
-					icon_size="1x"
-					title="Editar usuario"
-					onClick={() => setEdit(true)}
-				/>
-				<Button
-					icon={faTrash}
-					not_border
-					icon_size="1x"
-					text_color="danger"
-					title="Eliminar usuario"
-					onClick={() => setTrash(true)}
-				/>
-				<Button
-					icon={active ? faExclamationCircle : faCheck}
-					not_border
-					icon_size="1x"
-					text_color={active ? "warning" : "success"}
-					title={`${active ? "Desabilitar " : "Habilitar "} usuario`}
-					onClick={() => setEnabled(true)}
-				/>
+				{id === 1 ? null : (
+					<>
+						<Button
+							icon={faIdBadge}
+							not_border
+							icon_size="1x"
+							title="Reporte de usuario"
+							onClick={() =>
+								window.open(
+									`http://localhost:8000/api/certificado/${user.id}`,
+									"_blank"
+								)
+							}
+						/>
+						<Button
+							icon={faEdit}
+							not_border
+							icon_size="1x"
+							title="Editar usuario"
+							onClick={() => setEdit(true)}
+						/>
+						<Button
+							icon={faTrash}
+							not_border
+							icon_size="1x"
+							text_color="danger"
+							title="Eliminar usuario"
+							onClick={() => setTrash(true)}
+						/>
+						<Button
+							icon={active ? faExclamationCircle : faCheck}
+							not_border
+							icon_size="1x"
+							text_color={active ? "warning" : "success"}
+							title={`${
+								active ? "Desabilitar " : "Habilitar "
+							} usuario`}
+							onClick={() => setEnabled(true)}
+						/>
+					</>
+				)}
 			</div>
 		</div>
 	);
