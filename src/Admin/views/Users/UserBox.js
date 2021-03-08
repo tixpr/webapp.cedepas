@@ -71,7 +71,7 @@ const UserBox = ({ user }) => {
 					title="Reporte de usuario"
 					onClick={() =>
 						window.open(
-							`https://api.seminarioandinosanpablo.org.pe/api/certificado/${user.id}`,
+							`${window.base_url}/api/certificado/${user.id}`,
 							"_blank"
 						)
 					}

@@ -52,7 +52,7 @@ const DeleteAreaform = ({ area_id, onSuccess, onCancel }) => {
 				)}
 			>
 				<Text h3 className={clsx("grow text-danger", load && "hidden")}>
-					<center>Confirme la elimnación</center>
+					<center>Confirme la eliminación</center>
 				</Text>
 				<Submit
 					hidden={load}

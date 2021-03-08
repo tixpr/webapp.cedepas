@@ -47,7 +47,7 @@ const DeleteCourseform = ({ course_id, area_id, onSuccess, onCancel }) => {
 			{load && <Load />}
 			<div className={clsx(lg && "flex-row align-center", !lg && "flex-column")}>
 				<Text h3 className={clsx("grow text-danger", load && "hidden")}>
-					<center>Confirme la elimnación</center>
+					<center>Confirme la eliminación</center>
 				</Text>
 				<Submit
 					hidden={load}

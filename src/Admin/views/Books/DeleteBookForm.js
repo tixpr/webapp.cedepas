@@ -52,7 +52,7 @@ const DeleteBookForm = ({ onCancel, onSuccess, book_id }) => {
 				)}
 			>
 				<Text h3 className={clsx("grow text-danger", load && "hidden")}>
-					<center>Confirme la elimnación del material</center>
+					<center>Confirme la eliminación del material</center>
 				</Text>
 				<Submit
 					center

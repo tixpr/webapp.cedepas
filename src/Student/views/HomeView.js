@@ -46,7 +46,7 @@ const HomeView = () => {
 							add_class="box-shadow"
 							onClick={() =>
 								window.open(
-									"https://api.seminarioandinosanpablo.org.pe/api/student/certificado",
+									`${window.base_url}/api/student/certificado`,
 									"_blank"
 								)
 							}

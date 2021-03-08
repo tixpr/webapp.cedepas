@@ -15,7 +15,9 @@ import Splash from "./Splash";
 
 window.axios = axios;
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = "https://api.seminarioandinosanpablo.org.pe";
+//window.base_url = "https://api.seminarioandinosanpablo.org.pe";
+window.base_url = "http://localhost:8000";
+axios.defaults.baseURL = window.base_url;
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 store.dispatch(isLoginAction());

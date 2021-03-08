@@ -52,7 +52,7 @@ const DeleteUserForm = ({ onCancel, onSuccess, pago_id }) => {
 			>
 				<Submit
 					center
-					text="Confirme la elimnación del pago"
+					text="Confirme la eliminación del pago"
 					icon={faTrash}
 					bg_color="danger"
 					hidden={load}

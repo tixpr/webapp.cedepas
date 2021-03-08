@@ -22,7 +22,7 @@ const PagoBox = ({ pago }) => {
 					>
 						<img
 							style={{ width: "100%", maxWidth: "600px" }}
-							src={`https://api.seminarioandinosanpablo.org.pe/storage/vauchers/${vaucher}`}
+							src={`${window.base_url}/storage/vauchers/${vaucher}`}
 							alt="vaucher del pago"
 						/>
 						<Button

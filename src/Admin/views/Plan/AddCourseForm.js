@@ -109,6 +109,7 @@ const AddCourseForm = ({ onSuccess, onCancel, area_id }) => {
 						label="Creditos"
 						name="credits"
 						type="number"
+						step="any"
 						hidden={load}
 						register={register}
 						error={errors.credits}

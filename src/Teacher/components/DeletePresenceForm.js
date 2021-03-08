@@ -33,8 +33,11 @@ const DeletePresenceForm = ({ onCancel, onSuccess, presence_id }) => {
 		onSuccess && onSuccess();
 	}
 	useEffect(() => {
-		return () => dispatch(resetDeletePresenceAction());
-	}, [dispatch]);
+		return () => {
+			dispatch(resetDeletePresenceAction());
+			onSuccess && onSuccess();
+		};
+	}, [dispatch, onSuccess]);
 	return (
 		<div className="container-absolute flex-row flex-center">
 			<div className="flex-row flex-center bg-white padding-10">
@@ -50,7 +53,7 @@ const DeletePresenceForm = ({ onCancel, onSuccess, presence_id }) => {
 						h3
 						className={clsx("grow text-danger", load && "hidden")}
 					>
-						Confirme la elimnación
+						Confirme la eliminación
 					</Text>
 					<div className="flex-row">
 						<Submit

@@ -31,8 +31,11 @@ const DeleteNoteForm = ({ onCancel, onSuccess, note_id }) => {
 		onSuccess && onSuccess();
 	}
 	useEffect(() => {
-		return () => dispatch(resetDeleteNoteAction());
-	}, [dispatch]);
+		return () => {
+			dispatch(resetDeleteNoteAction());
+			onSuccess && onSuccess();
+		};
+	}, [dispatch, onSuccess]);
 	return (
 		<div className="container-absolute flex-row flex-center">
 			<div className="flex-row flex-center bg-white padding-10">
@@ -48,7 +51,7 @@ const DeleteNoteForm = ({ onCancel, onSuccess, note_id }) => {
 						h3
 						className={clsx("grow text-danger", load && "hidden")}
 					>
-						Confirme la elimnación
+						Confirme la eliminación
 					</Text>
 					<div className="flex-row">
 						<Submit
