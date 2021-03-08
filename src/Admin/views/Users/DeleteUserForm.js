@@ -52,7 +52,7 @@ const DeleteUserForm = ({ onCancel, onSuccess, user_id }) => {
 				)}
 			>
 				<Text h3 className={clsx("grow text-danger", load && "hidden")}>
-					<center>Confirme la elimnación del usuario</center>
+					<center>Confirme la elimniación del usuario</center>
 				</Text>
 				<Submit
 					center
