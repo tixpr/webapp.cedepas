@@ -18,9 +18,12 @@ import { useMediaQuery } from "react-responsive";
 
 const add_course_schema = yup.object().shape({
 	name: yup.string().required("Requerido"),
+	program: yup.string().required("Requerido"),
+	code: yup.string().required("Requerido"),
 	credits: yup
 		.number()
-		.min(1, "El credito debe de ser minimo 1")
+		.min(1.0, "El credito debe de ser minimo 1.0")
+		.max(9.9, "El valor maximo debe de ser menor a 10")
 		.required("Requerido"),
 	hours: yup
 		.number()
@@ -86,6 +89,22 @@ const AddCourseForm = ({ onSuccess, onCancel, area_id }) => {
 						!lg && "flex-column"
 					)}
 				>
+					<InputForm
+						label="Código"
+						name="code"
+						type="text"
+						hidden={load}
+						register={register}
+						error={errors.code}
+					/>
+					<InputForm
+						label="Programa"
+						name="program"
+						type="text"
+						hidden={load}
+						register={register}
+						error={errors.program}
+					/>
 					<InputForm
 						label="Creditos"
 						name="credits"
